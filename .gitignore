@@ -1,0 +1,43 @@
+# Ignorar archivos y carpetas de Python
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.pot
+
+# Ignorar configuraciones locales de Django
+*.sqlite3
+*.log
+*.env
+*.venv
+.env/
+venv/
+instance/
+.webassets-cache
+
+# Ignorar archivos y carpetas de Django específicos
+db.sqlite3
+*.py[cod]
+*.sqlite3-journal
+
+# Ignorar archivos y carpetas de caché de Vue.js y npm
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar archivos de configuración específicos de IDEs y editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar archivos y carpetas de SO específicos
+.DS_Store
+Thumbs.db
