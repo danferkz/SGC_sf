@@ -16,7 +16,7 @@
                         <li><router-link to="/login">Login</router-link></li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost normal-case text-xl">Carpidsfsdfsdfsdfdsfsdfsdfsdfsfdsfsdfsdntería - Dego</a>
+                <a class="btn btn-ghost normal-case text-xl">Carpintería </a>
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
