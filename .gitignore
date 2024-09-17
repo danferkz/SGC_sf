@@ -42,3 +42,4 @@ yarn-error.log*
 # Ignorar archivos y carpetas de SO específicos
 .DS_Store
 Thumbs.db
+.history
