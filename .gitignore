@@ -19,6 +19,7 @@ build/
 venv/
 instance/
 .webassets-cache
+.hystory
 
 # Ignorar archivos y carpetas de Django específicos
 db.sqlite3
