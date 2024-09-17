@@ -7,6 +7,8 @@ import RegistrationView from '../views/RegistrationView.vue'
 import Vista from '../views/VistaView.vue'
 import EmployeeView from '../views/EmployeeView.vue'
 import InternView from '../views/InternView.vue'
+import Producto from '@/views/Producto.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +47,13 @@ const router = createRouter({
       path: '/interno',
       name: 'Interno',
       component: InternView
+    },
+    {
+      path: '/producto',
+      name: 'Producto',
+      component: Producto
     }
+      
 
   ]
 })
