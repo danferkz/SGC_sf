@@ -5,6 +5,8 @@ import AdminView from '../views/AdminView.vue'
 import LoginClient from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import Vista from '../views/VistaView.vue'
+import EmployeeView from '../views/EmployeeView.vue'
+import InternView from '../views/InternView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +35,16 @@ const router = createRouter({
       path: '/vista',
       name: 'Vista',
       component: Vista
+    },
+    {
+      path: '/empleado',
+      name: 'Empleado',
+      component: EmployeeView
+    },
+    {
+      path: '/interno',
+      name: 'Interno',
+      component: InternView
     }
 
   ]
