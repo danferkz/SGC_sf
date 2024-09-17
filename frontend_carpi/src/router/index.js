@@ -6,6 +6,9 @@ import LoginClient from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import Vista from '../views/VistaView.vue'
 import Producto from '@/views/Producto.vue'
+import Mueble from '@/views/Mueble.vue'
+import Ventana from '@/views/Ventana.vue'
+import Puerta from '@/views/Puerta.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,7 +42,23 @@ const router = createRouter({
       path: '/producto',
       name: 'Producto',
       component: Producto
+    },
+    {
+      path: '/ventana',
+      name: 'Ventana',
+      component: Ventana
+    },
+    {
+      path: '/mueble',
+      name: 'Mueble',
+      component: Mueble
+    },
+    {
+      path: '/puerta',
+      name: 'Puerta',
+      component: Puerta
     }
+
 
 
   ]
