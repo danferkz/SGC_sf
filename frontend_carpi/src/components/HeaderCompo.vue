@@ -11,7 +11,7 @@
                         </svg>
                     </label>
                     <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-nude rounded-box w-52">
-                        <li><a href="#productos">Productos</a></li>
+                        <li><router-link to="/producto">Producto</router-link></li>
                         <li><a href="#pedidos">Pedidos</a></li>
                         <li><router-link to="/login">Login</router-link></li>
                     </ul>
