@@ -8,7 +8,7 @@
                         Iniciar Sesión
                     </h2>
                     <p class="mt-2 text-center text-sm text-gray-600">
-                        Accede a tu cuenta de Carpintería Artesanal
+                        Accede a tu cuenta de Carpintería Maderera El Bosque
                     </p>
                 </div>
                 <form class="mt-8 space-y-6">
