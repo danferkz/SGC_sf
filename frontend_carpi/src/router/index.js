@@ -76,9 +76,7 @@ const router = createRouter({
       path: '/puerta',
       name: 'Puerta',
       component: Puerta
-    }
-      
-
+    }    
 
   ]
 })
