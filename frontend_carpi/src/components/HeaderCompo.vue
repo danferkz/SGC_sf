@@ -11,9 +11,10 @@
                         </svg>
                     </label>
                     <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-nude rounded-box w-52">
-                        <li><a href="#productos">Productos</a></li>
+                        <li><router-link to="/producto">Producto</router-link></li>
                         <li><a href="#pedidos">Pedidos</a></li>
                         <li><router-link to="/login">Login</router-link></li>
+                        
                     </ul>
                 </div>
                 <a class="btn btn-ghost normal-case text-2xl font-bold">Maderera El Bosque</a>
@@ -23,6 +24,7 @@
                     <li><a href="#productos">Productos</a></li>
                     <li><a href="#pedidos">Pedidos</a></li>
                     <li><router-link to="/login">Login</router-link></li>
+                    
                 </ul>
             </div>
             <div class="navbar-end">
@@ -88,6 +90,8 @@
                         <li><a href="#productos" class="hover:text-nude-200 transition">Productos</a></li>
                         <li><a href="#pedidos" class="hover:text-nude-200 transition">Pedidos</a></li>
                         <li><router-link to="/login" class="hover:text-nude-200 transition">Login</router-link></li>
+                       
+                        
                     </ul>
                 </nav>
             </div>

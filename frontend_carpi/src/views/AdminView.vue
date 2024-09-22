@@ -5,25 +5,25 @@
           <div class="max-w-md w-full space-y-8 bg-[#FFFBEB] p-10 rounded-xl shadow-2xl">
               <div>
                   <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                      Iniciar Sesión
+                      Inicio de Sesión Administrador
                   </h2>
                   <p class="mt-2 text-center text-sm text-gray-600">
-                      Accede a tu cuenta de Carpintería Maderera El Bosque
+                      Accede a tu cuenta de Administrador de la Carpintería Maderera El Bosque
                   </p>
               </div>
               <form class="mt-8 space-y-6">
                   <div class="rounded-md shadow-sm -space-y-px">
                       <div>
                           <!-- Changed margin-bottom to 5px -->
-                          <label for="email-address" class="sr-only">Correo electrónico</label>
+                          <label for="user" class="sr-only">Usuario</label>
                           <input
-                              id="email-address"
-                              name="email"
-                              type="email"
-                              autocomplete="email"
+                              id="user"
+                              name="user"
+                              type="user"
+                              autocomplete="current-user"
                               required
                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-t-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                              placeholder="Correo electrónico"
+                              placeholder="Usuario"
                           />
                       </div>
                       <div>
@@ -72,12 +72,7 @@
                       </button>
                   </div>
               </form>
-              <div class="text-center">
-                  ¿No tienes una cuenta?
-                  <router-link to="/registro" class="font-medium text-amber-600 hover:text-amber-500">
-                      Regístrate aquí
-                  </router-link>
-              </div>
+              
           </div>
       </div>
   </div>
