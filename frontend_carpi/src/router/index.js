@@ -7,8 +7,11 @@ import RegistrationView from '../views/RegistrationView.vue'
 import Vista from '../views/VistaView.vue'
 import EmployeeView from '../views/EmployeeView.vue'
 import InternView from '../views/InternView.vue'
-import Producto from '../views/Producto.vue'
 import HomeAdminView from '../views/HomeAdminView.vue'
+import Producto from '@/views/Producto.vue'
+import Mueble from '@/views/Mueble.vue'
+import Ventana from '@/views/Ventana.vue'
+import Puerta from '@/views/Puerta.vue'
 
 
 const router = createRouter({
@@ -58,8 +61,24 @@ const router = createRouter({
       path: '/homeadmin',
       name: 'Home Admin',
       component: HomeAdminView
+    },
+    {
+      path: '/ventana',
+      name: 'Ventana',
+      component: Ventana
+    },
+    {
+      path: '/mueble',
+      name: 'Mueble',
+      component: Mueble
+    },
+    {
+      path: '/puerta',
+      name: 'Puerta',
+      component: Puerta
     }
       
+
 
   ]
 })
