@@ -7,7 +7,8 @@ import RegistrationView from '../views/RegistrationView.vue'
 import Vista from '../views/VistaView.vue'
 import EmployeeView from '../views/EmployeeView.vue'
 import InternView from '../views/InternView.vue'
-import Producto from '@/views/Producto.vue'
+import Producto from '../views/Producto.vue'
+import HomeAdminView from '../views/HomeAdminView.vue'
 
 
 const router = createRouter({
@@ -52,6 +53,11 @@ const router = createRouter({
       path: '/producto',
       name: 'Producto',
       component: Producto
+    },
+    {
+      path: '/homeadmin',
+      name: 'Home Admin',
+      component: HomeAdminView
     }
       
 
