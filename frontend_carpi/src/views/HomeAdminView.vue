@@ -1,5 +1,7 @@
 <template>
   <div class="flex bg-beige-100 font-sans">
+    <HeaderAdminCompo /> <!-- Incluyendo el Header aquí -->
+    
     <!-- Sidebar -->
     <aside class="w-64 bg-brown-200 h-screen fixed shadow-lg">
       <div class="p-6">
@@ -48,6 +50,7 @@
         </li>
       </ul>
     </aside>
+    
     <main class="ml-64 p-6 bg-beige-100 min-h-screen flex">
       <div class="flex-1">
         <h1 class="text-3xl font-bold text-black">Bienvenido al Panel Administrativo</h1>
@@ -146,12 +149,14 @@
 </template>
 
 <script>
+import HeaderAdminCompo from '@/components/HeaderAdminCompo.vue'; // Asegúrate de que la ruta es correcta
 import VueCal from 'vue-cal';
 import 'vue-cal/dist/vueCal.css';
 
 export default {
   name: "HomeAdminView",
   components: {
+    HeaderAdminCompo, // Añade el componente aquí
     VueCal,
   },
   data() {
@@ -175,3 +180,4 @@ export default {
   background-color: #ffb300; /* melón */
 }
 </style>
+
