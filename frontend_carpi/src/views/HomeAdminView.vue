@@ -1,9 +1,10 @@
 <template>
   <div class="flex bg-beige-100 font-sans">
-    <HeaderAdminCompo /> <!-- Incluyendo el Header aquí -->
+    <!-- Header en la parte superior -->
+    <HeaderAdminCompo class="fixed w-full z-10" />
     
     <!-- Sidebar -->
-    <aside class="w-64 bg-brown-200 h-screen fixed shadow-lg">
+    <aside class="w-64 bg-brown-200 h-screen fixed shadow-lg top-16">
       <div class="p-6">
         <h2 class="text-2xl font-bold text-black">Maderera El Bosque</h2>
       </div>
@@ -51,7 +52,7 @@
       </ul>
     </aside>
     
-    <main class="ml-64 p-6 bg-beige-100 min-h-screen flex">
+    <main class="ml-64 p-6 bg-beige-100 min-h-screen pt-16">
       <div class="flex-1">
         <h1 class="text-3xl font-bold text-black">Bienvenido al Panel Administrativo</h1>
         <section class="mt-6">
@@ -140,8 +141,7 @@
           class="mt-2"
           :events="events"
           :disable-times="true"
-          :disable-day-numbers="true"
-          style="border: 1px solid #000; font-size: 14px; background-color: #f5f5dc; height: 400px; width: 480px;"
+          style="font-size: 14px; background-color: #f5f5dc; height: 400px; width: 480px;"
         />
       </div>
     </main>
@@ -178,6 +178,14 @@ export default {
 
 .hover\:bg-melon-100:hover {
   background-color: #ffb300; /* melón */
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 </style>
 
