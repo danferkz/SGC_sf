@@ -131,14 +131,14 @@
           </table>
         </section>
       </div>
-      <div class="w-120 ml-10">
+      <div class="w-140 ml-10">
         <h2 class="text-2xl font-bold text-black mb-2">Calendario</h2>
         <vue-cal
           class="mt-2"
           :events="events"
           :disable-times="true"
           :disable-day-numbers="true"
-          style="border: 1px solid #000; font-size: 14px; background-color: #f5f5dc; height: 400px; width: 400px;"
+          style="border: 1px solid #000; font-size: 14px; background-color: #f5f5dc; height: 400px; width: 480px;"
         />
       </div>
     </main>
