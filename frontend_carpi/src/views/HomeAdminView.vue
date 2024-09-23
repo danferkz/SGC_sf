@@ -168,6 +168,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .bg-beige-100 {
   background-color: #f5f5dc; /* beige claro */
