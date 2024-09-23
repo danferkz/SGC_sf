@@ -87,74 +87,39 @@
                 <td class="border border-black p-2">Completado</td>
                 <td class="border border-black p-2">2024-09-19</td>
               </tr>
-              <tr>
-                <td class="border border-black p-2">3</td>
-                <td class="border border-black p-2">Carlos Ruiz</td>
-                <td class="border border-black p-2">En Espera</td>
-                <td class="border border-black p-2">2024-09-18</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">4</td>
-                <td class="border border-black p-2">Ana Torres</td>
-                <td class="border border-black p-2">Completado</td>
-                <td class="border border-black p-2">2024-09-17</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">5</td>
-                <td class="border border-black p-2">Luis Gómez</td>
-                <td class="border border-black p-2">Cancelado</td>
-                <td class="border border-black p-2">2024-09-16</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">6</td>
-                <td class="border border-black p-2">Elena Martínez</td>
-                <td class="border border-black p-2">En Proceso</td>
-                <td class="border border-black p-2">2024-09-15</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">7</td>
-                <td class="border border-black p-2">Pedro Fernández</td>
-                <td class="border border-black p-2">Completado</td>
-                <td class="border border-black p-2">2024-09-14</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">8</td>
-                <td class="border border-black p-2">Sofía Ramírez</td>
-                <td class="border border-black p-2">En Espera</td>
-                <td class="border border-black p-2">2024-09-13</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">9</td>
-                <td class="border border-black p-2">Ricardo Gómez</td>
-                <td class="border border-black p-2">Completado</td>
-                <td class="border border-black p-2">2024-09-12</td>
-              </tr>
-              <tr>
-                <td class="border border-black p-2">10</td>
-                <td class="border border-black p-2">Laura Pérez</td>
-                <td class="border border-black p-2">Cancelado</td>
-                <td class="border border-black p-2">2024-09-11</td>
-              </tr>
+              <!-- Más registros aquí -->
             </tbody>
           </table>
         </section>
       </div>
       <div class="w-96 ml-6">
         <h2 class="text-2xl font-bold text-black">Calendario</h2>
-        <div class="border border-black mt-2 p-4 bg-white rounded-lg shadow">
-          <!-- Aquí puedes incluir un componente de calendario -->
-          <p class="text-center">[Calendario aquí]</p>
-          <!-- Puedes usar una librería como Vue Cal o crear un calendario simple -->
-        </div>
+        <vue-cal
+          class="mt-2"
+          :events="events"
+          :disable-times="true"
+          :disable-day-numbers="true"
+          style="border: 1px solid #000;"
+        />
       </div>
     </main>
   </div>
 </template>
 
 <script>
+import VueCal from 'vue-cal';
+import 'vue-cal/dist/vueCal.css';
+
 export default {
   name: "HomeAdminView",
-  // Lógica del componente aquí
+  components: {
+    VueCal,
+  },
+  data() {
+    return {
+      events: [], // Puedes agregar eventos aquí
+    };
+  },
 };
 </script>
 
