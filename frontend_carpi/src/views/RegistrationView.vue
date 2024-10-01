@@ -153,6 +153,6 @@ export default {
 
 <style scoped>
 .error-message {
-    color: red;
+    color: yellow;
 }
 </style>
