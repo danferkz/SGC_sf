@@ -37,6 +37,18 @@
                         >
                     </div>
                     <div class="mb-[3px]">
+                        <label for="address" class="sr-only">Dirección</label>
+                        <input
+                            id="address"
+                            name="address"
+                            type="text"
+                            required
+                            v-model="address"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
+                            placeholder="Dirección"
+                        >
+                    </div>
+                    <div class="mb-[3px]">
                         <label for="password" class="sr-only">Contraseña</label>
                         <input
                             id="password"
@@ -89,9 +101,19 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
+const name = ref('');
+const email = ref('');
+const address = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+
+const handleRegistration = () => {
+    // Aquí iría la lógica para manejar el registro
+};
 </script>
 
 <style>
-
+/* Agrega tu estilo personalizado si es necesario */
 </style>
