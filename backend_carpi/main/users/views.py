@@ -1,57 +1,139 @@
-from rest_framework import generics, viewsets, status
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
-from .serializers import ClientRegistrationSerializer, AdminUserSerializer
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.views import APIView
 from .models import CustomUser
+from .serializers import ClientSerializer, AdminSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import PermissionDenied
 
-class ClientRegistrationView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = ClientRegistrationSerializer
-    permission_classes = [AllowAny]
+# 1. Crear un nuevo cliente
+class ClientCreateView(CreateAPIView):
+    serializer_class = ClientSerializer
+    authentication_classes = []
+    permission_classes = []
 
-class AdminUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.filter(is_staff=True) | CustomUser.objects.filter(is_superuser=True)
-    serializer_class = AdminUserSerializer
-    permission_classes = [IsAdminUser]
+    def perform_create(self, serializer):
+        # marcado como cliente
+        serializer.save(is_cliente=True)
+
+# 2. Crear un nuevo administrador (solo los administradores pueden crear otros administradores)
+class AdminCreateView(CreateAPIView):
+    serializer_class = AdminSerializer
+    permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    def create(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
-            return Response({'error': 'No tienes permiso para crear otros administradores.'}, status=status.HTTP_403_FORBIDDEN)
-        return super().create(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        if self.request.user.is_staff:
+            serializer.save(is_staff=True, is_superuser=True)
+        else:
+            raise PermissionDenied('Solo los administradores pueden crear otros administradores.')
 
-    # Los otros métodos CRUD ya están bien implementados y protegidos por IsAdminUser
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+# 3. Mostrar la lista de clientes (solo los administradores pueden listar a los clientes)
+class ClientListView(ListAPIView):
+    serializer_class = ClientSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return CustomUser.objects.filter(is_cliente=True)
+        else:
+            raise PermissionDenied('Solo los administradores pueden listar los clientes.')
+
+class AdminListView(ListAPIView):
+    serializer_class = AdminSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return CustomUser.objects.filter(is_staff=True)
+        else:
+            raise PermissionDenied('Solo los administradores pueden listar otros administradores.')
+
+# 5. Actualizar un cliente existente
+class ClientUpdateView(UpdateAPIView):
+    queryset = CustomUser.objects.filter(is_cliente=True)
+    serializer_class = ClientSerializer
+    authentication_classes = [JWTAuthentication]
 
     def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if request.user != instance:
+            return Response({'error': 'Solo puedes actualizar tu propio perfil.'}, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
 
-    def destroy(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
+# 6. Actualizar un administrador existente (solo administradores)
+class AdminUpdateView(UpdateAPIView):
+    queryset = CustomUser.objects.filter(is_staff=True)
+    serializer_class = AdminSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if not request.user.is_staff and request.user != instance:
+            return Response({'error': 'Solo los administradores pueden actualizar su propio perfil o el de otros administradores.'}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
+
+# 7. Eliminar un cliente existente (eliminación lógica usando "is_active" a false)
+class ClientDestroyView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, pk):
+        try:
+            cliente = CustomUser.objects.get(pk=pk, is_cliente=True)
+            cliente.is_active = False
+            cliente.save()
+            return Response({'message': 'Cliente eliminado lógicamente.'}, status=status.HTTP_204_NO_CONTENT)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'Cliente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+# 8. Eliminar un administrador existente (eliminación física usando DestroyAPIView)
+class AdminDestroyView(DestroyAPIView):
+    queryset = CustomUser.objects.filter(is_staff=True)
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+# 9. Login para Clientes
+class ClientLoginSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user = self.user
+        if not user.is_cliente:
+            raise serializers.ValidationError("Solo los clientes pueden acceder.")
+        return data
 
 class ClientLoginView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        if response.status_code == 200:
-            data = response.data
-            username = request.data.get('username')
-            user = CustomUser.objects.filter(username=username).first()
-            if user and not user.is_cliente:
-                return Response({'error': 'No tienes permiso para acceder a esta área'}, status=status.HTTP_403_FORBIDDEN)
-        return response
+    serializer_class = ClientLoginSerializer
+
+# 10. Login para Administradores
+class AdminLoginSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user = self.user
+        if not user.is_staff:
+            raise serializers.ValidationError("Solo los administradores pueden acceder.")
+        return data
 
 class AdminLoginView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        if response.status_code == 200:
-            data = response.data
-            user = CustomUser.objects.filter(username=request.data['username']).first()
-            if user and not (user.is_staff or user.is_superuser):
-                return Response({'error': 'No tienes permiso para acceder a esta área'}, status=status.HTTP_403_FORBIDDEN)
-        return response
+    serializer_class = AdminLoginSerializer
+
+# 11. Logout para Administradores y Clientes
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Logout exitoso."}, status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

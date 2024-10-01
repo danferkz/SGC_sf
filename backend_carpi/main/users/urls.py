@@ -1,20 +1,31 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from . import views
-
-router = DefaultRouter()
-router.register(r'admin', views.AdminUserViewSet, basename='admin_users')
+from django.urls import path
+from .views import (
+    ClientCreateView, AdminCreateView,
+    ClientListView, AdminListView,
+    ClientUpdateView, AdminUpdateView,
+    ClientDestroyView, AdminDestroyView,
+    ClientLoginView, AdminLoginView, LogoutView
+)
 
 urlpatterns = [
-    # Registro de clientes
-    path('register/', views.ClientRegistrationView.as_view(), name='register_clients'),
-    
-    # Login de clientes
-    path('login/client/', views.ClientLoginView.as_view(), name='login_clients'),
-    
-    # Login de administradores
-    path('login/admin/', views.AdminLoginView.as_view(), name='login_admins'),
-    
-    # CRUD de usuarios administradores
-    path('', include(router.urls)),  # Registra las rutas del viewset
+    # Creación de usuarios
+    path('clients/create/', ClientCreateView.as_view(), name='create-client'),
+    path('admins/create/', AdminCreateView.as_view(), name='create-admin'),
+
+    # Listado de usuarios
+    path('clients/', ClientListView.as_view(), name='list-clients'),
+    path('admins/', AdminListView.as_view(), name='list-admins'),
+
+    # Actualización de usuarios
+    path('clients/update/<int:pk>/', ClientUpdateView.as_view(), name='update-client'),
+    path('admins/update/<int:pk>/', AdminUpdateView.as_view(), name='update-admin'),
+
+    # Eliminación de usuarios
+    path('clients/delete/<int:pk>/', ClientDestroyView.as_view(), name='delete-client'),
+    path('admins/delete/<int:pk>/', AdminDestroyView.as_view(), name='delete-admin'),
+
+    # Autenticación
+    path('clients/login/', ClientLoginView.as_view(), name='login-client'),
+    path('admins/login/', AdminLoginView.as_view(), name='login-admin'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
