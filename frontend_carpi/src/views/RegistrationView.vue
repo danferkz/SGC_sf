@@ -66,12 +66,17 @@
                         </div>
                         <span v-if="confirmPasswordError" class="error-message text-red-500">{{ confirmPasswordError }}</span>
                     </div>
-                    <div class="form-control mt-4">
-                        <label class="label cursor-pointer">
-                            <input type="checkbox" v-model="termsAccepted" class="checkbox" />
-                            <span class="label-text">Acepto los <RouterLink to="/terms" class="text-[#D97706]">términos y condiciones</RouterLink></span>
+                    <div class="form-control mt-4 flex items-center">
+                        <input 
+                            type="checkbox" 
+                            v-model="termsAccepted" 
+                            class="checkbox h-4 w-4 border border-gray-300 rounded text-[#D97706] focus:ring-[#D97706] focus:ring-opacity-50"
+                        />
+                        <label class="ml-2 label-text">
+                            Acepto los 
+                            <RouterLink to="/terms" class="text-[#D97706]">términos y condiciones</RouterLink>
                         </label>
-                        <span v-if="termsError" class="error-message text-red-500">{{ termsError }}</span>
+                        <span v-if="termsError" class="error-message text-red-500 ml-2">{{ termsError }}</span>
                     </div>
                     <div class="form-control mt-6">
                         <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
