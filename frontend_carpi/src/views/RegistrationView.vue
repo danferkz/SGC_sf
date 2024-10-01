@@ -66,7 +66,6 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 export default {
-    
     setup() {
         const router = useRouter();
         const username = ref('');
