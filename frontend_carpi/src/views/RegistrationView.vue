@@ -66,6 +66,13 @@
                         </div>
                         <span v-if="confirmPasswordError" class="error-message text-red-500">{{ confirmPasswordError }}</span>
                     </div>
+                    <div class="form-control mt-4">
+                        <label class="label cursor-pointer">
+                            <input type="checkbox" v-model="termsAccepted" class="checkbox" />
+                            <span class="label-text">Acepto los <RouterLink to="/terms" class="text-[#D97706]">términos y condiciones</RouterLink></span>
+                        </label>
+                        <span v-if="termsError" class="error-message text-red-500">{{ termsError }}</span>
+                    </div>
                     <div class="form-control mt-6">
                         <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
                             Registrarse
@@ -100,6 +107,7 @@ export default {
         const email = ref('');
         const password = ref('');
         const confirmPassword = ref('');
+        const termsAccepted = ref(false); // Nueva variable reactiva para el checkbox
         const errorMessage = ref('');
         const fullNameError = ref('');
         const phoneError = ref('');
@@ -107,6 +115,7 @@ export default {
         const emailError = ref('');
         const passwordError = ref('');
         const confirmPasswordError = ref('');
+        const termsError = ref(''); // Mensaje de error para términos y condiciones
 
         const passwordVisible = ref(false);
         const confirmPasswordVisible = ref(false);
@@ -143,6 +152,7 @@ export default {
             emailError.value = '';
             passwordError.value = '';
             confirmPasswordError.value = '';
+            termsError.value = ''; // Reiniciar mensaje de error de términos
 
             // Validaciones de campos obligatorios
             if (!fullName.value) {
@@ -173,8 +183,12 @@ export default {
                 confirmPasswordError.value = 'Las contraseñas no coinciden.';
             }
 
+            if (!termsAccepted.value) {
+                termsError.value = 'Debes aceptar los términos y condiciones.';
+            }
+
             // Si hay errores, no continuar con la creación de usuario
-            if (fullNameError.value || phoneError.value || usernameError.value || emailError.value || passwordError.value || confirmPasswordError.value) {
+            if (fullNameError.value || phoneError.value || usernameError.value || emailError.value || passwordError.value || confirmPasswordError.value || termsError.value) {
                 return;
             }
 
@@ -204,6 +218,7 @@ export default {
             email,
             password,
             confirmPassword,
+            termsAccepted,
             errorMessage,
             fullNameError,
             phoneError,
@@ -211,10 +226,11 @@ export default {
             emailError,
             passwordError,
             confirmPasswordError,
+            termsError,
+            handleRegistration,
+            togglePasswordVisibility,
             passwordVisible,
             confirmPasswordVisible,
-            togglePasswordVisibility,
-            handleRegistration,
         };
     },
 };
