@@ -19,6 +19,7 @@
                         </label>
                         <input id="phone" v-model="phone" type="tel" placeholder="Número de teléfono"
                             class="input input-bordered" required />
+                        <span v-if="phoneError" class="error-message text-red-500">{{ phoneError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="username" class="label">
@@ -76,19 +77,34 @@ export default {
         const router = useRouter();
 
         // Reactive variables for form inputs
-        const fullName = ref(''); // Nuevo campo
-        const phone = ref(''); // Nuevo campo
+        const fullName = ref('');
+        const phone = ref('');
         const username = ref('');
         const email = ref('');
         const password = ref('');
         const confirmPassword = ref('');
         const errorMessage = ref('');
+        const phoneError = ref(''); // Nueva variable para manejar errores del número de teléfono
+
+        const validatePhoneNumber = (number) => {
+            const regex = /^[0-9]{10,15}$/; // Validar que el número contenga solo dígitos y tenga entre 10 y 15 caracteres
+            return regex.test(number);
+        };
 
         const handleRegistration = async () => {
+            // Reset error messages
             errorMessage.value = '';
+            phoneError.value = '';
+
+            // Validar número de teléfono
+            if (!validatePhoneNumber(phone.value)) {
+                phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
+                return;
+            }
+
             const formData = {
-                fullName: fullName.value, // Agregar nombre completo
-                phone: phone.value, // Agregar número de teléfono
+                fullName: fullName.value,
+                phone: phone.value,
                 username: username.value,
                 email: email.value,
                 password: password.value,
@@ -106,13 +122,14 @@ export default {
         };
 
         return {
-            fullName, // Agregar al retorno
-            phone, // Agregar al retorno
+            fullName,
+            phone,
             username,
             email,
             password,
             confirmPassword,
             errorMessage,
+            phoneError, // Agregar al retorno
             handleRegistration,
         };
     },
