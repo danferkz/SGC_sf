@@ -39,32 +39,6 @@
                         <p v-if="emailError" class="text-red-500 text-xs mt-1">Correo electrónico inválido</p>
                     </div>
                     <div class="mb-[3px]">
-                        <label for="address" class="sr-only">Dirección</label>
-                        <input
-                            id="address"
-                            name="address"
-                            type="text"
-                            required
-                            v-model="address"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            placeholder="Dirección"
-                        >
-                    </div>
-                    <div class="mb-[3px]">
-                        <label for="phone-number" class="sr-only">Número telefónico</label>
-                        <input
-                            id="phone-number"
-                            name="phone-number"
-                            type="tel"
-                            required
-                            v-model="phoneNumber"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': phoneError }"
-                            placeholder="Número telefónico"
-                        >
-                        <p v-if="phoneError" class="text-red-500 text-xs mt-1">Número telefónico inválido</p>
-                    </div>
-                    <div class="mb-[3px]">
                         <label for="password" class="sr-only">Contraseña</label>
                         <input
                             id="password"
@@ -75,19 +49,6 @@
                             v-model="password"
                             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
                             placeholder="Contraseña"
-                        >
-                    </div>
-                    <div class="mb-[3px]">
-                        <label for="confirm-password" class="sr-only">Confirmar contraseña</label>
-                        <input
-                            id="confirm-password"
-                            name="confirm-password"
-                            type="password"
-                            autocomplete="new-password"
-                            required
-                            v-model="confirmPassword"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-b-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            placeholder="Confirmar contraseña"
                         >
                     </div>
                 </div>
@@ -104,14 +65,6 @@
                     </button>
                 </div>
             </form>
-            <div class="text-center">
-                <p class="mt-2 text-sm text-gray-600">
-                    ¿Ya tienes una cuenta?
-                    <a href="#" class="font-medium text-amber-600 hover:text-amber-500">
-                        Inicia sesión aquí
-                    </a>
-                </p>
-            </div>
         </div>
     </div>
 </template>
@@ -121,32 +74,20 @@ import { ref } from 'vue';
 
 const name = ref('');
 const email = ref('');
-const address = ref('');
-const phoneNumber = ref('');
 const password = ref('');
-const confirmPassword = ref('');
-
 const emailError = ref(false);
-const phoneError = ref(false);
 
 const handleRegistration = () => {
     emailError.value = !validateEmail(email.value);
-    phoneError.value = !validatePhoneNumber(phoneNumber.value);
 
-    if (!emailError.value && !phoneError.value) {
-        // Aquí iría la lógica para manejar el registro exitoso
-        console.log('Registro exitoso');
+    if (!emailError.value) {
+        console.log('Correo válido');
     }
 };
 
 const validateEmail = (email) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
-};
-
-const validatePhoneNumber = (phone) => {
-    const phonePattern = /^[0-9]+$/;
-    return phonePattern.test(phone);
 };
 </script>
 
