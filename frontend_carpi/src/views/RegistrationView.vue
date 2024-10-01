@@ -135,6 +135,7 @@ export default {
         };
 
         const handleRegistration = async () => {
+            // Reset error messages
             errorMessage.value = '';
             fullNameError.value = '';
             phoneError.value = '';
