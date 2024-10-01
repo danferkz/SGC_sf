@@ -107,7 +107,7 @@ export default {
         const email = ref('');
         const password = ref('');
         const confirmPassword = ref('');
-        const termsAccepted = ref(false); // Nueva variable reactiva para el checkbox
+        const termsAccepted = ref(false);
         const errorMessage = ref('');
         const fullNameError = ref('');
         const phoneError = ref('');
@@ -115,7 +115,7 @@ export default {
         const emailError = ref('');
         const passwordError = ref('');
         const confirmPasswordError = ref('');
-        const termsError = ref(''); // Mensaje de error para términos y condiciones
+        const termsError = ref('');
 
         const passwordVisible = ref(false);
         const confirmPasswordVisible = ref(false);
@@ -152,7 +152,7 @@ export default {
             emailError.value = '';
             passwordError.value = '';
             confirmPasswordError.value = '';
-            termsError.value = ''; // Reiniciar mensaje de error de términos
+            termsError.value = '';
 
             // Validaciones de campos obligatorios
             if (!fullName.value) {
@@ -161,6 +161,8 @@ export default {
 
             if (!validatePhoneNumber(phone.value)) {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
+            } else if (!phone.value) {
+                phoneError.value = 'El número de teléfono es obligatorio.';
             }
 
             if (!validateUsername(username.value)) {
