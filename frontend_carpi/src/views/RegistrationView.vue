@@ -7,6 +7,20 @@
             <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
                 <form @submit.prevent="handleRegistration" class="card-body">
                     <div class="form-control">
+                        <label for="full-name" class="label">
+                            <span class="label-text text-[#000000]">Nombre completo</span>
+                        </label>
+                        <input id="full-name" v-model="fullName" type="text" placeholder="Nombre completo"
+                            class="input input-bordered" required />
+                    </div>
+                    <div class="form-control">
+                        <label for="phone" class="label">
+                            <span class="label-text text-[#000000]">Número de teléfono</span>
+                        </label>
+                        <input id="phone" v-model="phone" type="tel" placeholder="Número de teléfono"
+                            class="input input-bordered" required />
+                    </div>
+                    <div class="form-control">
                         <label for="username" class="label">
                             <span class="label-text text-[#000000]">Nombre de usuario</span>
                         </label>
@@ -55,13 +69,15 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios'; // Importa Axios aquí
+import axios from 'axios';
 
 export default {
     setup() {
         const router = useRouter();
 
         // Reactive variables for form inputs
+        const fullName = ref(''); // Nuevo campo
+        const phone = ref(''); // Nuevo campo
         const username = ref('');
         const email = ref('');
         const password = ref('');
@@ -69,34 +85,29 @@ export default {
         const errorMessage = ref('');
 
         const handleRegistration = async () => {
-            // Reset error message
             errorMessage.value = '';
-
-            // Form data
             const formData = {
+                fullName: fullName.value, // Agregar nombre completo
+                phone: phone.value, // Agregar número de teléfono
                 username: username.value,
                 email: email.value,
                 password: password.value,
-                password2: confirmPassword.value, // Coincide con el campo del serializer
+                password2: confirmPassword.value,
             };
 
             try {
-                // Llamada a la API para registrar el usuario
                 const response = await axios.post('http://localhost:8000/api/users/clients/create/', formData);
-
-                // Manejar la respuesta en caso de éxito
                 console.log('User registered:', response.data);
-
-                // Redirigir a la vista de login
                 router.push('/login');
             } catch (error) {
-                // Manejo de errores
                 errorMessage.value = error.response?.data?.password ? error.response.data.password : 'Error al registrar el usuario. Por favor, intenta nuevamente.';
                 console.error('Error during registration:', error);
             }
         };
 
         return {
+            fullName, // Agregar al retorno
+            phone, // Agregar al retorno
             username,
             email,
             password,
@@ -107,7 +118,6 @@ export default {
     },
 };
 </script>
-
 
 <style scoped>
 .error-message {
