@@ -12,6 +12,7 @@
   "dependencies": {
     "@heroicons/vue": "^2.1.5",
     "axios": "^1.7.7",
+    "frontend_carpi": "file:",
     "vue": "^3.4.29",
     "vue-cal": "^4.9.0",
     "vue-router": "^4.3.3",

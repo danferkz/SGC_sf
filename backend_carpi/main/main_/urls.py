@@ -14,16 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from django.conf import settings
+
+'''
 
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken import views as authtoken_views
+from django.conf import settings  # Asegúrate de importar settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
-urlpatterns = [
-    # Admin Backoffice URLs
+from django.conf import settings
+from django.conf.urls.static import static
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -40,9 +43,18 @@ urlpatterns = [
     path('frontoffice/products/', include('products.urls')),  # Los clientes también pueden ver productos
     path('frontoffice/orders/', include('orders.urls')),  # Para que los clientes gestionen sus pedidos
     path('frontoffice/users/', include('users.urls')),  # Registro y gestión de cuentas de usuarios
-]
+'''
 
-# Serve media files in development
-if settings.DEBUG:
-    from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    # Administración de Django
+    path('admin/', admin.site.urls),
+
+    # Rutas para la aplicación de usuarios (clients y admins)
+    path('api/users/', include('users.urls')),
+
+    # Aquí puedes incluir otras rutas de otras aplicaciones
+    # path('api/other-app/', include('other_app.urls')),
+]
