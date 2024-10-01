@@ -34,7 +34,7 @@
                         <input id="confirm-password" v-model="confirmPassword" type="password"
                             placeholder="Confirmar contraseña" class="input input-bordered" required />
                     </div>
-                    <div class="form-control mt-4">
+                    <div class="form-control mt-4 text-center">
                         <label class="label cursor-pointer">
                             <span class="label-text text-[#000000]">
                                 <input type="checkbox" v-model="termsAccepted" class="checkbox" required />
