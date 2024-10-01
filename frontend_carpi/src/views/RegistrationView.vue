@@ -120,12 +120,12 @@ export default {
         };
 
         const validatePhoneNumber = (phone) => {
-            const phoneRegex = /^\d{10,15}$/; // Asegúrate de que el número tenga entre 10 y 15 dígitos
+            const phoneRegex = /^\d{10,15}$/;
             return phoneRegex.test(phone);
         };
 
         const validateEmail = (email) => {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular simple para validar el correo electrónico
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         };
 
@@ -138,38 +138,37 @@ export default {
             passwordError.value = '';
             confirmPasswordError.value = '';
 
+            // Validaciones de campos obligatorios
             if (!fullName.value) {
                 fullNameError.value = 'El nombre completo es obligatorio.';
-                return;
             }
 
             if (!validatePhoneNumber(phone.value)) {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
-                return;
             }
 
             if (!username.value) {
                 usernameError.value = 'El nombre de usuario es obligatorio.';
-                return;
             }
 
             if (!validateEmail(email.value)) {
                 emailError.value = 'Por favor, ingresa un correo electrónico válido.';
-                return;
             }
 
             if (!password.value) {
                 passwordError.value = 'La contraseña es obligatoria.';
-                return;
             }
 
             if (password.value.length < 8) {
                 passwordError.value = 'La contraseña debe tener al menos 8 caracteres.';
-                return;
             }
 
             if (password.value !== confirmPassword.value) {
                 confirmPasswordError.value = 'Las contraseñas no coinciden.';
+            }
+
+            // Si hay errores, no continuar con la creación de usuario
+            if (fullNameError.value || phoneError.value || usernameError.value || emailError.value || passwordError.value || confirmPasswordError.value) {
                 return;
             }
 
