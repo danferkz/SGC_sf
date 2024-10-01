@@ -40,16 +40,28 @@
                         <label for="password" class="label">
                             <span class="label-text text-[#000000]">Contraseña</span>
                         </label>
-                        <input id="password" v-model="password" type="password" placeholder="Contraseña"
-                            class="input input-bordered" required />
+                        <div class="relative">
+                            <input id="password" v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="Contraseña"
+                                class="input input-bordered" required />
+                            <button type="button" @click="togglePasswordVisibility('password')" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span v-if="passwordVisible">👁️</span>
+                                <span v-else>🙈</span>
+                            </button>
+                        </div>
                         <span v-if="passwordError" class="error-message text-red-500">{{ passwordError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="confirm-password" class="label">
                             <span class="label-text text-[#000000]">Confirmar contraseña</span>
                         </label>
-                        <input id="confirm-password" v-model="confirmPassword" type="password"
-                            placeholder="Confirmar contraseña" class="input input-bordered" required />
+                        <div class="relative">
+                            <input id="confirm-password" v-model="confirmPassword" :type="confirmPasswordVisible ? 'text' : 'password'" 
+                                placeholder="Confirmar contraseña" class="input input-bordered" required />
+                            <button type="button" @click="togglePasswordVisibility('confirmPassword')" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span v-if="confirmPasswordVisible">👁️</span>
+                                <span v-else>🙈</span>
+                            </button>
+                        </div>
                         <span v-if="confirmPasswordError" class="error-message text-red-500">{{ confirmPasswordError }}</span>
                     </div>
                     <div class="form-control mt-6">
@@ -89,8 +101,12 @@ export default {
         const errorMessage = ref('');
         const phoneError = ref('');
         const emailError = ref('');
-        const passwordError = ref(''); // Nueva variable para errores de contraseña
-        const confirmPasswordError = ref(''); // Nueva variable para errores de confirmación de contraseña
+        const passwordError = ref('');
+        const confirmPasswordError = ref('');
+
+        // Variables para mostrar u ocultar la contraseña
+        const passwordVisible = ref(false);
+        const confirmPasswordVisible = ref(false);
 
         const validatePhoneNumber = (number) => {
             const regex = /^[0-9]{10,15}$/;
@@ -102,33 +118,36 @@ export default {
             return regex.test(email);
         };
 
+        const togglePasswordVisibility = (field) => {
+            if (field === 'password') {
+                passwordVisible.value = !passwordVisible.value;
+            } else if (field === 'confirmPassword') {
+                confirmPasswordVisible.value = !confirmPasswordVisible.value;
+            }
+        };
+
         const handleRegistration = async () => {
-            // Reset error messages
             errorMessage.value = '';
             phoneError.value = '';
             emailError.value = '';
-            passwordError.value = ''; // Reiniciar error de contraseña
-            confirmPasswordError.value = ''; // Reiniciar error de confirmación de contraseña
+            passwordError.value = '';
+            confirmPasswordError.value = '';
 
-            // Validar número de teléfono
             if (!validatePhoneNumber(phone.value)) {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
                 return;
             }
 
-            // Validar correo electrónico
             if (!validateEmail(email.value)) {
                 emailError.value = 'Por favor, ingresa un correo electrónico válido.';
                 return;
             }
 
-            // Validar contraseña
             if (password.value.length < 8) {
                 passwordError.value = 'La contraseña debe tener al menos 8 caracteres.';
                 return;
             }
 
-            // Verificar que las contraseñas coincidan
             if (password.value !== confirmPassword.value) {
                 confirmPasswordError.value = 'Las contraseñas no coinciden.';
                 return;
@@ -163,8 +182,11 @@ export default {
             errorMessage,
             phoneError,
             emailError,
-            passwordError, // Agregar al retorno
-            confirmPasswordError, // Agregar al retorno
+            passwordError,
+            confirmPasswordError,
+            passwordVisible,
+            confirmPasswordVisible,
+            togglePasswordVisibility,
             handleRegistration,
         };
     },
