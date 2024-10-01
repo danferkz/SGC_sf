@@ -34,6 +34,7 @@
                         </label>
                         <input id="email" v-model="email" type="email" placeholder="Correo electrónico"
                             class="input input-bordered" required />
+                        <span v-if="emailError" class="error-message text-red-500">{{ emailError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="password" class="label">
@@ -84,21 +85,34 @@ export default {
         const password = ref('');
         const confirmPassword = ref('');
         const errorMessage = ref('');
-        const phoneError = ref(''); // Nueva variable para manejar errores del número de teléfono
+        const phoneError = ref(''); // Variable para errores de teléfono
+        const emailError = ref(''); // Nueva variable para manejar errores del correo electrónico
 
         const validatePhoneNumber = (number) => {
-            const regex = /^[0-9]{10,15}$/; // Validar que el número contenga solo dígitos y tenga entre 10 y 15 caracteres
+            const regex = /^[0-9]{10,15}$/;
             return regex.test(number);
+        };
+
+        const validateEmail = (email) => {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validar formato de correo electrónico
+            return regex.test(email);
         };
 
         const handleRegistration = async () => {
             // Reset error messages
             errorMessage.value = '';
             phoneError.value = '';
+            emailError.value = ''; // Reiniciar el error de correo electrónico
 
             // Validar número de teléfono
             if (!validatePhoneNumber(phone.value)) {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
+                return;
+            }
+
+            // Validar correo electrónico
+            if (!validateEmail(email.value)) {
+                emailError.value = 'Por favor, ingresa un correo electrónico válido.';
                 return;
             }
 
@@ -129,7 +143,8 @@ export default {
             password,
             confirmPassword,
             errorMessage,
-            phoneError, // Agregar al retorno
+            phoneError,
+            emailError, // Agregar al retorno
             handleRegistration,
         };
     },
