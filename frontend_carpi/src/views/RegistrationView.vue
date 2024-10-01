@@ -112,18 +112,35 @@
                     Debes aceptar los términos y condiciones
                 </p>
 
-                <div>
+                <!-- Botón para mostrar vista previa -->
+                <div class="flex justify-between mt-4">
+                    <button
+                        type="button"
+                        @click="showPreview"
+                        class="w-1/2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                        Vista previa
+                    </button>
+
                     <button
                         type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+                        class="w-1/2 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
                     >
-                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                            <UserPlusIcon class="h-5 w-5 text-amber-500 group-hover:text-amber-400" aria-hidden="true" />
-                        </span>
                         Registrarse
                     </button>
                 </div>
             </form>
+
+            <!-- Sección de vista previa de datos -->
+            <div v-if="previewVisible" class="mt-6 bg-gray-100 p-4 rounded-md shadow-md">
+                <h3 class="text-lg font-bold mb-4">Vista previa de los datos</h3>
+                <p><strong>Nombre:</strong> {{ name }}</p>
+                <p><strong>Correo electrónico:</strong> {{ email }}</p>
+                <p><strong>Dirección:</strong> {{ address }}</p>
+                <p><strong>Número telefónico:</strong> {{ phoneNumber }}</p>
+                <p><strong>Contraseña:</strong> (oculta)</p>
+            </div>
+
             <div class="text-center">
                 <p class="mt-2 text-sm text-gray-600">
                     ¿Ya tienes una cuenta?
@@ -146,6 +163,7 @@ const phoneNumber = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const termsAccepted = ref(false);
+const previewVisible = ref(false);
 
 const emailError = ref(false);
 const phoneError = ref(false);
@@ -162,6 +180,10 @@ const handleRegistration = () => {
         // Lógica para manejar el registro exitoso
         console.log('Registro exitoso');
     }
+};
+
+const showPreview = () => {
+    previewVisible.value = true;
 };
 
 const validateEmail = (email) => {
