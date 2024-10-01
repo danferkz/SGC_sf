@@ -49,6 +49,18 @@
                         >
                     </div>
                     <div class="mb-[3px]">
+                        <label for="phone-number" class="sr-only">Número telefónico</label>
+                        <input
+                            id="phone-number"
+                            name="phone-number"
+                            type="tel"
+                            required
+                            v-model="phoneNumber"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
+                            placeholder="Número telefónico"
+                        >
+                    </div>
+                    <div class="mb-[3px]">
                         <label for="password" class="sr-only">Contraseña</label>
                         <input
                             id="password"
@@ -106,6 +118,7 @@ import { ref } from 'vue';
 const name = ref('');
 const email = ref('');
 const address = ref('');
+const phoneNumber = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 
