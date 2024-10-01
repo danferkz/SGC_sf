@@ -129,6 +129,11 @@ export default {
             return emailRegex.test(email);
         };
 
+        const validateUsername = (username) => {
+            const usernameRegex = /^[a-zA-Z0-9_]+$/; // Solo permite letras, números y guiones bajos
+            return usernameRegex.test(username);
+        };
+
         const handleRegistration = async () => {
             errorMessage.value = '';
             fullNameError.value = '';
@@ -147,7 +152,9 @@ export default {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
             }
 
-            if (!username.value) {
+            if (!validateUsername(username.value)) {
+                usernameError.value = 'El nombre de usuario solo puede contener letras, números y guiones bajos.';
+            } else if (!username.value) {
                 usernameError.value = 'El nombre de usuario es obligatorio.';
             }
 
