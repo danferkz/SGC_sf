@@ -42,6 +42,7 @@
                         </label>
                         <input id="password" v-model="password" type="password" placeholder="Contraseña"
                             class="input input-bordered" required />
+                        <span v-if="passwordError" class="error-message text-red-500">{{ passwordError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="confirm-password" class="label">
@@ -49,6 +50,7 @@
                         </label>
                         <input id="confirm-password" v-model="confirmPassword" type="password"
                             placeholder="Confirmar contraseña" class="input input-bordered" required />
+                        <span v-if="confirmPasswordError" class="error-message text-red-500">{{ confirmPasswordError }}</span>
                     </div>
                     <div class="form-control mt-6">
                         <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
@@ -85,8 +87,10 @@ export default {
         const password = ref('');
         const confirmPassword = ref('');
         const errorMessage = ref('');
-        const phoneError = ref(''); // Variable para errores de teléfono
-        const emailError = ref(''); // Nueva variable para manejar errores del correo electrónico
+        const phoneError = ref('');
+        const emailError = ref('');
+        const passwordError = ref(''); // Nueva variable para errores de contraseña
+        const confirmPasswordError = ref(''); // Nueva variable para errores de confirmación de contraseña
 
         const validatePhoneNumber = (number) => {
             const regex = /^[0-9]{10,15}$/;
@@ -94,7 +98,7 @@ export default {
         };
 
         const validateEmail = (email) => {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validar formato de correo electrónico
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return regex.test(email);
         };
 
@@ -102,7 +106,9 @@ export default {
             // Reset error messages
             errorMessage.value = '';
             phoneError.value = '';
-            emailError.value = ''; // Reiniciar el error de correo electrónico
+            emailError.value = '';
+            passwordError.value = ''; // Reiniciar error de contraseña
+            confirmPasswordError.value = ''; // Reiniciar error de confirmación de contraseña
 
             // Validar número de teléfono
             if (!validatePhoneNumber(phone.value)) {
@@ -113,6 +119,18 @@ export default {
             // Validar correo electrónico
             if (!validateEmail(email.value)) {
                 emailError.value = 'Por favor, ingresa un correo electrónico válido.';
+                return;
+            }
+
+            // Validar contraseña
+            if (password.value.length < 8) {
+                passwordError.value = 'La contraseña debe tener al menos 8 caracteres.';
+                return;
+            }
+
+            // Verificar que las contraseñas coincidan
+            if (password.value !== confirmPassword.value) {
+                confirmPasswordError.value = 'Las contraseñas no coinciden.';
                 return;
             }
 
@@ -144,7 +162,9 @@ export default {
             confirmPassword,
             errorMessage,
             phoneError,
-            emailError, // Agregar al retorno
+            emailError,
+            passwordError, // Agregar al retorno
+            confirmPasswordError, // Agregar al retorno
             handleRegistration,
         };
     },
@@ -153,6 +173,6 @@ export default {
 
 <style scoped>
 .error-message {
-    color: yellow;
+    color: red;
 }
 </style>
