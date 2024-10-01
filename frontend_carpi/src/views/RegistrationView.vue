@@ -12,6 +12,7 @@
                         </label>
                         <input id="full-name" v-model="fullName" type="text" placeholder="Nombre completo"
                             class="input input-bordered" required />
+                        <span v-if="fullNameError" class="error-message text-red-500">{{ fullNameError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="phone" class="label">
@@ -27,6 +28,7 @@
                         </label>
                         <input id="username" v-model="username" type="text" placeholder="Nombre de usuario"
                             class="input input-bordered" required />
+                        <span v-if="usernameError" class="error-message text-red-500">{{ usernameError }}</span>
                     </div>
                     <div class="form-control">
                         <label for="email" class="label">
@@ -99,24 +101,15 @@ export default {
         const password = ref('');
         const confirmPassword = ref('');
         const errorMessage = ref('');
+        const fullNameError = ref('');
         const phoneError = ref('');
+        const usernameError = ref('');
         const emailError = ref('');
         const passwordError = ref('');
         const confirmPasswordError = ref('');
 
-        // Variables para mostrar u ocultar la contraseña
         const passwordVisible = ref(false);
         const confirmPasswordVisible = ref(false);
-
-        const validatePhoneNumber = (number) => {
-            const regex = /^[0-9]{10,15}$/;
-            return regex.test(number);
-        };
-
-        const validateEmail = (email) => {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
-        };
 
         const togglePasswordVisibility = (field) => {
             if (field === 'password') {
@@ -128,18 +121,35 @@ export default {
 
         const handleRegistration = async () => {
             errorMessage.value = '';
+            fullNameError.value = '';
             phoneError.value = '';
+            usernameError.value = '';
             emailError.value = '';
             passwordError.value = '';
             confirmPasswordError.value = '';
+
+            if (!fullName.value) {
+                fullNameError.value = 'El nombre completo es obligatorio.';
+                return;
+            }
 
             if (!validatePhoneNumber(phone.value)) {
                 phoneError.value = 'Por favor, ingresa un número de teléfono válido (10-15 dígitos).';
                 return;
             }
 
+            if (!username.value) {
+                usernameError.value = 'El nombre de usuario es obligatorio.';
+                return;
+            }
+
             if (!validateEmail(email.value)) {
                 emailError.value = 'Por favor, ingresa un correo electrónico válido.';
+                return;
+            }
+
+            if (!password.value) {
+                passwordError.value = 'La contraseña es obligatoria.';
                 return;
             }
 
@@ -180,7 +190,9 @@ export default {
             password,
             confirmPassword,
             errorMessage,
+            fullNameError,
             phoneError,
+            usernameError,
             emailError,
             passwordError,
             confirmPasswordError,
