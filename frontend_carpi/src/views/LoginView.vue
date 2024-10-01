@@ -10,6 +10,7 @@
                         <label for="username" class="label">
                             <span class="label-text text-[#000000]">Username</span>
                         </label>
+ <!-- Campo de Nombre de Usuario -->
                         <input id="username" v-model="username" type="text" placeholder="Username"
                             class="input input-bordered" required />
                     </div>
@@ -17,13 +18,17 @@
                         <label for="password" class="label">
                             <span class="label-text text-[#000000]">Password</span>
                         </label>
+ <!-- Campo de Contraseña de Usuario -->
                         <input id="password" v-model="password" type="password" placeholder="Password"
                             class="input input-bordered" required />
                     </div>
+ <!-- Mensaje de Error:si existe un problema con el inicio de sesión -->
                     <div v-if="errorMessage" class="text-red-500 text-center mt-2">
                         {{ errorMessage }}
                     </div>
                     <div class="form-control mt-6">
+ <!-- Botón de Envío: Un botón estilizado que envía el formulario -->
+
                         <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
                             Login
                         </button>
