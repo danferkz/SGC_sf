@@ -157,9 +157,7 @@ export default {
 
             if (!password.value) {
                 passwordError.value = 'La contraseña es obligatoria.';
-            }
-
-            if (password.value.length < 8) {
+            } else if (password.value.length < 8) {
                 passwordError.value = 'La contraseña debe tener al menos 8 caracteres.';
             }
 
