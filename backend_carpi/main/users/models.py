@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+# modelo de custom user
 class CustomUser(AbstractUser):
     DNI = models.CharField(max_length=11, unique=True, null=True, blank=True)
     sexo = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino')], null=True, blank=True)
