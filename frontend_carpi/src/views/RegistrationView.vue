@@ -94,6 +94,24 @@
                     </div>
                 </div>
 
+                <!-- Nueva sección para términos y condiciones -->
+                <div class="flex items-center">
+                    <input
+                        id="terms"
+                        name="terms"
+                        type="checkbox"
+                        v-model="termsAccepted"
+                        class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
+                        required
+                    >
+                    <label for="terms" class="ml-2 block text-sm text-gray-900">
+                        Acepto los <a href="#" class="text-amber-600 hover:text-amber-500">términos y condiciones</a>
+                    </label>
+                </div>
+                <p v-if="!termsAccepted && submitAttempt" class="text-red-500 text-xs mt-1">
+                    Debes aceptar los términos y condiciones
+                </p>
+
                 <div>
                     <button
                         type="submit"
@@ -127,18 +145,21 @@ const address = ref('');
 const phoneNumber = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const termsAccepted = ref(false);
 
 const emailError = ref(false);
 const phoneError = ref(false);
 const passwordMismatch = ref(false);
+const submitAttempt = ref(false);
 
 const handleRegistration = () => {
+    submitAttempt.value = true;
     emailError.value = !validateEmail(email.value);
     phoneError.value = !validatePhoneNumber(phoneNumber.value);
     passwordMismatch.value = password.value !== confirmPassword.value;
 
-    if (!emailError.value && !phoneError.value && !passwordMismatch.value) {
-        // Aquí iría la lógica para manejar el registro exitoso
+    if (!emailError.value && !phoneError.value && !passwordMismatch.value && termsAccepted.value) {
+        // Lógica para manejar el registro exitoso
         console.log('Registro exitoso');
     }
 };
