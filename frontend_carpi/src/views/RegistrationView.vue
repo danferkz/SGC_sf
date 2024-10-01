@@ -119,6 +119,16 @@ export default {
             }
         };
 
+        const validatePhoneNumber = (phone) => {
+            const phoneRegex = /^\d{10,15}$/; // Asegúrate de que el número tenga entre 10 y 15 dígitos
+            return phoneRegex.test(phone);
+        };
+
+        const validateEmail = (email) => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular simple para validar el correo electrónico
+            return emailRegex.test(email);
+        };
+
         const handleRegistration = async () => {
             errorMessage.value = '';
             fullNameError.value = '';
