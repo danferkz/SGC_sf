@@ -33,8 +33,10 @@
                             required
                             v-model="email"
                             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
+                            :class="{ 'border-red-500': emailError }"
                             placeholder="Correo electrónico"
                         >
+                        <p v-if="emailError" class="text-red-500 text-xs mt-1">Correo electrónico inválido</p>
                     </div>
                     <div class="mb-[3px]">
                         <label for="address" class="sr-only">Dirección</label>
@@ -57,8 +59,10 @@
                             required
                             v-model="phoneNumber"
                             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
+                            :class="{ 'border-red-500': phoneError }"
                             placeholder="Número telefónico"
                         >
+                        <p v-if="phoneError" class="text-red-500 text-xs mt-1">Número telefónico inválido</p>
                     </div>
                     <div class="mb-[3px]">
                         <label for="password" class="sr-only">Contraseña</label>
@@ -122,11 +126,30 @@ const phoneNumber = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 
+const emailError = ref(false);
+const phoneError = ref(false);
+
 const handleRegistration = () => {
-    // Aquí iría la lógica para manejar el registro
+    emailError.value = !validateEmail(email.value);
+    phoneError.value = !validatePhoneNumber(phoneNumber.value);
+
+    if (!emailError.value && !phoneError.value) {
+        // Aquí iría la lógica para manejar el registro exitoso
+        console.log('Registro exitoso');
+    }
+};
+
+const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+};
+
+const validatePhoneNumber = (phone) => {
+    const phonePattern = /^[0-9]+$/;
+    return phonePattern.test(phone);
 };
 </script>
 
 <style>
-/* Agrega tu estilo personalizado si es necesario */
+/* Estilo personalizado si es necesario */
 </style>
