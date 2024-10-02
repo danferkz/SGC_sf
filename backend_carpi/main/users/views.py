@@ -7,18 +7,19 @@ from rest_framework.views import APIView
 from .models import CustomUser
 from .serializers import ClientSerializer, AdminSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
 # 1. Crear un nuevo cliente
 class ClientCreateView(CreateAPIView):
     serializer_class = ClientSerializer
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = []  # No requiere autenticación
+    permission_classes = []  # Permite el acceso sin autenticación
 
     def perform_create(self, serializer):
-        # marcado como cliente
+        # Asegura que el nuevo usuario sea marcado como cliente
         serializer.save(is_cliente=True)
 
 # 2. Crear un nuevo administrador (solo los administradores pueden crear otros administradores)
@@ -45,6 +46,7 @@ class ClientListView(ListAPIView):
         else:
             raise PermissionDenied('Solo los administradores pueden listar los clientes.')
 
+# 4. Mostrar la lista de administradores (solo los administradores)
 class AdminListView(ListAPIView):
     serializer_class = AdminSerializer
     permission_classes = [IsAuthenticated]
@@ -94,7 +96,7 @@ class ClientDestroyView(APIView):
             return Response({'message': 'Cliente eliminado lógicamente.'}, status=status.HTTP_204_NO_CONTENT)
         except CustomUser.DoesNotExist:
             return Response({'error': 'Cliente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
-        
+
 # 8. Eliminar un administrador existente (eliminación física usando DestroyAPIView)
 class AdminDestroyView(DestroyAPIView):
     queryset = CustomUser.objects.filter(is_staff=True)

@@ -34,14 +34,6 @@
                         <input id="confirm-password" v-model="confirmPassword" type="password"
                             placeholder="Confirmar contraseña" class="input input-bordered" required />
                     </div>
-                    <div class="form-control mt-4 text-center">
-                        <label class="label cursor-pointer">
-                            <span class="label-text text-[#000000]">
-                                <input type="checkbox" v-model="termsAccepted" class="checkbox" required />
-                                Acepto los términos y condiciones
-                            </span>
-                        </label>
-                    </div>
                     <div class="form-control mt-6">
                         <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
                             Registrarse
@@ -63,33 +55,42 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+import axios from 'axios'; // Importa Axios aquí
 
 export default {
     setup() {
         const router = useRouter();
+
+        // Reactive variables for form inputs
         const username = ref('');
         const email = ref('');
         const password = ref('');
         const confirmPassword = ref('');
-        const termsAccepted = ref(false);
         const errorMessage = ref('');
 
         const handleRegistration = async () => {
+            // Reset error message
             errorMessage.value = '';
+
+            // Form data
             const formData = {
                 username: username.value,
                 email: email.value,
                 password: password.value,
-                password2: confirmPassword.value,
-                termsAccepted: termsAccepted.value,
+                password2: confirmPassword.value, // Coincide con el campo del serializer
             };
 
             try {
+                // Llamada a la API para registrar el usuario
                 const response = await axios.post('http://localhost:8000/api/users/clients/create/', formData);
+
+                // Manejar la respuesta en caso de éxito
                 console.log('User registered:', response.data);
+
+                // Redirigir a la vista de login
                 router.push('/login');
             } catch (error) {
+                // Manejo de errores
                 errorMessage.value = error.response?.data?.password ? error.response.data.password : 'Error al registrar el usuario. Por favor, intenta nuevamente.';
                 console.error('Error during registration:', error);
             }
@@ -100,13 +101,13 @@ export default {
             email,
             password,
             confirmPassword,
-            termsAccepted,
             errorMessage,
             handleRegistration,
         };
     },
 };
 </script>
+
 
 <style scoped>
 .error-message {
