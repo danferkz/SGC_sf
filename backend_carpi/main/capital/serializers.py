@@ -5,4 +5,4 @@ from .models import Capital
 class CapitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Capital
-        fields = ['monto_disponible']
+        fields = '__all__'
