@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+
+  backend:
+    image: sgc_sf_backend:latest
+    container_name: backend
+    hostname: sgc-backend.pe
+    restart: unless-stopped
+    ports:
+      - "8085:8000"
+    #environment:
+    #  WORDPRESS_DB_HOST: db:3306
+     # WORDPRESS_DB_USER: admin
+      #WORDPRESS_DB_PASSWORD: a
+      #WORDPRESS_DB_NAME: wordpress
+
+
+  frontend:
+    image: nginx:latest
+    container_name: frontend
+    hostname: sgc-frontend.pe
+    restart: unless-stopped
+    ports:
+      - "8086:80"    
+    volumes:
+      - ./frontend_carpi/dist:/usr/share/nginx/html
+
+
+  #phpmyadmin:
+  #  image: phpmyadmin:latest
+   # container_name: pma_wp1
+    #restart: unless-stopped
+    #ports:
+    #  - "8081:80"
+    #depends_on:
+    #  - db
+    #environment:
+    #  PMA_HOST: db:3306
+     # MYSQL_ROOT_PASSWORD: a
+      #PMA_USER: admin
+      #PMA_PASSWORD: a
+    

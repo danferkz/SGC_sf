@@ -1,33 +1,41 @@
-# users/serializers.py
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser
 
-class ClientRegistrationSerializer(serializers.ModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'is_cliente']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id', 'username', 'email', 'password', 'password2', 'DNI', 'sexo', 'direccion', 'telefono']
+        read_only_fields = []
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        return attrs
 
     def create(self, validated_data):
-        user = CustomUser.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        user.is_cliente = True
-        user.save()
+        validated_data.pop('password2')
+        user = CustomUser.objects.create_user(**validated_data)
         return user
 
-class AdminUserSerializer(serializers.ModelSerializer):
+class AdminSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'is_staff']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id', 'username', 'email', 'password', 'password2']
+        read_only_fields = []
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        return attrs
 
     def create(self, validated_data):
-        user = CustomUser.objects.create_superuser(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        validated_data.pop('password2')
+        user = CustomUser.objects.create_user(**validated_data)
         return user

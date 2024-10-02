@@ -19,6 +19,7 @@ build/
 venv/
 instance/
 .webassets-cache
+.hystory
 
 # Ignorar archivos y carpetas de Django específicos
 db.sqlite3
@@ -41,3 +42,8 @@ yarn-error.log*
 # Ignorar archivos y carpetas de SO específicos
 .DS_Store
 Thumbs.db
+.history
+__pycache__
+migrations
+local.py
+yp.
