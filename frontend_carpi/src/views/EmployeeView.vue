@@ -16,73 +16,55 @@
                         <div>
                             <!-- Changed margin-bottom to 5px -->
                             <label for="user" class="sr-only">Usuario</label>
-                            <input
-                                id="user"
-                                name="user"
-                                type="user"
-                                autocomplete="current-user"
-                                required
+                            <input id="user" name="user" type="user" autocomplete="current-user" required
                                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-t-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                                placeholder="Usuario"
-                            />
+                                placeholder="Usuario" />
                         </div>
                         <div>
                             <label for="password" class="sr-only">Contraseña</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autocomplete="current-password"
+                            <input id="password" name="password" type="password" autocomplete="current-password"
                                 required
                                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-b-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                                placeholder="Contraseña"
-                            />
+                                placeholder="Contraseña" />
                         </div>
                     </div>
-  
+
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
-                            />
+                            <input id="remember-me" name="remember-me" type="checkbox"
+                                class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded" />
                             <label for="remember-me" class="ml-2 block text-sm text-gray-900">
                                 Recordarme
                             </label>
                         </div>
-  
+
                         <div class="text-sm">
                             <a href="#" class="font-medium text-amber-600 hover:text-amber-500">
                                 ¿Olvidaste tu contraseña?
                             </a>
                         </div>
                     </div>
-  
+
                     <div>
-                        <button
-                            type="submit"
-                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-                        >
+                        <button type="submit"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
                             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                                <LockClosedIcon class="h-5 w-5 text-amber-500 group-hover:text-amber-400" aria-hidden="true" />
+                                <LockClosedIcon class="h-5 w-5 text-amber-500 group-hover:text-amber-400"
+                                    aria-hidden="true" />
                             </span>
                             Iniciar Sesión
                         </button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
-  </template>
-  
-  <script setup>
-  // importa el componente header
-  import Header from '@/components/HeaderCompo.vue'
-  </script>
-  
-  <style>
-  </style>
-  
+</template>
+
+<script setup>
+// importa el componente header
+import Header from '@/components/HeaderCompo.vue'
+</script>
+
+<style></style>

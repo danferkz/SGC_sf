@@ -1,118 +1,110 @@
 <template>
-    <div class="flex bg-beige-100 font-sans">
-      <!-- Sidebar -->
-      <aside class="w-64 bg-brown-200 h-screen fixed shadow-lg">
-        <div class="p-6">
-          <h2 class="text-2xl font-bold text-black">Maderera El Bosque</h2>
+  <div class="min-h-screen bg-gray-100 text-gray-800 flex">
+    <!-- Header -->
+    <HeaderAdmin class="header-admin" />
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="flex-1 py-16 px-6 bg-white">
+      <div class="container mx-auto">
+        <h3 class="text-3xl font-bold text-center mb-12">Dashboard</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Gestión de Clientes -->
+          <router-link to="/gestionclientes"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestioncliente_icon.png" alt="Clientes" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">CLIENTES</h4>
+            <p>Gestiona tus clientes</p>
+          </router-link>
+          <!-- Gestión de Pedidos -->
+          <router-link to="/gestionpedidos"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestionpedidos_icon.png" alt="Pedidos" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">PEDIDOS</h4>
+            <p>Gestiona tus pedidos</p>
+          </router-link>
+          <!-- Gestión de Administradores -->
+          <router-link to="/gestionadminstradores"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">ADMINISTRACION</h4>
+            <p>Gestiona los administradores</p>
+          </router-link>
+          <!-- Gestión de Presupuestos -->
+          <router-link to="/presupuesto"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestionpresupuesto_icon.png" alt="Presupuestos" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">PRESUPUESTOS</h4>
+            <p>Gestiona los presupuestos</p>
+          </router-link>
         </div>
-        <ul class="space-y-2 p-4">
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2 2m-2-2v8a2 2 0 002 2h16a2 2 0 002-2v-8m-2-2l-2-2m2 2l2 2m-2-2l-2-2"></path>
-              </svg>
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7m14 4H5m14 4H5"></path>
-              </svg>
-              Pedidos
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 00-2-2M5 11l7-7 7 7"></path>
-              </svg>
-              Productos
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8"></path>
-              </svg>
-              Agregar Producto
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              Reportes
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-melon-100">
-              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-              Configuración
-            </a>
-          </li>
-        </ul>
-      </aside>
-      <main class="ml-64 p-6">
-        <h1 class="text-3xl font-bold text-black">Bienvenido al Panel Administrativo</h1>
-        <section class="mt-6">
-          <h2 class="text-2xl font-bold text-black">Resumen de Actividades</h2>
-          <p class="mt-2 text-black">Aquí podrás visualizar el estado actual de los pedidos, productos y reportes.</p>
-          <!-- Aquí puedes agregar gráficos o estadísticas -->
-        </section>
-        <section class="mt-6">
-          <h2 class="text-2xl font-bold text-black">Últimos Pedidos</h2>
-          <table class="min-w-full bg-white border border-gray-300 mt-2">
-            <thead>
-              <tr>
-                <th class="border border-gray-300 p-2">ID</th>
-                <th class="border border-gray-300 p-2">Cliente</th>
-                <th class="border border-gray-300 p-2">Estado</th>
-                <th class="border border-gray-300 p-2">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="border border-gray-300 p-2">1</td>
-                <td class="border border-gray-300 p-2">Juan Pérez</td>
-                <td class="border border-gray-300 p-2">En Proceso</td>
-                <td class="border border-gray-300 p-2">2024-09-20</td>
-              </tr>
-              <tr>
-                <td class="border border-gray-300 p-2">2</td>
-                <td class="border border-gray-300 p-2">María López</td>
-                <td class="border border-gray-300 p-2">Completado</td>
-                <td class="border border-gray-300 p-2">2024-09-19</td>
-              </tr>
-              <!-- Agrega más filas según sea necesario -->
-            </tbody>
-          </table>
-        </section>
-      </main>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "HomeAdminView",
-    // Lógica del componente aquí
-  };
-  </script>
-  
-  <style scoped>
-  .bg-beige-100 {
-    background-color: #f5f5dc; /* beige claro */
-  }
-  
-  .bg-brown-200 {
-    background-color: #d7b57a; /* marrón claro */
-  }
-  
-  .hover\:bg-melon-100:hover {
-    background-color: #ffb300; /* melón */
-  }
-  </style>
-  
+      </div>
+    </section>
+  </div>
+</template>
+
+<script setup>
+import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
+</script>
+
+<style scoped>
+/* Contenedor principal */
+.min-h-screen {
+  display: flex;
+  background-color: #FFFFFF; /* Fondo blanco para el contenedor principal */
+}
+/* Estilos del header admin */
+.header-admin {
+  width: 250px;
+  background-color: #FFFFFF;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  height: 100vh; /* Asegura que el header ocupe toda la altura */
+}
+/* Sección del dashboard */
+#dashboard {
+  padding: 20px;
+  background-color: #FFFFFF;
+  flex: 1;
+  margin-left: 120px; /* Se agrega separación de 120px entre el header y el contenido */
+}
+/* Contenedor de imagen */
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 150px; /* Altura fija para las imágenes */
+}
+/* Imagen del dashboard */
+.dashboard-image {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+  border-radius: 0.5rem;
+}
+/* Alineación del contenido */
+.container {
+  padding: 20px;
+}
+/* Estilos de las tarjetas */
+.card {
+  background-color: #FFFBEB;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: background-color 0.3s;
+}
+.card:hover {
+  background-color: #FFECB3;
+}
+</style>

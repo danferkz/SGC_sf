@@ -5,18 +5,21 @@ import App from './App.vue'
 import router from './router'
 //import * as HeroIcons from '@heroicons/vue/outline'
 //import { ShoppingBagIcon, DocumentTextIcon, UserIcon } from '@heroicons/vue/outline'
-//import store from './store'
-//import axios from 'axios'
+import store from './store'
+import axios from 'axios'
 
 
 // Configuración de Axios
-//axios.defaults.baseURL = 'http://localhost:8000';
-//axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
 const app = createApp(App)
 
 // Añadir Axios a las propiedades globales
-//app.config.globalProperties.$axios = axios;
+app.config.globalProperties.$axios = axios;
+
+// Cargar el token desde el local storage en Vuex cuando se carga la aplicación
+store.dispatch('auth/autoLogin');
 
 // Registrar los íconos globalmente
 //app.component('ShoppingBagIcon', ShoppingBagIcon)
@@ -28,6 +31,6 @@ const app = createApp(App)
 //})
 
 app.use(router)
-//app.use(store)
+app.use(store)
 app.mount('#app')
 
