@@ -13,21 +13,32 @@
                         <label for="user" class="label">
                             <span class="label-text text-[#000000]">Usuario</span>
                         </label>
-                        <input id="user" v-model="username" type="text" placeholder="Usuario" class="input input-bordered"
-                            required />
+                        <input id="user" v-model="username" type="text" placeholder="Usuario" class="input input-bordered" required />
                     </div>
                     <div class="form-control">
                         <label for="password" class="label">
                             <span class="label-text text-[#000000]">Contraseña</span>
                         </label>
-                        <input id="password" v-model="password" type="password" placeholder="Contraseña"
-                            class="input input-bordered" required />
+                        <input id="password" v-model="password" type="password" placeholder="Contraseña" class="input input-bordered" required />
                     </div>
+                    
+                    <!-- Mensaje de error -->
                     <div v-if="error" class="text-red-500 text-sm mt-2">
                         {{ error }}
                     </div>
+                    
+                    <!-- Indicador de carga -->
+                    <div v-if="isLoading" class="text-gray-500 text-sm mt-2">
+                        Iniciando sesión...
+                    </div>
+
+                    <!-- Enlace para restablecer contraseña -->
+                    <div class="form-control mt-2">
+                        <a href="/forgot-password" class="text-sm text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a>
+                    </div>
+
                     <div class="form-control mt-6">
-                        <button type="submit" class="btn bg-amber-600 hover:bg-amber-700 text-white">
+                        <button :disabled="isLoading" type="submit" class="btn bg-amber-600 hover:bg-amber-700 text-white">
                             Iniciar Sesión
                         </button>
                     </div>
@@ -36,6 +47,7 @@
         </div>
     </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
