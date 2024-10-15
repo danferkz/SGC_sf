@@ -15,6 +15,7 @@ import Puerta from '../views/Puerta.vue'
 import ClienteGestion from '../views/ClientePerfilVista.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
+import Gestionpedidos from '@/views/Gestionpedidos.vue';
 
 
 
@@ -93,9 +94,14 @@ const router = createRouter({
       component: GestionAdmin
     },
     {
-      path: '/:pathMatch(.*)*', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/:pathMatch(.)', // Ruta de comodín para capturar todas las rutas no definidas
       name: 'Error404',
       component: Erroraoa
+    },
+    {
+      path: '/gestionpedidos', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'Gestionpedidos',
+      component: Gestionpedidos
     }
   ]
 })
