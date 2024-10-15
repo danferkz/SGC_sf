@@ -13,9 +13,11 @@
     "@heroicons/vue": "^2.1.5",
     "axios": "^1.7.7",
     "frontend_carpi": "file:",
+    "lucide-vue-next": "^0.453.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
