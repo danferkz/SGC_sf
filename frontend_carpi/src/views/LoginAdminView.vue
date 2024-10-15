@@ -15,11 +15,31 @@
                         </label>
                         <input id="user" v-model="username" type="text" placeholder="Usuario" class="input input-bordered" required />
                     </div>
-                    <div class="form-control">
+                    
+                    <!-- Opción para recordar el nombre de usuario -->
+                    <div class="form-control mt-2">
+                        <label class="cursor-pointer label">
+                            <input type="checkbox" v-model="rememberMe" class="checkbox checkbox-primary" />
+                            <span class="label-text">Recordar usuario</span>
+                        </label>
+                    </div>
+
+                    <div class="form-control relative">
                         <label for="password" class="label">
                             <span class="label-text text-[#000000]">Contraseña</span>
                         </label>
-                        <input id="password" v-model="password" type="password" placeholder="Contraseña" class="input input-bordered" required />
+                        <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" placeholder="Contraseña" class="input input-bordered" required />
+                        <!-- Botón para mostrar/ocultar contraseña -->
+                        <button type="button" @click="togglePasswordVisibility" aria-label="Mostrar u ocultar contraseña" class="absolute right-3 top-12">
+                            <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12A3 3 0 119 12a3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A8.944 8.944 0 0112 19c-4.477 0-8.268-2.943-9.542-7C3.732 7.943 7.523 5 12 5c1.109 0 2.174.2 3.167.575M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />
+                            </svg>
+                        </button>
                     </div>
                     
                     <!-- Mensaje de error -->
@@ -38,8 +58,11 @@
                     </div>
 
                     <div class="form-control mt-6">
-                        <button :disabled="isLoading" type="submit" class="btn bg-amber-600 hover:bg-amber-700 text-white">
-                            Iniciar Sesión
+                        <button :disabled="isLoading" type="submit" class="btn bg-amber-600 hover:bg-amber-700 text-white flex justify-center items-center">
+                            <span v-if="!isLoading">Iniciar Sesión</span>
+                            <svg v-if="isLoading" class="animate-spin h-5 w-5 text-white ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v4m0 4v8m0-4h8m-4-4h-8" />
+                            </svg>
                         </button>
                     </div>
                 </form>
