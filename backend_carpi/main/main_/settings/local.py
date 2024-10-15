@@ -12,6 +12,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 '''
 DATABASES = {
     'default': {
@@ -33,7 +35,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     }
-}'''
+
+}
+}
+'''
 
 STATIC_URL = '/static/'
 

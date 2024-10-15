@@ -1,202 +1,118 @@
 <template>
-    <div class="min-h-screen bg-wood-pattern flex items-center justify-center px-4">
-        <div class="max-w-md w-full space-y-8 bg-[#FFFBEB] p-10 rounded-xl shadow-2xl">
-            <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Crear una cuenta
-                </h2>
-                <p class="mt-2 text-center text-sm text-gray-600">
-                    Únete a Carpintería Artesanal
-                </p>
+    <div class="bg-[#FFFBEB] min-h-screen flex items-center justify-center">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <div class="text-center lg:text-left lg:w-1/2">
+                <h1 class="text-5xl font-bold text-[#000000]">Registro</h1>
             </div>
-            <form class="mt-8 space-y-6" @submit.prevent="handleRegistration">
-                <div class="rounded-md shadow-sm -space-y-px">
-                    <div>
-                        <label for="name" class="sr-only">Nombre completo</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            required
-                            v-model="name"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-t-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            placeholder="Nombre completo"
-                        >
+            <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
+                <form @submit.prevent="handleRegistration" class="card-body">
+                    <div class="form-control">
+                        <label for="username" class="label">
+                            <span class="label-text text-[#000000]">Nombre de usuario</span>
+                        </label>
+                        <input id="username" v-model="username" type="text" placeholder="Nombre de usuario"
+                            class="input input-bordered" required />
                     </div>
-                    <div class="mb-[3px]">
-                        <label for="email-address" class="sr-only">Correo electrónico</label>
-                        <input
-                            id="email-address"
-                            name="email"
-                            type="email"
-                            autocomplete="email"
-                            required
-                            v-model="email"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': emailError }"
-                            placeholder="Correo electrónico"
-                        >
-                        <p v-if="emailError" class="text-red-500 text-xs mt-1">Correo electrónico inválido</p>
+                    <div class="form-control">
+                        <label for="email" class="label">
+                            <span class="label-text text-[#000000]">Correo electrónico</span>
+                        </label>
+                        <input id="email" v-model="email" type="email" placeholder="Correo electrónico"
+                            class="input input-bordered" required />
                     </div>
-                    <div class="mb-[3px]">
-                        <label for="address" class="sr-only">Dirección</label>
-                        <input
-                            id="address"
-                            name="address"
-                            type="text"
-                            required
-                            v-model="address"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            placeholder="Dirección"
-                        >
+                    <div class="form-control">
+                        <label for="password" class="label">
+                            <span class="label-text text-[#000000]">Contraseña</span>
+                        </label>
+                        <input id="password" v-model="password" type="password" placeholder="Contraseña"
+                            class="input input-bordered" required />
                     </div>
-                    <div class="mb-[3px]">
-                        <label for="phone-number" class="sr-only">Número telefónico</label>
-                        <input
-                            id="phone-number"
-                            name="phone-number"
-                            type="tel"
-                            required
-                            v-model="phoneNumber"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': phoneError }"
-                            placeholder="Número telefónico"
-                        >
-                        <p v-if="phoneError" class="text-red-500 text-xs mt-1">Número telefónico inválido</p>
+                    <div class="form-control">
+                        <label for="confirm-password" class="label">
+                            <span class="label-text text-[#000000]">Confirmar contraseña</span>
+                        </label>
+                        <input id="confirm-password" v-model="confirmPassword" type="password"
+                            placeholder="Confirmar contraseña" class="input input-bordered" required />
                     </div>
-                    <div class="mb-[3px]">
-                        <label for="password" class="sr-only">Contraseña</label>
-                        <input
-                            id="password"
-                            name="password"
-                            type="password"
-                            autocomplete="new-password"
-                            required
-                            v-model="password"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            placeholder="Contraseña"
-                        >
+                    <div class="form-control mt-6">
+                        <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
+                            Registrarse
+                        </button>
                     </div>
-                    <div class="mb-[3px]">
-                        <label for="confirm-password" class="sr-only">Confirmar contraseña</label>
-                        <input
-                            id="confirm-password"
-                            name="confirm-password"
-                            type="password"
-                            autocomplete="new-password"
-                            required
-                            v-model="confirmPassword"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-b-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                            :class="{ 'border-red-500': passwordMismatch }"
-                            placeholder="Confirmar contraseña"
-                        >
-                        <p v-if="passwordMismatch" class="text-red-500 text-xs mt-1">Las contraseñas no coinciden</p>
+                    <div v-if="errorMessage" class="error-message text-red-500 mt-2">
+                        {{ errorMessage }}
                     </div>
-                </div>
-
-                <!-- Nueva sección para términos y condiciones -->
-                <div class="flex items-center">
-                    <input
-                        id="terms"
-                        name="terms"
-                        type="checkbox"
-                        v-model="termsAccepted"
-                        class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
-                        required
-                    >
-                    <label for="terms" class="ml-2 block text-sm text-gray-900">
-                        Acepto los <a href="#" class="text-amber-600 hover:text-amber-500">términos y condiciones</a>
-                    </label>
-                </div>
-                <p v-if="!termsAccepted && submitAttempt" class="text-red-500 text-xs mt-1">
-                    Debes aceptar los términos y condiciones
-                </p>
-
-                <!-- Botón para mostrar vista previa -->
-                <div class="flex justify-between mt-4">
-                    <button
-                        type="button"
-                        @click="showPreview"
-                        class="w-1/2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                        Vista previa
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="w-1/2 ml-2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-                    >
-                        Registrarse
-                    </button>
-                </div>
-            </form>
-
-            <!-- Sección de vista previa de datos -->
-            <div v-if="previewVisible" class="mt-6 bg-gray-100 p-4 rounded-md shadow-md">
-                <h3 class="text-lg font-bold mb-4">Vista previa de los datos</h3>
-                <p><strong>Nombre:</strong> {{ name }}</p>
-                <p><strong>Correo electrónico:</strong> {{ email }}</p>
-                <p><strong>Dirección:</strong> {{ address }}</p>
-                <p><strong>Número telefónico:</strong> {{ phoneNumber }}</p>
-                <p><strong>Contraseña:</strong> (oculta)</p>
-            </div>
-
-            <div class="text-center">
-                <p class="mt-2 text-sm text-gray-600">
-                    ¿Ya tienes una cuenta?
-                    <a href="#" class="font-medium text-amber-600 hover:text-amber-500">
-                        Inicia sesión aquí
-                    </a>
-                </p>
+                    <div class="text-center mt-4">
+                        <span class="text-[#000000]">¿Ya tienes una cuenta?</span>
+                        <RouterLink to="/login" class="text-[#D97706]">Iniciar sesión</RouterLink>
+                    </div>
+                </form>
             </div>
         </div>
+        
     </div>
+
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios'; // Importa Axios aquí
 
-const name = ref('');
-const email = ref('');
-const address = ref('');
-const phoneNumber = ref('');
-const password = ref('');
-const confirmPassword = ref('');
-const termsAccepted = ref(false);
-const previewVisible = ref(false);
+export default {
+    setup() {
+        const router = useRouter();
 
-const emailError = ref(false);
-const phoneError = ref(false);
-const passwordMismatch = ref(false);
-const submitAttempt = ref(false);
+        // Reactive variables for form inputs
+        const username = ref('');
+        const email = ref('');
+        const password = ref('');
+        const confirmPassword = ref('');
+        const errorMessage = ref('');
 
-const handleRegistration = () => {
-    submitAttempt.value = true;
-    emailError.value = !validateEmail(email.value);
-    phoneError.value = !validatePhoneNumber(phoneNumber.value);
-    passwordMismatch.value = password.value !== confirmPassword.value;
+        const handleRegistration = async () => {
+            // Reset error message
+            errorMessage.value = '';
 
-    if (!emailError.value && !phoneError.value && !passwordMismatch.value && termsAccepted.value) {
-        // Lógica para manejar el registro exitoso
-        console.log('Registro exitoso');
-    }
-};
+            // Form data
+            const formData = {
+                username: username.value,
+                email: email.value,
+                password: password.value,
+                password2: confirmPassword.value, // Coincide con el campo del serializer
+            };
 
-const showPreview = () => {
-    previewVisible.value = true;
-};
+            try {
+                // Llamada a la API para registrar el usuario
+                const response = await axios.post('http://localhost:8000/api/users/clients/create/', formData);
 
-const validateEmail = (email) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-};
+                // Manejar la respuesta en caso de éxito
+                console.log('User registered:', response.data);
 
-const validatePhoneNumber = (phone) => {
-    const phonePattern = /^[0-9]+$/;
-    return phonePattern.test(phone);
+                // Redirigir a la vista de login
+                router.push('/login');
+            } catch (error) {
+                // Manejo de errores
+                errorMessage.value = error.response?.data?.password ? error.response.data.password : 'Error al registrar el usuario. Por favor, intenta nuevamente.';
+                console.error('Error during registration:', error);
+            }
+        };
+
+        return {
+            username,
+            email,
+            password,
+            confirmPassword,
+            errorMessage,
+            handleRegistration,
+        };
+    },
 };
 </script>
 
-<style>
-/* Estilo personalizado si es necesario */
+
+<style scoped>
+.error-message {
+    color: red;
+}
 </style>
