@@ -13,7 +13,7 @@
                             <div class="ml-4">
                                 <div v-if="currentUser">
                                     <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                                        {{ currentUser.name }}
+                                        {{ currentUser.username }}
                                     </h1>
                                     <p class="text-sm font-medium text-gray-500">
                                         {{ currentUser.email }}
