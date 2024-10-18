@@ -16,6 +16,7 @@ import ClienteGestion from '../views/ClientePerfilVista.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
+import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
 
 
 
@@ -102,6 +103,11 @@ const router = createRouter({
       path: '/gestionpedidos', // Ruta de comodín para capturar todas las rutas no definidas
       name: 'Gestionpedidos',
       component: Gestionpedidos
+    },
+    {
+      path: '/gestionpresupuesto', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'Gestionpresupuesto',
+      component: Gestionpresupuesto
     }
   ]
 })
