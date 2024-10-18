@@ -1,3 +1,4 @@
+<!-- HomeAdminView.vue (ahomeadmin) -->
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800 flex">
     <!-- Header -->

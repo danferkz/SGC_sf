@@ -139,3 +139,25 @@ class LogoutView(APIView):
             return Response({"message": "Logout exitoso."}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class AdminProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        user = request.user
+        if not user.is_staff:
+            return Response({'error': 'No eres un administrador'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = AdminSerializer(user)
+        return Response(serializer.data)
+
+class ClientProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        user = request.user
+        if not user.is_cliente:
+            return Response({'error': 'No eres un cliente'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = ClientSerializer(user)
+        return Response(serializer.data)

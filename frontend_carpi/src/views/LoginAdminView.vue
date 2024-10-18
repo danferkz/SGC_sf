@@ -1,3 +1,4 @@
+<!-- LoginAdminView.vue -->
 <template>
     <div class="hero bg-[#FFFBEB] min-h-screen">
         <div class="hero-content flex-col lg:flex-row-reverse">

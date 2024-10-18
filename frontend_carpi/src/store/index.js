@@ -1,10 +1,10 @@
-// store/index.js
 import { createStore } from 'vuex';
 import sessions from './modules/sessions';
-import axios from 'axios';
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
     modules: {
-        sessions
-    }
+        sessions,
+    },
+    plugins: [createPersistedState()], // Persistencia del estado en localStorage o sessionStorage
 });
