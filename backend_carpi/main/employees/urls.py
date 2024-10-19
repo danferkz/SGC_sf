@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # employees/urls.py
 from django.urls import path, include
@@ -11,3 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
 ]
 
+=======
+>>>>>>> aa0943055347aeec60d19ae8d698ba29e7c97134

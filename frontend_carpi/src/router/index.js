@@ -15,6 +15,7 @@ import Puerta from '../views/Puerta.vue'
 import ClienteGestion from '../views/ClientePerfilVista.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
+import ClienteDashboard from '../views/ClienteDashboard.vue';
 
 
 
@@ -86,6 +87,11 @@ const router = createRouter({
       path: '/cliente',
       name: 'ClienteGestion',
       component: ClienteGestion
+    },
+    {
+      path: '/clientedashboard',
+      name: 'ClienteDashboard',
+      component: ClienteDashboard
     },
     {
       path: '/gestionadmin',
