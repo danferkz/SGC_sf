@@ -35,7 +35,7 @@
             <p>Gestiona los administradores</p>
           </router-link>
           <!-- Gestión de Presupuestos -->
-          <router-link to="/presupuesto"
+          <router-link to="/gestionpresupuesto"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionpresupuesto_icon.png" alt="Presupuestos" class="dashboard-image" />
