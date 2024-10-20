@@ -1,3 +1,4 @@
+<!-- HomeAdminView.vue (ahomeadmin) -->
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800 flex">
     <!-- Header -->
@@ -8,7 +9,7 @@
         <h3 class="text-3xl font-bold text-center mb-12">Dashboard</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Gestión de Clientes -->
-          <router-link to="/clientedashboard"
+          <router-link to="/gestionclientes"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestioncliente_icon.png" alt="Clientes" class="dashboard-image" />
@@ -26,7 +27,7 @@
             <p>Gestiona tus pedidos</p>
           </router-link>
           <!-- Gestión de Administradores -->
-          <router-link to="/admindashboard"
+          <router-link to="/gestionadminstradores"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />
@@ -35,7 +36,7 @@
             <p>Gestiona los administradores</p>
           </router-link>
           <!-- Gestión de Presupuestos -->
-          <router-link to="/gestionpresupuesto"
+          <router-link to="/presupuesto"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionpresupuesto_icon.png" alt="Presupuestos" class="dashboard-image" />
