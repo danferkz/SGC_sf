@@ -23,7 +23,7 @@
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.dimensions.width" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
           <div>
             <label for="depth" class="block text-sm font-medium text-gray-700">Profundidad (cm)</label>
