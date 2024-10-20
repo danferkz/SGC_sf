@@ -8,7 +8,7 @@
         <h3 class="text-3xl font-bold text-center mb-12">Dashboard</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Gestión de Clientes -->
-          <router-link to="/gestionclientes"
+          <router-link to="/clientedashboard"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestioncliente_icon.png" alt="Clientes" class="dashboard-image" />
@@ -26,7 +26,7 @@
             <p>Gestiona tus pedidos</p>
           </router-link>
           <!-- Gestión de Administradores -->
-          <router-link to="/gestionadminstradores"
+          <router-link to="/admindashboard"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />

@@ -1,5 +1,8 @@
 <template>
-    <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-gray-100 text-gray-800 flex">
+      <!-- Header -->
+      <HeaderAdmin class="header-admin" />
+      <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-3xl font-bold text-gray-900">Gestión de Clientes</h1>
@@ -136,94 +139,96 @@
         </div>
       </div>
     </div>
-  </template>
+    </div>
+    </template>
+    
+<script setup>
+    import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
+    import { ref, computed } from 'vue'
+    import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
 
-  <script setup>
-  import { ref, computed } from 'vue'
-  import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+// Datos de ejemplo (reemplazar con datos reales de la API)
+const clientes = ref([
+  { id: 1, nombre: 'Juan Pérez', email: 'juan@example.com', telefono: '123456789', direccion: 'Calle 123, Ciudad' },
+  { id: 2, nombre: 'María García', email: 'maria@example.com', telefono: '987654321', direccion: 'Avenida 456, Ciudad' },
+  { id: 3, nombre: 'Carlos López', email: 'carlos@example.com', telefono: '456789123', direccion: 'Plaza 789, Ciudad' },
+  // ... más clientes
+])
 
-  // Datos de ejemplo (reemplazar con datos reales de la API)
-  const clientes = ref([
-    { id: 1, nombre: 'Juan Pérez', email: 'juan@example.com', telefono: '123456789', direccion: 'Calle 123, Ciudad' },
-    { id: 2, nombre: 'María García', email: 'maria@example.com', telefono: '987654321', direccion: 'Avenida 456, Ciudad' },
-    { id: 3, nombre: 'Carlos López', email: 'carlos@example.com', telefono: '456789123', direccion: 'Plaza 789, Ciudad' },
-    // ... más clientes
-  ])
+const busqueda = ref('')
+const paginaActual = ref(1)
+const clientesPorPagina = 10
 
-  const busqueda = ref('')
-  const paginaActual = ref(1)
-  const clientesPorPagina = 10
+const clientesFiltrados = computed(() => {
+  return clientes.value
+    .filter(cliente => 
+      cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      cliente.email.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      cliente.telefono.includes(busqueda.value)
+    )
+})
 
-  const clientesFiltrados = computed(() => {
-    return clientes.value
-      .filter(cliente => 
-        cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-        cliente.email.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-        cliente.telefono.includes(busqueda.value)
-      )
-  })
+const totalPaginas = computed(() => Math.ceil(clientesFiltrados.value.length / clientesPorPagina))
 
-  const totalPaginas = computed(() => Math.ceil(clientesFiltrados.value.length / clientesPorPagina))
-
-  const paginaAnterior = () => {
-    if (paginaActual.value > 1) {
-      paginaActual.value--
-    }
+const paginaAnterior = () => {
+  if (paginaActual.value > 1) {
+    paginaActual.value--
   }
+}
 
-  const paginaSiguiente = () => {
-    if (paginaActual.value < totalPaginas.value) {
-      paginaActual.value++
-    }
+const paginaSiguiente = () => {
+  if (paginaActual.value < totalPaginas.value) {
+    paginaActual.value++
   }
+}
 
-  const mostrarModal = ref(false)
-  const clienteEditando = ref(null)
-  const clienteForm = ref({
+const mostrarModal = ref(false)
+const clienteEditando = ref(null)
+const clienteForm = ref({
+  nombre: '',
+  email: '',
+  telefono: '',
+  direccion: ''
+})
+
+const abrirModalAgregar = () => {
+  clienteEditando.value = null
+  clienteForm.value = {
     nombre: '',
     email: '',
     telefono: '',
     direccion: ''
-  })
-
-  const abrirModalAgregar = () => {
-    clienteEditando.value = null
-    clienteForm.value = {
-      nombre: '',
-      email: '',
-      telefono: '',
-      direccion: ''
-    }
-    mostrarModal.value = true
   }
+  mostrarModal.value = true
+}
 
-  const editarCliente = (cliente) => {
-    clienteEditando.value = cliente
-    clienteForm.value = { ...cliente }
-    mostrarModal.value = true
-  }
+const editarCliente = (cliente) => {
+  clienteEditando.value = cliente
+  clienteForm.value = { ...cliente }
+  mostrarModal.value = true
+}
 
-  const eliminarCliente = (cliente) => {
-    if (confirm(`¿Estás seguro de que quieres eliminar a ${cliente.nombre}?`)) {
-      clientes.value = clientes.value.filter(c => c.id !== cliente.id)
-    }
+const eliminarCliente = (cliente) => {
+  if (confirm(`¿Estás seguro de que quieres eliminar a ${cliente.nombre}?`)) {
+    clientes.value = clientes.value.filter(c => c.id !== cliente.id)
   }
+}
 
-  const cerrarModal = () => {
-    mostrarModal.value = false
-  }
+const cerrarModal = () => {
+  mostrarModal.value = false
+}
 
-  const guardarCliente = () => {
-    
-    if (clienteEditando.value) {
-      // Actualizar cliente existente
-      const index = clientes.value.findIndex(c => c.id === clienteEditando.value.id)
-      clientes.value[index] = { ...clienteEditando.value, ...clienteForm.value }
-    } else {
-      // Agregar nuevo cliente
-      const nuevoId = Math.max(...clientes.value.map(c => c.id)) + 1
-      clientes.value.push({ id: nuevoId, ...clienteForm.value })
-    }
-    cerrarModal()
+const guardarCliente = () => {
+  
+  if (clienteEditando.value) {
+    // Actualizar cliente existente
+    const index = clientes.value.findIndex(c => c.id === clienteEditando.value.id)
+    clientes.value[index] = { ...clienteEditando.value, ...clienteForm.value }
+  } else {
+    // Agregar nuevo cliente
+    const nuevoId = Math.max(...clientes.value.map(c => c.id)) + 1
+    clientes.value.push({ id: nuevoId, ...clienteForm.value })
   }
-  </script>
+  cerrarModal()
+}
+ </script>
