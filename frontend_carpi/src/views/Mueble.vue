@@ -28,12 +28,12 @@
           <div>
             <label for="depth" class="block text-sm font-medium text-gray-700">Profundidad (cm)</label>
             <input type="number" id="depth" v-model="formData.dimensions.depth" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
           <div>
             <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
             <input type="number" id="height" v-model="formData.dimensions.height" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
         </div>
 
