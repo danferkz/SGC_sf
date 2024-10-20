@@ -24,12 +24,12 @@
           <div>
             <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
             <input type="number" id="height" v-model="formData.height" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
         </div>
 
@@ -173,10 +173,17 @@ const handleSubmit = () => {
     message.value = validationError
     messageClass.value = 'text-red-600'
   } else {
-    message.value = 'Pedido enviado con éxito.'
+    message.value = '¡Pedido realizado con éxito!'
     messageClass.value = 'text-green-600'
-    console.log('Datos del formulario:', { ...formData })
   }
 }
 
+import Header from '@/components/HeaderCompo.vue'
+import Footer from '@/components/FooterCompo.vue'
 </script>
+
+<style scoped>
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
+</style>
