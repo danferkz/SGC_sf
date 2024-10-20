@@ -186,6 +186,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 /* Aquí puedes añadir estilos personalizados si lo deseas */
 </style>
