@@ -150,5 +150,7 @@ import Footer from '@/components/FooterCompo.vue'
 </script>
 
 <style scoped>
-/* Aquí puedes agregar clases de estilo adicional si es necesario */
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
 </style>
