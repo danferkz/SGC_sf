@@ -182,6 +182,7 @@ import Header from '@/components/HeaderCompo.vue'
 import Footer from '@/components/FooterCompo.vue'
 </script>
 
+
 <style scoped>
 /* Aquí puedes agregar clases de estilo adicional si es necesario */
 </style>
