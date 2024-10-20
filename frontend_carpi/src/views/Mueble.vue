@@ -188,5 +188,7 @@ export default {
 
 
 <style scoped>
-/* Aquí puedes añadir estilos personalizados si lo deseas */
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
 </style>
