@@ -10,27 +10,45 @@
                         <label for="username" class="label">
                             <span class="label-text text-[#000000]">Username</span>
                         </label>
-                        <input id="username" v-model="username" type="text" placeholder="Username"
-                            class="input input-bordered" required />
+                        <input 
+                            id="username" 
+                            v-model="username" 
+                            type="text" 
+                            placeholder="Username"
+                            class="input input-bordered" 
+                            required 
+                        />
                     </div>
                     <div class="form-control">
                         <label for="password" class="label">
                             <span class="label-text text-[#000000]">Password</span>
                         </label>
-                        <input id="password" v-model="password" type="password" placeholder="Password"
-                            class="input input-bordered" required />
+                        <input 
+                            id="password" 
+                            v-model="password" 
+                            type="password" 
+                            placeholder="Password"
+                            class="input input-bordered" 
+                            required 
+                        />
                     </div>
                     <div v-if="errorMessage" class="text-red-500 text-center mt-2">
                         {{ errorMessage }}
                     </div>
                     <div class="form-control mt-6">
-                        <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
+                        <button 
+                            type="submit" 
+                            class="btn bg-[#D97706] hover:bg-[#B45309] text-white"
+                        >
                             Login
                         </button>
                     </div>
                     <div class="text-center mt-4">
                         <span class="text-[#000000]">¿NO tienes una cuenta?</span>
-                        <router-link to="/registro" class="font-medium text-[#D97706] hover:text-[#B45309] ml-1">
+                        <router-link 
+                            to="/registro" 
+                            class="font-medium text-[#D97706] hover:text-[#B45309] ml-1"
+                        >
                             Regístrate aquí
                         </router-link>
                     </div>
@@ -56,17 +74,17 @@ const handleLogin = async () => {
     try {
         const response = await axios.post('http://localhost:8000/api/users/clients/login/', {
             username: username.value,
-            password: password.value
+            password: password.value,
         });
         
         // Maneja la respuesta y almacena el token
-        const { access, refresh } = response.data;
+        const { access } = response.data; // Solo se necesita el token de acceso
         localStorage.setItem('token', access);
         
         // Redirigir después de un inicio de sesión exitoso
-        router.push('/cliente'); // Cambia '/dashboard' a la ruta que desees
+        router.push('/cliente'); // Cambia '/cliente' a la ruta que desees
     } catch (error) {
-        console.error('Error during login:', error.response ? error.response.data : error);
+        console.error('Error durante el login:', error.response ? error.response.data : error);
         errorMessage.value = error.response?.data?.detail || 'Error al iniciar sesión.';
     }
 };
