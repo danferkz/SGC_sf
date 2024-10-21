@@ -4,7 +4,9 @@ from .views import (
     ClientListView, AdminListView,
     ClientUpdateView, AdminUpdateView,
     ClientDestroyView, AdminDestroyView,
-    ClientLoginView, AdminLoginView, LogoutView
+    ClientLoginView, AdminLoginView, LogoutView,
+    AdminProfileView, ClientProfileView,
+    ChangePasswordView
 )
 
 urlpatterns = [
@@ -20,6 +22,9 @@ urlpatterns = [
     path('clients/update/<int:pk>/', ClientUpdateView.as_view(), name='update-client'),
     path('admins/update/<int:pk>/', AdminUpdateView.as_view(), name='update-admin'),
 
+    # Cambio de contraseña
+    path('clients/change-password/', ChangePasswordView.as_view(), name='change-password-client'),  # Nueva URL
+
     # Eliminación de usuarios
     path('clients/delete/<int:pk>/', ClientDestroyView.as_view(), name='delete-client'),
     path('admins/delete/<int:pk>/', AdminDestroyView.as_view(), name='delete-admin'),
@@ -28,4 +33,8 @@ urlpatterns = [
     path('clients/login/', ClientLoginView.as_view(), name='login-client'),
     path('admins/login/', AdminLoginView.as_view(), name='login-admin'),
     path('logout/', LogoutView.as_view(), name='logout'),
+
+    # Perfiles
+    path('admins/profile/', AdminProfileView.as_view(), name='admin-profile'),
+    path('clients/profile/', ClientProfileView.as_view(), name='client-profile'),
 ]

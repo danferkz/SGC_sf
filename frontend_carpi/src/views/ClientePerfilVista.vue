@@ -85,6 +85,10 @@
                         class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Actualizar Perfil
                     </button>
+                    <button @click="openModal('password')"
+                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                        Cambiar Contraseña
+                    </button>
                     <button @click="openModal('delete')"
                         class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         Eliminar Cuenta
@@ -101,27 +105,29 @@
         <dialog id="my_modal" class="modal">
             <div class="modal-box">
                 <h3 class="text-lg font-bold" id="modal-title">{{ modalTitle }}</h3>
-                <form @submit.prevent="handleSubmit" class="space-y-4">
-                    <div v-if="modalType !== 'delete'">
+                
+                <!-- Update Profile Form -->
+                <form v-if="modalType === 'update'" @submit.prevent="handleUpdateSubmit" class="space-y-4">
+                    <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
                         <input type="text" id="username" v-model="userData.username"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required>
                     </div>
-                    <div v-if="modalType !== 'delete'">
+                    <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
                         <input type="email" id="email" v-model="userData.email"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required>
                     </div>
-                    <div v-if="modalType !== 'delete'">
+                    <div>
                         <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
                         <input type="text" id="dni" v-model="userData.dni"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required @input="validateDNI" @keypress="onlyNumber" @keydown="limitDNI">
                         <p v-if="dniError" class="text-red-500 text-sm mt-1">{{ dniError }}</p>
                     </div>
-                    <div v-if="modalType !== 'delete'">
+                    <div>
                         <label for="sex" class="block text-sm font-medium text-gray-700">Sexo</label>
                         <select id="sex" v-model="userData.sex"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -132,167 +138,314 @@
                             <option value="otro">Otro</option>
                         </select>
                     </div>
-                    <div v-if="modalType !== 'delete'">
+                    <div>
                         <label for="address" class="block text-sm font-medium text-gray-700">Dirección</label>
                         <textarea id="address" v-model="userData.address" rows="3"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none"
                             required></textarea>
                     </div>
-                    <div v-if="modalType !== 'delete'">
+                    <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
                         <input type="tel" id="phone" v-model="userData.phone"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required @input="validatePhone" @keypress="onlyNumber" @keydown="limitPhone">
                         <p v-if="phoneError" class="text-red-500 text-sm mt-1">{{ phoneError }}</p>
                     </div>
-                    <div v-if="modalType !== 'delete'">
-                        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                        <input type="password" id="password" v-model="userData.password"
+                    <div class="modal-actions mt-4">
+                        <button type="button" @click="closeModal" class="btn">Cancelar</button>
+                        <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Password Change Form -->
+                <form v-if="modalType === 'password'" @submit.prevent="handlePasswordSubmit" class="space-y-4">
+                    <div>
+                        <label for="currentPassword" class="block text-sm font-medium text-gray-700">Contraseña actual</label>
+                        <input type="password" id="currentPassword" v-model="passwordData.currentPassword"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required>
                     </div>
-                    <div v-if="modalType === 'delete'" class="text-sm text-gray-500">
-                        ¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.
+                    <div>
+                        <label for="newPassword" class="block text-sm font-medium text-gray-700">Nueva contraseña</label>
+                        <input type="password" id="newPassword" v-model="passwordData.newPassword"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required>
+                    </div>
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmar nueva contraseña</label>
+                        <input type="password" id="confirmPassword" v-model="passwordData.confirmPassword"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            required>
+                        <p v-if="passwordError" class="text-red-500 text-sm mt-1">{{ passwordError }}</p>
+                    </div>
+                    <div class="modal-actions mt-4">
+                        <button type="button" @click="closeModal" class="btn">Cancelar</button>
+                        <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            Cambiar Contraseña
+                        </button>
                     </div>
                 </form>
-                <div class="modal-actions">
-                    <button @click="closeModal" class="btn">Cancelar</button>
-                    <button @click="handleSubmit" :class="[
-                        'mt-2 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white',
-                        'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2',
-                        { 'bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500': modalType !== 'delete', 'bg-red-600 hover:bg-red-700 focus:ring-red-500': modalType === 'delete' }
-                    ]">
-                        {{ modalType === 'delete' ? 'Eliminar' : 'Guardar' }}
-                    </button>
+
+                <!-- Delete Account Confirmation -->
+                <div v-if="modalType === 'delete'">
+                    <p class="text-sm text-gray-500">¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+                    <div class="modal-actions mt-4">
+                        <button @click="closeModal" class="btn">Cancelar</button>
+                        <button @click="handleDeleteAccount" class="ml-3 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Eliminar
+                        </button>
+                    </div>
                 </div>
             </div>
         </dialog>
     </div>
 </template>
 
-<script>
+<script setup>
 import HeaderValid from "@/components/HeaderCompo.vue";
-import { mapGetters } from "vuex";
-import { onMounted } from "vue";
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex'; // Importa useStore para acceder al store
 
-export default {
-    components: {
-        HeaderValid,
-    },
-    data() {
-        return {
-            userData: {
-                name: "",
-                description: "",
-                dni: "",
-                sex: "",
-                address: "",
-                phone: "",
-                password: "",
+// Estado
+const modalType = ref('');
+const userData = ref({
+    username: '',
+    email: '',
+    dni: '',
+    sex: '',
+    address: '',
+    phone: '',
+});
+
+const passwordData = ref({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+});
+
+const dniError = ref('');
+const phoneError = ref('');
+const passwordError = ref('');
+
+// Computed properties
+const modalTitle = computed(() => {
+    switch (modalType.value) {
+        case 'update':
+            return 'Actualizar Perfil';
+        case 'password':
+            return 'Cambiar Contraseña';
+        case 'delete':
+            return 'Eliminar Cuenta';
+        default:
+            return '';
+    }
+});
+
+const store = useStore(); // Para acceder al store
+
+// Métodos
+const openModal = (type) => {
+    modalType.value = type;
+    if (type === 'update') {
+        loadUserData();
+    }
+    const modal = document.getElementById('my_modal');
+    modal.showModal();
+};
+
+const closeModal = () => {
+    modalType.value = '';
+    userData.value = {
+        email: '',
+        dni: '',
+        sex: '',
+        address: '',
+        phone: '',
+    };
+    passwordData.value = {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    };
+    passwordError.value = '';
+    const modal = document.getElementById('my_modal');
+    modal.close();
+};
+
+// Validaciones
+const validateUserData = () => {
+    // Aquí puedes implementar más validaciones si es necesario
+    return true;
+};
+
+const validatePasswordChange = () => {
+    if (passwordData.value.newPassword !== passwordData.value.confirmPassword) {
+        passwordError.value = 'Las contraseñas no coinciden';
+        return false;
+    }
+    if (passwordData.value.newPassword.length < 8) {
+        passwordError.value = 'La contraseña debe tener al menos 8 caracteres';
+        return false;
+    }
+    passwordError.value = '';
+    return true;
+};
+
+// Actualizar perfil
+const handleUpdateSubmit = async () => {
+    try {
+        if (!validateUserData()) {
+            return;
+        }
+
+        const response = await fetch('/api/user/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`, 
             },
-            modalType: "",
-            modalTitle: "",
-            dniError: "",
-            phoneError: "",
-        };
-    },
-    computed: {
-        ...mapGetters("sessions", ["currentUser"]),
-    },
-    beforeRouteEnter(to, from, next) {
-        next(async (vm) => {
-            if (!vm.currentUser) {
-                // Intenta hacer autoLogin si el usuario no está ya en el estado
-                await vm.$store.dispatch("sessions/autoLogin");
+            body: JSON.stringify(userData.value)
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al actualizar el perfil');
+        }
+
+        toast.success('Perfil actualizado correctamente');
+        closeModal();
+        loadUserData(); 
+    } catch (error) {
+        console.error('Error:', error);
+        toast.error('Error al actualizar el perfil');
+    }
+};
+
+// Cambiar contraseña
+const handlePasswordSubmit = async () => {
+    try {
+        if (!validatePasswordChange()) {
+            return;
+        }
+
+        const response = await fetch('/api/user/password', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`, 
+            },
+            body: JSON.stringify({
+                currentPassword: passwordData.value.currentPassword,
+                newPassword: passwordData.value.newPassword
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al cambiar la contraseña');
+        }
+
+        toast.success('Contraseña actualizada correctamente');
+        closeModal();
+    } catch (error) {
+        console.error('Error:', error);
+        toast.error('Error al cambiar la contraseña');
+    }
+};
+
+// Eliminar cuenta
+const handleDeleteAccount = async () => {
+    try {
+        const response = await fetch('/api/user/delete', {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`, 
             }
         });
-    },
-    methods: {
-        openModal(type) {
-            this.modalType = type;
-            this.modalTitle = type === "update" ? "Editar Perfil" : "Eliminar Cuenta";
-            this.dniError = "";
-            this.phoneError = "";
-            document.getElementById("my_modal").showModal();
-        },
-        closeModal() {
-            document.getElementById("my_modal").close();
-        },
-        validateDNI() {
-            const dniPattern = /^\d{8}$/; // 8 dígitos
-            if (!this.userData.dni.match(dniPattern)) {
-                this.dniError = "El DNI debe tener exactamente 8 dígitos y solo números.";
-            } else {
-                this.dniError = "";
-            }
-        },
-        validatePhone() {
-            const phonePattern = /^\d{9}$/; // 9 dígitos
-            if (!this.userData.phone.match(phonePattern)) {
-                this.phoneError = "El teléfono debe tener exactamente 9 dígitos y solo números.";
-            } else {
-                this.phoneError = "";
-            }
-        },
-        async handleSubmit() {
-            if (!this.dniError && !this.phoneError) {
-                try {
-                    // Recoge los datos del usuario
-                    const updatedUser = {
-                        username: this.userData.name,
-                        email: this.currentUser.email, // Utiliza el email actual
-                        password: this.userData.password,
-                        password2: this.userData.password, // Asumiendo que password2 es igual a password
-                        DNI: this.userData.dni,
-                        sexo: this.userData.sex,
-                        direccion: this.userData.address,
-                        telefono: this.userData.phone,
-                    };
 
-                    // Realiza la solicitud PUT al backend
-                    const response = await this.$axios.put(
-                        `/clients/update/${this.currentUser.id}/`,
-                        updatedUser
-                    );
+        if (!response.ok) {
+            throw new Error('Error al eliminar la cuenta');
+        }
 
-                    // Si la actualización es exitosa, cierra el modal y actualiza la información del usuario
-                    this.closeModal();
+        toast.success('Cuenta eliminada correctamente');
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    } catch (error) {
+        console.error('Error:', error);
+        toast.error('Error al eliminar la cuenta');
+    }
+};
 
-                    // Actualiza la información del usuario en Vuex
-                    this.$store.commit("sessions/setCurrentUser", response.data);
+// Cerrar sesión
+const handleLogout = () => {
+    localStorage.removeItem('token'); // Eliminar el token
+    store.dispatch('sessions/logout'); // Despacha la acción de logout en Vuex
+    window.location.href = '/login'; // Redirige al usuario a la página de inicio de sesión
+};
 
-                    // Muestra un mensaje de éxito (opcional)
-                    this.$toast.success("Perfil actualizado correctamente");
-                } catch (error) {
-                    // Muestra un error si falla la actualización
-                    console.error("Error al actualizar el perfil:", error);
-                    this.$toast.error("Hubo un problema al actualizar el perfil");
-                }
+// Validaciones de campo específicas
+const validateDNI = (event) => {
+    // Implementar validación de DNI
+};
+
+const validatePhone = (event) => {
+    // Implementar validación de teléfono
+};
+
+const onlyNumber = (event) => {
+    const keyCode = event.keyCode || event.which;
+    if (keyCode < 48 || keyCode > 57) {
+        event.preventDefault();
+    }
+};
+
+const limitDNI = (event) => {
+    if (event.target.value.length >= 8 && event.keyCode !== 8) {
+        event.preventDefault();
+    }
+};
+
+const limitPhone = (event) => {
+    if (event.target.value.length >= 9 && event.keyCode !== 8) {
+        event.preventDefault();
+    }
+};
+
+// Cargar datos de usuario desde el store de sessions.js
+const loadUserData = async () => {
+    try {
+        const currentUser = store.state.sessions.currentUser; // Obtenemos el usuario desde el store
+        if (currentUser) {
+            userData.value = {
+                username: currentUser.username,
+                email: currentUser.email,
+                dni: currentUser.dni,
+                sex: currentUser.sex,
+                address: currentUser.address,
+                phone: currentUser.phone
+            };
+        }
+    } catch (error) {
+        console.error('Error al cargar datos del usuario:', error);
+    }
+};
+
+// Al montar el componente, cargamos los datos del usuario
+onMounted(() => {
+    loadUserData();
+});
+</script>
+
+<script>
+// Mueve la función beforeRouteEnter aquí, fuera del <script setup>
+export default {
+    beforeRouteEnter(to, from, next) {
+        next(async (vm) => {
+            if (!vm.$store.state.sessions.currentUser) {
+                await vm.$store.dispatch('sessions/autoLogin'); // Intenta autoLogin si no hay usuario actual
             }
-        },
-        handleLogout() {
-            this.$store.dispatch("sessions/logout");
-            this.$router.push("/login"); // Ajusta según tu ruta
-        },
-        onlyNumber(event) {
-            const char = String.fromCharCode(event.which);
-            if (!/[0-9]/.test(char)) {
-                event.preventDefault(); // Impide la entrada de caracteres que no son números
-            }
-        },
-        limitDNI(event) {
-            if (this.userData.dni.length >= 8 && event.key !== "Backspace") {
-                event.preventDefault(); // Impide la entrada si ya tiene 8 dígitos
-                style
-            }
-        },
-        limitPhone(event) {
-            if (this.userData.phone.length >= 9 && event.key !== "Backspace") {
-                event.preventDefault(); // Impide la entrada si ya tiene 9 dígitos
-            }
-        },
+            vm.loadUserData(); // Cargar los datos del usuario después del autoLogin
+        });
     },
 };
 </script>
-
-<style scoped></style>

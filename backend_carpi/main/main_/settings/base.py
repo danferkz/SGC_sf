@@ -45,7 +45,8 @@ THIRD_APPS= [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'djoser']
+    'djoser',
+    'drf_yasg',]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -148,5 +149,5 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+
 
