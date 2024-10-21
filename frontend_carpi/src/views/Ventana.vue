@@ -24,12 +24,16 @@
           <div>
             <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
             <input type="number" id="height" v-model="formData.height" required min="50" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
+
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="50" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
+
           </div>
         </div>
 
@@ -150,5 +154,9 @@ import Footer from '@/components/FooterCompo.vue'
 </script>
 
 <style scoped>
-/* Aquí puedes agregar clases de estilo adicional si es necesario */
+
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
+
 </style>

@@ -70,4 +70,5 @@ import Footer from '@/components/FooterCompo.vue'
   height: auto;
   border-radius: 0.5rem;
 }
+
 </style>
