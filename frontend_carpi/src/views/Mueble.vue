@@ -23,17 +23,17 @@
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.dimensions.width" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
           <div>
             <label for="depth" class="block text-sm font-medium text-gray-700">Profundidad (cm)</label>
             <input type="number" id="depth" v-model="formData.dimensions.depth" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
           <div>
             <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
             <input type="number" id="height" v-model="formData.dimensions.height" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
           </div>
         </div>
 
@@ -186,6 +186,9 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Aquí puedes añadir estilos personalizados si lo deseas */
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
 </style>

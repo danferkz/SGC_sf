@@ -17,10 +17,10 @@
                 <label for="estado" class="text-sm font-medium text-gray-600">Estado:</label>
                 <select id="estado" v-model="filtroEstado" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                   <option value="">Todos</option>
-                  <option value="pendiente">Pendiente</option>
-                  <option value="en_proceso">En Proceso</option>
-                  <option value="completado">Completado</option>
-                  <option value="cancelado">Cancelado</option>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="En-proceso">En-proceso</option>
+                  <option value="Completado">Completado</option>
+                  <option value="Cancelado">Cancelado</option>
                 </select>
               </div>
 
@@ -56,7 +56,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pedido.producto }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatearFecha(pedido.fecha) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <span :class="[ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full', estadoClases[pedido.estado] ]">
+                      <span :class="[ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full', estadoClases[pedido.estado] || 'bg-gray-100 text-gray-800' ]">
                         {{ pedido.estado }}
                       </span>
                     </td>
@@ -109,109 +109,69 @@
       </div>
     </section>
   </div>
-  </template>
-  
-  <script setup>
-  import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
-  import { ref, computed } from 'vue'
-  import { SearchIcon, EyeIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
-  
-  // Datos de ejemplo (reemplazar con datos reales de la API)
-  const pedidos = ref([
-    { id: 1, cliente: 'Juan Pérez', producto: 'Ventana', fecha: '2023-05-15', estado: 'pendiente' },
-    { id: 2, cliente: 'María García', producto: 'Puerta', fecha: '2023-05-14', estado: 'en_proceso' },
-    { id: 3, cliente: 'Carlos López', producto: 'Mesa', fecha: '2023-05-13', estado: 'completado' },
-    // más pedidos
-  ])
-  
-  const filtroEstado = ref('')
-  const busqueda = ref('')
-  const paginaActual = ref(1)
-  const pedidosPorPagina = 10
-  
-  const pedidosFiltrados = computed(() => {
-    return pedidos.value
-      .filter(pedido => 
-        (filtroEstado.value === '' || pedido.estado === filtroEstado.value) &&
-        (busqueda.value === '' || 
-          pedido.cliente.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-          pedido.producto.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-          pedido.id.toString().includes(busqueda.value)
-        )
+</template>
+
+<script setup>
+import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
+import { ref, computed } from 'vue'
+import { SearchIcon, EyeIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+
+// Datos de ejemplo (reemplazar con datos reales de la API)
+const pedidos = ref([
+  { id: 1, cliente: 'Juan Pérez', producto: 'Ventana', fecha: '2023-05-15', estado: 'Pendiente' },
+  { id: 2, cliente: 'María García', producto: 'Puerta', fecha: '2023-05-14', estado: 'En-proceso' },
+  { id: 3, cliente: 'Carlos López', producto: 'Mesa', fecha: '2023-05-13', estado: 'Completado' },
+  // más pedidos
+])
+
+const filtroEstado = ref('')
+const busqueda = ref('')
+const paginaActual = ref(1)
+const pedidosPorPagina = 10
+
+const pedidosFiltrados = computed(() => {
+  return pedidos.value
+    .filter(pedido => 
+      (filtroEstado.value === '' || pedido.estado === filtroEstado.value) &&
+      (busqueda.value === '' || 
+        pedido.cliente.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+        pedido.producto.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+        pedido.id.toString().includes(busqueda.value)
       )
-      .slice((paginaActual.value - 1) * pedidosPorPagina, paginaActual.value * pedidosPorPagina)
-  })
-  
-  const totalPaginas = computed(() => Math.ceil(pedidos.value.length / pedidosPorPagina))
-  
-  const estadoClases = {
-    pendiente: 'bg-yellow-100 text-yellow-800',
-    en_proceso: 'bg-blue-100 text-blue-800',
-    completado: 'bg-green-100 text-green-800',
-    cancelado: 'bg-red-100 text-red-800'
-  }
-  
-  const formatearFecha = (fecha) => new Date(fecha).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
-  
-  const verDetalles = (pedido) => console.log('Ver detalles del pedido:', pedido)
-  const editarPedido = (pedido) => console.log('Editar pedido:', pedido)
-  const eliminarPedido = (pedido) => console.log('Eliminar pedido:', pedido)
-  
-  const paginaAnterior = () => { if (paginaActual.value > 1) paginaActual.value-- }
-  const paginaSiguiente = () => { if (paginaActual.value < totalPaginas.value) paginaActual.value++ }
-  </script>
-  <style scoped>
-  /* Contenedor principal */
-  .min-h-screen {
-    display: flex;
-    background-color: #FFFFFF; /* Fondo blanco para el contenedor principal */
-  }
-  /* Estilos del header admin */
-  .header-admin {
-    width: 250px;
-    background-color: #FFFFFF;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    height: 100vh; /* Asegura que el header ocupe toda la altura */
-  }
-  /* Sección del dashboard */
-  #dashboard {
-    padding: 20px;
-    background-color: #FFFFFF;
-    flex: 1;
-    margin-left: 120px; /* Se agrega separación de 120px entre el header y el contenido */
-  }
-  /* Contenedor de imagen */
-  .image-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    height: 150px; /* Altura fija para las imágenes */
-  }
-  /* Imagen del dashboard */
-  .dashboard-image {
-    max-width: 100%;
-    max-height: 100%;
-    height: auto;
-    width: auto;
-    border-radius: 0.5rem;
-  }
-  /* Alineación del contenido */
-  .container {
-    padding: 20px;
-  }
-  /* Estilos de las tarjetas */
-  .card {
-    background-color: #FFFBEB;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: background-color 0.3s;
-  }
-  .card:hover {
-    background-color: #FFECB3;
-  }
-  </style>
+    )
+    .slice((paginaActual.value - 1) * pedidosPorPagina, paginaActual.value * pedidosPorPagina)
+})
+
+const estadoClases = {
+  'Pendiente': 'bg-yellow-100 text-yellow-800',
+  'En-proceso': 'bg-blue-100 text-blue-800',
+  'Completado': 'bg-green-100 text-green-800',
+  'Cancelado': 'bg-red-100 text-red-800'
+}
+
+const paginaSiguiente = () => {
+  paginaActual.value++
+}
+
+const paginaAnterior = () => {
+  paginaActual.value--
+}
+
+const formatearFecha = (fecha) => {
+  const opciones = { year: 'numeric', month: 'long', day: 'numeric' }
+  return new Date(fecha).toLocaleDateString('es-ES', opciones)
+}
+
+const verDetalles = (pedido) => {
+  // Implementar lógica para ver detalles del pedido
+}
+
+const editarPedido = (pedido) => {
+  // Implementar lógica para editar el pedido
+}
+
+const eliminarPedido = (pedido) => {
+  // Implementar lógica para eliminar el pedido
+}
+</script>
+

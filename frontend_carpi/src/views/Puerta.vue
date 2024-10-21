@@ -24,12 +24,12 @@
           <div>
             <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
             <input type="number" id="height" v-model="formData.height" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
         </div>
 
@@ -175,13 +175,15 @@ const handleSubmit = () => {
   } else {
     message.value = '¡Pedido realizado con éxito!'
     messageClass.value = 'text-green-600'
-    // Aquí puedes realizar la lógica para enviar el pedido
   }
 }
+
 import Header from '@/components/HeaderCompo.vue'
 import Footer from '@/components/FooterCompo.vue'
 </script>
 
 <style scoped>
-/* Aquí puedes agregar clases de estilo adicional si es necesario */
+textarea {
+  resize: none; /* Desactiva el redimensionamiento */
+}
 </style>

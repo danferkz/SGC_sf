@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+
 // importa el componente header
 import Header from '@/components/HeaderCompo.vue'
 </script>

@@ -29,19 +29,32 @@
                 </div>
                 <ul tabindex="0"
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li><router-link to="/login">login</router-link></li>
-                    <li><router-link to="/cliente">Profile</router-link></li>
-                    <li><router-link to="/settings">Settings</router-link></li>
-                    <li><router-link to="/logout">Logout</router-link></li>
+                    <li v-if="!isAuthenticated"><router-link to="/login">Login</router-link></li>
+                    <li v-if="isAuthenticated"><router-link to="/cliente">Perfil</router-link></li>
+                    <li v-if="isAuthenticated"><a @click="handleLogout">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+// Accede al store de Vuex
+const store = useStore();
+const router = useRouter();
+
+// Computed para verificar si el usuario está autenticado
+const isAuthenticated = computed(() => store.getters['sessions/isAuthenticated']);
+
+// Método para manejar el cierre de sesión
+const handleLogout = () => {
+    store.dispatch('sessions/logout');
+    router.push('/'); // Ajusta según tu ruta
+};
 </script>
 
 <style scoped>
