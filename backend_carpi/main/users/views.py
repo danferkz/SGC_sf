@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.views import APIView
 from .models import CustomUser
-from .serializers import ClientSerializer, AdminSerializer
+from .serializers import ClientSerializer, AdminSerializer, ClientProfileUpdateSerializer, ChangePasswordSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -61,14 +61,21 @@ class AdminListView(ListAPIView):
 # 5. Actualizar un cliente existente
 class ClientUpdateView(UpdateAPIView):
     queryset = CustomUser.objects.filter(is_cliente=True)
-    serializer_class = ClientSerializer
+    serializer_class = ClientProfileUpdateSerializer  # Usamos el serializer sin contraseña
     authentication_classes = [JWTAuthentication]
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+
+        # Verificar si el usuario está activo
+        if not instance.is_active:
+            return Response({'error': 'Este cliente está inactivo y no puede actualizar su perfil.'}, status=status.HTTP_403_FORBIDDEN)
+
         if request.user != instance:
             return Response({'error': 'Solo puedes actualizar tu propio perfil.'}, status=status.HTTP_403_FORBIDDEN)
+        
         return super().update(request, *args, **kwargs)
+
 
 # 6. Actualizar un administrador existente (solo administradores)
 class AdminUpdateView(UpdateAPIView):
@@ -157,7 +164,27 @@ class ClientProfileView(APIView):
 
     def get(self, request):
         user = request.user
+
+        # Verificar si el usuario está activo
+        if not user.is_active:
+            return Response({'error': 'Este cliente está inactivo y no puede acceder a su perfil.'}, status=status.HTTP_403_FORBIDDEN)
+
         if not user.is_cliente:
             return Response({'error': 'No eres un cliente'}, status=status.HTTP_403_FORBIDDEN)
         serializer = ClientSerializer(user)
         return Response(serializer.data)
+
+# 12. Cambiar la contraseña de un usuario
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    # Usamos PUT para actualizar la contraseña
+    def put(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            user = request.user
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({'message': 'Contraseña actualizada correctamente.'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
