@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   backend:
-    image: sgc_sf_backend:latest
+    image: backend:latest
     container_name: backend
     hostname: sgc-backend.pe
     restart: unless-stopped
