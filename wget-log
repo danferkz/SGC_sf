@@ -1,0 +1,5 @@
+--2024-10-21 20:20:40--  https://code.visualstudio.com/sha/download?build=stable
+Resolving code.visualstudio.com (code.visualstudio.com)... 13.107.246.33, 2620:1ec:bdf::33
+Connecting to code.visualstudio.com (code.visualstudio.com)|13.107.246.33|:443... connected.
+GnuTLS: The TLS connection was non-properly terminated.
+Unable to establish SSL connection.
