@@ -34,8 +34,15 @@
                         <input id="confirm-password" v-model="confirmPassword" type="password"
                             placeholder="Confirmar contraseña" class="input input-bordered" required />
                     </div>
+                    <!-- Checkbox de Términos y Condiciones -->
+                    <div class="form-control">
+                        <label class="cursor-pointer flex items-center space-x-2">
+                            <input type="checkbox" v-model="termsAccepted" class="checkbox checkbox-bordered" required />
+                            <span class="label-text text-[#000000]">Acepto los <RouterLink to="/terms" class="text-[#D97706]">Términos y Condiciones</RouterLink></span>
+                        </label>
+                    </div>
                     <div class="form-control mt-6">
-                        <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white">
+                        <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white" :disabled="!termsAccepted">
                             Registrarse
                         </button>
                     </div>
@@ -67,6 +74,7 @@ export default {
         const password = ref('');
         const confirmPassword = ref('');
         const errorMessage = ref('');
+        const termsAccepted = ref(false); // Variable para controlar si aceptó los términos
 
         const handleRegistration = async () => {
             // Reset error message
@@ -79,6 +87,11 @@ export default {
                 password: password.value,
                 password2: confirmPassword.value, // Coincide con el campo del serializer
             };
+
+            if (!termsAccepted.value) {
+                errorMessage.value = 'Debes aceptar los Términos y Condiciones para registrarte.';
+                return;
+            }
 
             try {
                 // Llamada a la API para registrar el usuario
@@ -102,12 +115,12 @@ export default {
             password,
             confirmPassword,
             errorMessage,
+            termsAccepted, // Retornar la variable de los términos
             handleRegistration,
         };
     },
 };
 </script>
-
 
 <style scoped>
 .error-message {
