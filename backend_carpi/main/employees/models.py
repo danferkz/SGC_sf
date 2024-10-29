@@ -8,7 +8,8 @@ class Employee(models.Model):
         CustomUser , 
         on_delete=models.CASCADE, 
         related_name='employee_profile',
-        verbose_name='Usuario'
+        verbose_name='Usuario',
+        null=True,
     )
     hire_date = models.DateField(verbose_name='Fecha de Contratación')
     specialty = models.CharField(max_length=100, verbose_name='Especialidad')

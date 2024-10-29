@@ -7,7 +7,8 @@ class Delivery(models.Model):
         Order,
         on_delete=models.CASCADE,
         related_name='delivery',
-        verbose_name='Pedido'
+        verbose_name='Pedido',
+        null=True,
     )
     delivery_date = models.DateField(verbose_name='Fecha de Entrega')
     delivered_by = models.ForeignKey(
