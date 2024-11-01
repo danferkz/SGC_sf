@@ -232,6 +232,7 @@ if (confirm(`¿Estás seguro de que quieres eliminar a ${admin.nombre}?`)) {
 
 
 
+
 const cerrarModal = () => {
 mostrarModal.value = false
 }
