@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from .models import CustomUser
 from .serializers import ClientSerializer, AdminSerializer, ClientProfileUpdateSerializer, ChangePasswordSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
@@ -16,11 +16,11 @@ from rest_framework.exceptions import PermissionDenied
 class ClientCreateView(CreateAPIView):
     serializer_class = ClientSerializer
     authentication_classes = []  # No requiere autenticación
-    permission_classes = []  # Permite el acceso sin autenticación
+    permission_classes = []      # Permite el acceso sin autenticación
 
     def perform_create(self, serializer):
         # Asegura que el nuevo usuario sea marcado como cliente
-        serializer.save(is_cliente=True)
+        serializer.save(is_client=True)
 
 # 2. Crear un nuevo administrador (solo los administradores pueden crear otros administradores)
 class AdminCreateView(CreateAPIView):
@@ -42,7 +42,7 @@ class ClientListView(ListAPIView):
 
     def get_queryset(self):
         if self.request.user.is_staff or self.request.user.is_superuser:
-            return CustomUser.objects.filter(is_cliente=True)
+            return CustomUser.objects.filter(is_client=True)
         else:
             raise PermissionDenied('Solo los administradores pueden listar los clientes.')
 
@@ -60,22 +60,28 @@ class AdminListView(ListAPIView):
 
 # 5. Actualizar un cliente existente
 class ClientUpdateView(UpdateAPIView):
-    queryset = CustomUser.objects.filter(is_cliente=True)
+    queryset = CustomUser.objects.filter(is_client=True)
     serializer_class = ClientProfileUpdateSerializer  # Usamos el serializer sin contraseña
     authentication_classes = [JWTAuthentication]
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-
+        
         # Verificar si el usuario está activo
         if not instance.is_active:
-            return Response({'error': 'Este cliente está inactivo y no puede actualizar su perfil.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'Este cliente está inactivo y no puede actualizar su perfil.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
 
+        # Verificar que el usuario solo actualice su propio perfil
         if request.user != instance:
-            return Response({'error': 'Solo puedes actualizar tu propio perfil.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'Solo puedes actualizar tu propio perfil.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
         
         return super().update(request, *args, **kwargs)
-
 
 # 6. Actualizar un administrador existente (solo administradores)
 class AdminUpdateView(UpdateAPIView):
@@ -86,8 +92,12 @@ class AdminUpdateView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        # Verificar permisos de administrador
         if not request.user.is_staff and request.user != instance:
-            return Response({'error': 'Solo los administradores pueden actualizar su propio perfil o el de otros administradores.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'Solo los administradores pueden actualizar su propio perfil o el de otros administradores.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
         return super().update(request, *args, **kwargs)
 
 # 7. Eliminar un cliente existente (eliminación lógica usando "is_active" a false)
@@ -97,14 +107,21 @@ class ClientDestroyView(APIView):
 
     def delete(self, request, pk):
         try:
-            cliente = CustomUser.objects.get(pk=pk, is_cliente=True)
+            # Buscar el cliente y realizar eliminación lógica
+            cliente = CustomUser.objects.get(pk=pk, is_client=True)
             cliente.is_active = False
             cliente.save()
-            return Response({'message': 'Cliente eliminado lógicamente.'}, status=status.HTTP_204_NO_CONTENT)
+            return Response(
+                {'message': 'Cliente eliminado lógicamente.'}, 
+                status=status.HTTP_204_NO_CONTENT
+            )
         except CustomUser.DoesNotExist:
-            return Response({'error': 'Cliente no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {'error': 'Cliente no encontrado.'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-# 8. Eliminar un administrador existente (eliminación física usando DestroyAPIView)
+# 8. Eliminar un administrador existente (eliminación física)
 class AdminDestroyView(DestroyAPIView):
     queryset = CustomUser.objects.filter(is_staff=True)
     permission_classes = [IsAuthenticated]
@@ -115,7 +132,8 @@ class ClientLoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         user = self.user
-        if not user.is_cliente:
+        # Verificar que sea un cliente
+        if not user.is_client:
             raise serializers.ValidationError("Solo los clientes pueden acceder.")
         return data
 
@@ -127,6 +145,7 @@ class AdminLoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         user = self.user
+        # Verificar que sea un administrador
         if not user.is_staff:
             raise serializers.ValidationError("Solo los administradores pueden acceder.")
         return data
@@ -140,24 +159,37 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
+            # Invalidar el token de refresco
             refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response({"message": "Logout exitoso."}, status=status.HTTP_205_RESET_CONTENT)
+            return Response(
+                {"message": "Logout exitoso."}, 
+                status=status.HTTP_205_RESET_CONTENT
+            )
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": str(e)}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
+# 12. Ver perfil de administrador
 class AdminProfileView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         user = request.user
+        # Verificar que sea un administrador
         if not user.is_staff:
-            return Response({'error': 'No eres un administrador'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'No eres un administrador'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
         serializer = AdminSerializer(user)
         return Response(serializer.data)
 
+# 13. Ver perfil de cliente
 class ClientProfileView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -167,24 +199,34 @@ class ClientProfileView(APIView):
 
         # Verificar si el usuario está activo
         if not user.is_active:
-            return Response({'error': 'Este cliente está inactivo y no puede acceder a su perfil.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {'error': 'Este cliente está inactivo y no puede acceder a su perfil.'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-        if not user.is_cliente:
-            return Response({'error': 'No eres un cliente'}, status=status.HTTP_403_FORBIDDEN)
+        # Verificar que sea un cliente
+        if not user.is_client:
+            return Response(
+                {'error': 'No eres un cliente'}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
         serializer = ClientSerializer(user)
         return Response(serializer.data)
 
-# 12. Cambiar la contraseña de un usuario
+# 14. Cambiar la contraseña de un usuario
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    # Usamos PUT para actualizar la contraseña
     def put(self, request):
+        # Validar y actualizar la contraseña
         serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             user = request.user
             user.set_password(serializer.validated_data['new_password'])
             user.save()
-            return Response({'message': 'Contraseña actualizada correctamente.'}, status=status.HTTP_200_OK)
+            return Response(
+                {'message': 'Contraseña actualizada correctamente.'}, 
+                status=status.HTTP_200_OK
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
