@@ -61,6 +61,13 @@ class AdminSerializer(serializers.ModelSerializer):
         validated_data.pop('password2')
         user = CustomUser.objects.create_user(**validated_data)
         return user
+    
+#crea un serializador para ctualizar el perfil de un usuario administrador
+class AdminProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email']
+        read_only_fields = ['id']
 
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:

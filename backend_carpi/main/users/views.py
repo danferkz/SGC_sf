@@ -16,7 +16,8 @@ from .serializers import (
     AdminSerializer, 
     ClientProfileUpdateSerializer,
     ChangePasswordSerializer,
-    StaffSerializer
+    StaffSerializer,
+    AdminProfileUpdateSerializer
 )
 
 # Permisos personalizados
@@ -157,7 +158,7 @@ class AdminListView(ListAPIView):
 # Vista para actualizar un administrador
 class AdminUpdateView(UpdateAPIView):
     queryset = CustomUser.objects.filter(is_superuser=True)
-    serializer_class = AdminSerializer
+    serializer_class = AdminProfileUpdateSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     authentication_classes = [JWTAuthentication]
 
@@ -166,7 +167,7 @@ class AdminProfileView(BaseAuthenticatedView):
     def get(self, request):
         if not request.user.is_superuser:  # Cambiado a is_superuser
             raise PermissionDenied("No eres un administrador")
-        serializer = AdminSerializer(request.user)
+        serializer = AdminProfileUpdateSerializer(request.user)
         return Response(serializer.data)
 
 # Vista para eliminar un administrador
@@ -272,12 +273,16 @@ class UserListView(ListAPIView):
 # Vista para cambiar la contraseña del usuario
 class ChangePasswordView(BaseAuthenticatedView):
     def put(self, request):
+        user = request.user
+        if not user.is_client and not user.is_superuser:
+            raise PermissionDenied("No tienes permisos para realizar esta acción")
+        
         serializer = ChangePasswordSerializer(
             data=request.data, 
             context={'request': request}  # Pasa el contexto del request al serializer
         )
         if serializer.is_valid():
-            request.user.set_password(serializer.validated_data['new_password'])  # Cambia la contraseña
-            request.user.save()  # Guarda los cambios
+            user.set_password(serializer.validated_data['new_password'])  # Cambia la contraseña
+            user.save()  # Guarda los cambios
             return Response(status=status.HTTP_200_OK)  # Responde con éxito
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Maneja errores de validación
