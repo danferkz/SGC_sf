@@ -1,35 +1,44 @@
 # employees/serializers.py
 from rest_framework import serializers
+from users.models import CustomUser
 from .models import Employee
-from users.models import CustomUser  # Asegúrate de que se importe el modelo de usuario
-from django.core.exceptions import ValidationError
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)  # Muestra el usuario como una cadena
+    user_data = serializers.SerializerMethodField()
     user_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Employee
         fields = [
             'id',
-            'user',
             'user_id',
+            'user_data',  # Mostrará información detallada del usuario
             'hire_date',
             'specialty',
             'is_active'
         ]
 
+    def get_user_data(self, obj):
+        return {
+            'id': obj.user.id,
+            'username': obj.user.username,
+            'full_name': obj.user.get_full_name(),
+            'email': obj.user.email
+        }
+
     def validate_user_id(self, value):
         try:
             user = CustomUser.objects.get(id=value)
+            # Verificar que el usuario sea staff
             if not user.is_staff:
-                raise serializers.ValidationError("El usuario debe ser un empleado con is_staff=True.")
+                raise serializers.ValidationError(
+                    "Solo los usuarios con privilegios de staff pueden ser empleados."
+                )
+            # Verificar que el usuario no esté ya asignado a otro empleado
+            if Employee.objects.filter(user=user).exists():
+                raise serializers.ValidationError(
+                    "Este usuario ya está registrado como empleado."
+                )
+            return value
         except CustomUser.DoesNotExist:
-            raise serializers.ValidationError("El usuario no existe.")
-        return value
-
-    def create(self, validated_data):
-        user_id = validated_data.pop('user_id')
-        user = CustomUser.objects.get(id=user_id)
-        employee = Employee.objects.create(user=user, **validated_data)
-        return employee
+            raise serializers.ValidationError("Usuario no encontrado.")

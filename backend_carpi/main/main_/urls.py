@@ -45,6 +45,7 @@ urlpatterns = [
 
     # Rutas para la aplicación de usuarios (clients y admins)
     path('api/users/', include('users.urls')),
+    path('api/employees/', include('employees.urls')),  # Incluye las URLs de la aplicación employees
 
     # Swagger URLs
     #re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
