@@ -1,13 +1,14 @@
+#users/serializer.py
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import CustomUser 
+from .models import CustomUser
 
 class ClientSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser 
+        model = CustomUser
         fields = ['id', 'username', 'email', 'password', 'password2', 'dni', 'gender', 'address', 'phone']
         read_only_fields = []
 
@@ -18,14 +19,14 @@ class ClientSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
-        user = CustomUser .objects.create_user(**validated_data)
+        user = CustomUser.objects.create_user(**validated_data)
         return user
 
 class ClientProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser 
-        fields = ['id', 'username', 'email', 'dni', 'gender', 'address', 'phone']  # Cambiados los nombres de los campos
-        read_only_fields = []  # Cambia esto si deseas que algunos campos sean solo de lectura
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'dni', 'gender', 'address', 'phone']
+        read_only_fields = ['id']
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
@@ -47,7 +48,7 @@ class AdminSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser 
+        model = CustomUser
         fields = ['id', 'username', 'email', 'password', 'password2']
         read_only_fields = []
 
@@ -58,5 +59,16 @@ class AdminSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
-        user = CustomUser .objects.create_user(**validated_data)
+        user = CustomUser.objects.create_user(**validated_data)
+        return user
+
+class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email']
+        read_only_fields = ['id']
+
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(**validated_data)
+        user.save()
         return user
