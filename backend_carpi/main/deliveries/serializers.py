@@ -1,11 +1,22 @@
 # deliveries/serializers.py
 from rest_framework import serializers
-from .models import Entrega
-from orders.serializers import PedidoSerializer
+from .models import Delivery
+from serializers import OrderSerializer
+from serializers import EmployeeSerializer
 
-class EntregaSerializer(serializers.ModelSerializer):
-    pedido = serializers.PrimaryKeyRelatedField(read_only=True)  # Solo muestra el ID del pedido
-
+class DeliverySerializer(serializers.ModelSerializer):
+    order_details = OrderSerializer(source='order', read_only=True)
+    delivered_by_details = EmployeeSerializer(source='delivered_by', read_only=True)
+    
     class Meta:
-        model = Entrega
-        fields = '__all__'
+        model = Delivery
+        fields = [
+            'id',
+            'order',
+            'order_details',
+            'delivery_date',
+            'delivered_by',
+            'delivered_by_details',
+            'delivery_notes',
+            'signature_received'
+        ]

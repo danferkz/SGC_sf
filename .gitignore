@@ -53,4 +53,15 @@ yp.
 0003_initial.py
 0004_initial.py
 0005_initial.py
-
+0002_employee_user.py
+0003_delivery_order.py
+backend_carpi/main/capital/migrations/0001_initial.py
+backend_carpi/main/deliveries/migrations/0001_initial.py
+backend_carpi/main/deliveries/migrations/0002_initial.py
+backend_carpi/main/deliveries/migrations/0003_delivery_order.py
+backend_carpi/main/employees/migrations/0001_initial.py
+backend_carpi/main/employees/migrations/0002_employee_user.py
+backend_carpi/main/orders/migrations/0001_initial.py
+backend_carpi/main/orders/migrations/0002_initial.py
+backend_carpi/main/products/migrations/0001_initial.py
+backend_carpi/main/users/migrations/0001_initial.py

@@ -1,40 +1,63 @@
+# users/urls.py
 from django.urls import path
 from .views import (
-    ClientCreateView, AdminCreateView,
-    ClientListView, AdminListView,
-    ClientUpdateView, AdminUpdateView,
-    ClientDestroyView, AdminDestroyView,
-    ClientLoginView, AdminLoginView, LogoutView,
-    AdminProfileView, ClientProfileView,
-    ChangePasswordView
+    ClientCreateView,
+    ClientListView,
+    ClientUpdateView,
+    ClientProfileView,
+    ClientDestroyView,
+    ClientDetailView,
+    ClientSelfDestroyView,
+    AdminCreateView,
+    AdminListView,
+    AdminUpdateView,
+    AdminProfileView,
+    AdminDestroyView,
+    StaffCreateView,
+    StaffListView,
+    StaffDestroyView,
+    ClientLoginView,
+    AdminLoginView,
+    LogoutView,
+    UserListView,
+    ChangePasswordView,
 )
 
 urlpatterns = [
-    # Creación de usuarios
-    path('clients/create/', ClientCreateView.as_view(), name='create-client'),
-    path('admins/create/', AdminCreateView.as_view(), name='create-admin'),
+    # ============ VISTAS DE CLIENTE ============
+    path('clients/', ClientListView.as_view(), name='client-list'),  # Listar clientes
+    path('clients/create/', ClientCreateView.as_view(), name='client-create'),  # Crear cliente
+    path('clients/<int:pk>/', ClientDetailView.as_view(), name='client-detail'),  # Detalles de cliente
+    path('clients/update/<int:pk>/', ClientUpdateView.as_view(), name='client-update'),  # Actualizar cliente
+    path('clients/delete/<int:pk>/', ClientDestroyView.as_view(), name='client-delete'),  # Eliminar cliente
+    path('clients/profile/', ClientProfileView.as_view(), name='client-profile'),  # Obtener perfil del cliente
+    path('clients/self-delete/', ClientSelfDestroyView.as_view(), name='client-self-delete'),  # Eliminar cuenta del propio cliente
 
-    # Listado de usuarios
-    path('clients/', ClientListView.as_view(), name='list-clients'),
-    path('admins/', AdminListView.as_view(), name='list-admins'),
+    # ============ VISTAS DE ADMINISTRADOR ============
+    path('admins/', AdminListView.as_view(), name='admin-list'),  # Listar administradores
+    path('admins/create/', AdminCreateView.as_view(), name='admin-create'),  # Crear administrador
+    path('admins/update/<int:pk>/', AdminUpdateView.as_view(), name='admin-update'),  # Actualizar administrador
+    path('admins/delete/<int:pk>/', AdminDestroyView.as_view(), name='admin-delete'),  # Eliminar administrador
+    path('admins/profile/', AdminProfileView.as_view(), name='admin-profile'),  # Obtener perfil del administrador
 
-    # Actualización de usuarios
-    path('clients/update/<int:pk>/', ClientUpdateView.as_view(), name='update-client'),
-    path('admins/update/<int:pk>/', AdminUpdateView.as_view(), name='update-admin'),
+    # ============ VISTAS DE STAFF ============
+    path('staff/', StaffListView.as_view(), name='staff-list'),  # Listar miembros del staff
+    path('staff/create/', StaffCreateView.as_view(), name='staff-create'),  # Crear miembro del staff
+    path('staff/delete/<int:pk>/', StaffDestroyView.as_view(), name='staff-delete'),  # Eliminar miembro del staff
 
-    # Cambio de contraseña
-    path('clients/change-password/', ChangePasswordView.as_view(), name='change-password-client'),  # Nueva URL
+    # ============ VISTAS DE AUTENTICACIÓN ============
+    path('login/client/', ClientLoginView.as_view(), name='client-login'),  # Login cliente
+    path('login/admin/', AdminLoginView.as_view(), name='admin-login'),  # Login administrador
+    path('logout/', LogoutView.as_view(), name='logout'),  # Cierre de sesión
 
-    # Eliminación de usuarios
-    path('clients/delete/<int:pk>/', ClientDestroyView.as_view(), name='delete-client'),
-    path('admins/delete/<int:pk>/', AdminDestroyView.as_view(), name='delete-admin'),
-
-    # Autenticación
-    path('clients/login/', ClientLoginView.as_view(), name='login-client'),
-    path('admins/login/', AdminLoginView.as_view(), name='login-admin'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-
-    # Perfiles
-    path('admins/profile/', AdminProfileView.as_view(), name='admin-profile'),
-    path('clients/profile/', ClientProfileView.as_view(), name='client-profile'),
+    # ============ VISTAS GENERALES ============
+    path('users/me/', UserListView.as_view(), name='user-detail'),  # Obtener usuario autenticado
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),  # Cambiar contraseña
 ]
+
+"""
+/clients/?page=1&page_size=10  # Primera página de clientes con 10 elementos
+/admins/?page=2&page_size=5    # Segunda página de administradores con 5 elementos
+/staff/?page=3                 # Tercera página de personal con el tamaño de página predeterminado
+
+"""
