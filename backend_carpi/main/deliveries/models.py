@@ -4,7 +4,7 @@ from products.models import DoorWindow, Furniture  # Importa los modelos
 import uuid
 
 class Delivery(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
+    delivery_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
     door_window = models.OneToOneField(DoorWindow, null=True, blank=True, on_delete=models.CASCADE, related_name='delivery')
     furniture = models.OneToOneField(Furniture, null=True, blank=True, on_delete=models.CASCADE, related_name='delivery')
     

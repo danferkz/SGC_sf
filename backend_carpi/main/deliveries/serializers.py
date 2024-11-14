@@ -12,7 +12,7 @@ class DeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivery
         fields = [
-            'id',
+            'delivery_id',
             'door_window',
             'furniture',
             'delivery_date',
@@ -27,7 +27,7 @@ class DeliverySerializer(serializers.ModelSerializer):
     def get_door_window_detail(self, obj):
         if obj.door_window:
             return {
-                'id': str(obj.door_window.id),
+                'product_id': str(obj.door_window.product_id),
                 'product_type': obj.door_window.product_type,
                 'wood_type': obj.door_window.wood_type,
                 'cost_price': str(obj.door_window.cost_price),
@@ -42,7 +42,7 @@ class DeliverySerializer(serializers.ModelSerializer):
     def get_furniture_detail(self, obj):
         if obj.furniture:
             return {
-                'id': str(obj.furniture.id),
+                'product_id': str(obj.furniture.product_id),
                 'product_type': obj.furniture.product_type,
                 'wood_type': obj.furniture.wood_type,
                 'cost_price': str(obj.furniture.cost_price),

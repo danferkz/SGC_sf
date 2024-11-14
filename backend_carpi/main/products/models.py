@@ -9,7 +9,7 @@ class BaseProduct(models.Model):
         ('furniture', 'Mueble')
     ]
     
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
+    product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
     product_type = models.CharField(max_length=9, choices=PRODUCT_TYPES, verbose_name='Tipo de Producto', null=True)
     wood_type = models.CharField(max_length=100, verbose_name='Tipo de Madera', null=True)
     cost_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio de Costo', null=True)

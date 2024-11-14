@@ -10,7 +10,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = [
-            'id',
+            'employee_id',
             'user_id',
             'user_data',  # Mostrará información detallada del usuario
             'hire_date',

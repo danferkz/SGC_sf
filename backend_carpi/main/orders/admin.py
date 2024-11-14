@@ -4,7 +4,7 @@ from .models import Order
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 
+        'orders_id', 
         'client', 
         'delivery', 
         'employee', 
@@ -13,7 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
         'total_price'
     )
     list_filter = ('status', 'promised_date', 'employee')
-    search_fields = ('id', 'client__username', 'delivery__id', 'employee__name')
+    search_fields = ('orders_id', 'client__username', 'delivery__id', 'employee__name')
     ordering = ('promised_date',)
     date_hierarchy = 'promised_date'
     list_per_page = 20

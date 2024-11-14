@@ -4,7 +4,7 @@ from .models import Delivery
 
 class DeliveryAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 
+        'delivery_id', 
         'door_window', 
         'furniture', 
         'delivery_date', 
@@ -13,7 +13,7 @@ class DeliveryAdmin(admin.ModelAdmin):
         'additional_cost'
     )
     list_filter = ('delivery_date', 'signature_received', 'delivery_option')
-    search_fields = ('id', 'delivery_notes', 'door_window__wood_type', 'furniture__piece_name')
+    search_fields = ('delivery_id', 'delivery_notes', 'door_window__wood_type', 'furniture__piece_name')
     ordering = ('delivery_date',)
     date_hierarchy = 'delivery_date'
     list_per_page = 20

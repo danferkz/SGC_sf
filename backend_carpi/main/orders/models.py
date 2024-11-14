@@ -14,7 +14,7 @@ class Order(models.Model):
         ('cancelled ', 'Cancelado')
     ]
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
+    orders_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
     client = models.ForeignKey(CustomUser ,on_delete=models.PROTECT,limit_choices_to={'is_client': True},verbose_name='Cliente')
     delivery = models.OneToOneField(Delivery,on_delete=models.CASCADE,related_name='order',verbose_name='Entrega')
     employee = models.ForeignKey(Employee,on_delete=models.PROTECT,verbose_name='Empleado')
