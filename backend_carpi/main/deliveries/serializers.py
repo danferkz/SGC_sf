@@ -1,22 +1,31 @@
 # deliveries/serializers.py
 from rest_framework import serializers
 from .models import Delivery
-from serializers import OrderSerializer
-from serializers import EmployeeSerializer
+from products.models import DoorWindow, Furniture
 
 class DeliverySerializer(serializers.ModelSerializer):
-    order_details = OrderSerializer(source='order', read_only=True)
-    delivered_by_details = EmployeeSerializer(source='delivered_by', read_only=True)
-    
+    product_id = serializers.UUIDField(write_only=True)
+    delivery_option = serializers.BooleanField(write_only=True)
+
     class Meta:
         model = Delivery
         fields = [
-            'id',
-            'order',
-            'order_details',
+            'product_id',
             'delivery_date',
             'delivered_by',
-            'delivered_by_details',
             'delivery_notes',
-            'signature_received'
+            'signature_received',
+            'delivery_option'
         ]
+
+    def validate_product_id(self, value):
+        # Intentar encontrar el producto en ambos modelos
+        try:
+            product = DoorWindow.objects.get(id=value)
+        except DoorWindow.DoesNotExist:
+            try:
+                product = Furniture.objects.get(id=value)
+            except Furniture.DoesNotExist:
+                raise serializers.ValidationError("Producto no encontrado.")
+        
+        return product
