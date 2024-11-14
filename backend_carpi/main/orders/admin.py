@@ -1,20 +1,22 @@
 # orders/admin.py
 from django.contrib import admin
-from .models import Order, OrderItem
+from .models import Order
 
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 1  # Número de ítems en blanco que se mostrarán
-
-@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'client', 'employee', 'status', 'promised_date', 'home_delivery')
-    search_fields = ('client__username', 'employee__username', 'status')
-    list_filter = ('status', 'promised_date', 'home_delivery')
-    inlines = [OrderItemInline]
+    list_display = (
+        'id', 
+        'client', 
+        'delivery', 
+        'employee', 
+        'status', 
+        'promised_date', 
+        'total_price'
+    )
+    list_filter = ('status', 'promised_date', 'employee')
+    search_fields = ('id', 'client__username', 'delivery__id', 'employee__name')
+    ordering = ('promised_date',)
+    date_hierarchy = 'promised_date'
+    list_per_page = 20
 
-@admin.register(OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order', 'product', 'product_furniture', 'quantity', 'price', 'total_price')
-    search_fields = ('order__id', 'product__name', 'product_furniture__name')
-    list_filter = ('order',)
+# Registro del modelo en el admin
+admin.site.register(Order, OrderAdmin)

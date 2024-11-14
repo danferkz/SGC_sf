@@ -1,9 +1,7 @@
 # deliveries/urls.py
 from django.urls import path
-from .views import CreateDeliveryView
-
-app_name = 'deliveries'
+from .views import DeliveryCreateView  # Cambiado de CreateDeliveryView a DeliveryCreateView
 
 urlpatterns = [
-    path('create/', CreateDeliveryView.as_view(), name='delivery-create'),
+    path('create/', DeliveryCreateView.as_view(), name='create_delivery'),
 ]

@@ -1,24 +1,4 @@
 
-'''
-    path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
-    # Backoffice (admin) URLs
-    path('backoffice/capital/', include('capital.urls')),
-    path('backoffice/deliveries/', include('deliveries.urls')),
-    path('backoffice/employees/', include('employees.urls')),
-    path('backoffice/orders/', include('orders.urls')),
-    path('backoffice/products/', include('products.urls')),
-    path('backoffice/users/', include('users.urls')),
-
-    # Frontoffice (customer) URLs
-    path('frontoffice/products/', include('products.urls')),  # Los clientes también pueden ver productos
-    path('frontoffice/orders/', include('orders.urls')),  # Para que los clientes gestionen sus pedidos
-    path('frontoffice/users/', include('users.urls')),  # Registro y gestión de cuentas de usuarios
-'''
-
-
 from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view

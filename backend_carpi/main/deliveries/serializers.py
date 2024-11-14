@@ -4,28 +4,52 @@ from .models import Delivery
 from products.models import DoorWindow, Furniture
 
 class DeliverySerializer(serializers.ModelSerializer):
-    product_id = serializers.UUIDField(write_only=True)
-    delivery_option = serializers.BooleanField(write_only=True)
+    door_window = serializers.UUIDField(write_only=True, required=False)  # ID del DoorWindow
+    furniture = serializers.UUIDField(write_only=True, required=False)  # ID del Furniture
+    door_window_detail = serializers.SerializerMethodField(read_only=True)  # Detalles del DoorWindow
+    furniture_detail = serializers.SerializerMethodField(read_only=True)  # Detalles del Furniture
 
     class Meta:
         model = Delivery
         fields = [
-            'product_id',
+            'id',
+            'door_window',
+            'furniture',
             'delivery_date',
-            'delivered_by',
             'delivery_notes',
-            'signature_received',
-            'delivery_option'
+            #'signature_received',
+            'delivery_option',
+            'additional_cost',
+            'door_window_detail',
+            'furniture_detail'
         ]
 
-    def validate_product_id(self, value):
-        # Intentar encontrar el producto en ambos modelos
-        try:
-            product = DoorWindow.objects.get(id=value)
-        except DoorWindow.DoesNotExist:
-            try:
-                product = Furniture.objects.get(id=value)
-            except Furniture.DoesNotExist:
-                raise serializers.ValidationError("Producto no encontrado.")
-        
-        return product
+    def get_door_window_detail(self, obj):
+        if obj.door_window:
+            return {
+                'id': str(obj.door_window.id),
+                'product_type': obj.door_window.product_type,
+                'wood_type': obj.door_window.wood_type,
+                'cost_price': str(obj.door_window.cost_price),
+                'is_varnished': obj.door_window.is_varnished,
+                'length': str(obj.door_window.length),
+                'width': str(obj.door_window.width),
+                'is_exterior': obj.door_window.is_exterior,
+                'number_of_sheets': obj.door_window.number_of_sheets,
+            }
+        return None
+
+    def get_furniture_detail(self, obj):
+        if obj.furniture:
+            return {
+                'id': str(obj.furniture.id),
+                'product_type': obj.furniture.product_type,
+                'wood_type': obj.furniture.wood_type,
+                'cost_price': str(obj.furniture.cost_price),
+                'is_varnished': obj.furniture.is_varnished,
+                'piece_name': obj.furniture.piece_name,
+                'weight': str(obj.furniture.weight),
+                'is_part_of_set': obj.furniture.is_part_of_set,
+                'set_name': obj.furniture.set_name,
+            }
+        return None

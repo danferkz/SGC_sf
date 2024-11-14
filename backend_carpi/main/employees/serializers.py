@@ -22,7 +22,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return {
             'id': obj.user.id,
             'username': obj.user.username,
-            'full_name': obj.user.get_full_name(),
             'email': obj.user.email
         }
 
