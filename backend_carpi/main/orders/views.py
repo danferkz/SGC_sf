@@ -1,15 +1,15 @@
-# orders/views.py
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import CreateAPIView
 from .models import Order
 from .serializers import OrderSerializer
-from .total_price import calculate_total_price
+from orders.total_price import calculate_total_price  # Asegúrate de que esta importación sea correcta
 from deliveries.models import Delivery
 from employees.models import Employee
-from products.models import Product  # Asegúrate de que exista un modelo Product con el campo `cost_price`
-from rest_framework.permissions import IsAuthenticated
+from products.models import DoorWindow, Furniture  # Importa los modelos específicos
 
-class OrderViewSet(viewsets.ModelViewSet):
+class OrderCreateAPIView(CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
@@ -22,31 +22,49 @@ class OrderViewSet(viewsets.ModelViewSet):
             employee_id = request.data.get("employee")  # ID del empleado
 
             try:
-                # Obtener el precio de costo del producto
-                product = Product.objects.get(pk=product_id)
-                cost_price = product.cost_price  # Cambiado a cost_price
+                # Primero intenta obtener el producto como DoorWindow
+                product = DoorWindow.objects.get(pk=product_id)
+                cost_price = product.cost_price
 
-                # Obtener el costo adicional de entrega
+            except DoorWindow.DoesNotExist:
+                # Si no se encuentra como DoorWindow, intenta obtenerlo como Furniture
+                try:
+                    product = Furniture.objects.get(pk=product_id)
+                    cost_price = product.cost_price
+                except Furniture.DoesNotExist:
+                    return Response(
+                        {"error": "Product not found"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            # Obtener el costo adicional de entrega
+            try:
                 delivery = Delivery.objects.get(pk=delivery_id)
                 additional_cost = delivery.additional_cost
-
-                # Obtener el empleado
-                employee = Employee.objects.get(pk=employee_id)
-            except (Product.DoesNotExist, Delivery.DoesNotExist, Employee.DoesNotExist):
+            except Delivery.DoesNotExist:
                 return Response(
-                    {"error": "Product, Delivery, or Employee not found"},
+                    {"error": "Delivery not found"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Obtener el empleado
+            try:
+                employee = Employee.objects.get(pk=employee_id)
+            except Employee.DoesNotExist:
+                return Response(
+                    {"error": "Employee not found"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
             # Calcular el precio total usando la función de utils
             total_price = calculate_total_price(cost_price, additional_cost)
 
-            # Crear la orden y guardar `total_price` en la base de datos
+            # Crear la orden y guardar el total calculado
             order = serializer.save(
                 client=request.user,
                 employee=employee,
                 delivery=delivery,
-                total_price=total_price  # Aquí se guarda el total calculado en la base de datos
+                total_price=total_price
             )
             return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 

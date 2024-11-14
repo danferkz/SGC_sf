@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/employees/', include('employees.urls')),  # Incluye las URLs de la aplicación employees
     path('api/products/', include('products.urls')),  # Incluye las URLs de la aplicación products
     path('api/deliveries/', include('deliveries.urls')),  # Incluye las URLs de la aplicación deliveries
+    path('api/orders/', include('orders.urls')),  # Incluye las URLs de la aplicación orders
 
     # Swagger URLs
     #re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

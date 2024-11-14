@@ -1,3 +1,4 @@
+# deliveries/views.py
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .models import Delivery
@@ -45,10 +46,10 @@ class DeliveryCreateView(generics.CreateAPIView):
 
             # Asignar el objeto relacionado correspondiente
             if door_window_id:
-                door_window = get_object_or_404(DoorWindow, id=door_window_id)
+                door_window = get_object_or_404(DoorWindow, product_id=door_window_id)
                 delivery.door_window = door_window
             elif furniture_id:
-                furniture = get_object_or_404(Furniture, id=furniture_id)
+                furniture = get_object_or_404(Furniture, product_id=furniture_id)
                 delivery.furniture = furniture
 
             delivery.save()

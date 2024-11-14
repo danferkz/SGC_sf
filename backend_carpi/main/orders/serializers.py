@@ -6,35 +6,35 @@ from users.models import CustomUser
 from employees.models import Employee
 
 class OrderSerializer(serializers.ModelSerializer):
-    user_detail = serializers.SerializerMethodField()
+    client_detail = serializers.SerializerMethodField()  # Cambiado de user_detail a client_detail
     employee_detail = serializers.SerializerMethodField()
-    delivery_detail = serializers.SerializerMethodField()  # Nuevo campo para detalles de la entrega
+    delivery_detail = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = [
             'orders_id',
-            'user',
-            'user_detail',        # Detalles del usuario
+            'client',               # Campo de cliente en lugar de user
+            'client_detail',        # Detalles del cliente
             'delivery',
-            'delivery_detail',    # Detalles de la entrega
+            'delivery_detail',      # Detalles de la entrega
             'employee',
-            'employee_detail',    # Detalles del empleado
+            'employee_detail',      # Detalles del empleado
             'status',
             'promised_date',
             'total_price'
         ]
-        read_only_fields = ['id', 'total_price']
+        read_only_fields = ['orders_id', 'total_price']
 
-    def get_user_detail(self, obj):
+    def get_client_detail(self, obj):
         """
-        Obtiene los detalles del usuario (CustomUser) que realiza la orden.
+        Obtiene los detalles del cliente (CustomUser) que realiza la orden.
         """
-        user = obj.user
+        client = obj.client  # Aquí usamos client, no user
         return {
-            "id": user.id,
-            "username": user.username,
-            "email": user.email,
+            "id": client.id,
+            "username": client.username,
+            "email": client.email,
         }
 
     def get_employee_detail(self, obj):
@@ -59,11 +59,3 @@ class OrderSerializer(serializers.ModelSerializer):
             "additional_cost": delivery.additional_cost,
             # Incluye otros campos de Delivery según sea necesario
         }
-
-    def validate_user(self, value):
-        """
-        Valida que el usuario sea un cliente.
-        """
-        if not value.is_client:
-            raise serializers.ValidationError("El usuario debe ser un cliente.")
-        return value
