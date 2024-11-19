@@ -65,7 +65,6 @@
               <input id="false" type="radio" v-model="formData.exterior" value="No"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="false" class="ml-3 block text-sm font-medium text-gray-700">No</label>
->>>>>>> bb9e428229ee005320fd81ac22b07818d6fcc916
             </div>
           </div>
         </div>
