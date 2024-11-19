@@ -41,3 +41,9 @@ class EmployeeCreateView(generics.CreateAPIView):
                 {'detail': e.detail},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+# listar empleados
+class EmployeeListView(generics.ListAPIView):
+    serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    queryset = Employee.objects.all()
