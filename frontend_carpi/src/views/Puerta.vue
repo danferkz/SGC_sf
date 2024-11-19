@@ -1,6 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
+    <!-- Componente Header añadido aquí -->
     <Header />
+    
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
@@ -17,7 +19,8 @@
             <option value="Caoba">Caoba - S/. 180</option>
           </select>
         </div>
-        <!-- Barnizado-->
+
+        <!-- Barnizado -->
         <div>
           <label class="block text-sm font-medium text-gray-700">Barnizado</label>
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
@@ -33,6 +36,7 @@
             </div>
           </div>
         </div>
+
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -47,7 +51,7 @@
           </div>
         </div>
 
-        <!-- Exteriores -->
+        <!-- Exterior -->
         <div>
           <label class="block text-sm font-medium text-gray-700">Exterior</label>
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
@@ -64,8 +68,8 @@
           </div>
         </div>
 
-       <!-- Número de hojas -->
-       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Número de hojas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="number_of_sheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
@@ -156,8 +160,7 @@ export default {
       return localStorage.getItem('token');
     };
 
-    // Crear el producto a través de la API(Johanna)
-
+    // Crear el producto a través de la API
     const createProduct = async () => {
       try {
         const token = getToken();
@@ -246,5 +249,5 @@ export default {
 </script>
 
 <style scoped>
-
+/* Estilos específicos si los necesitas */
 </style>
