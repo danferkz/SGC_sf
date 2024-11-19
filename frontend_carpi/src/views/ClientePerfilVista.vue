@@ -1,306 +1,276 @@
 <template>
-    <div class="min-h-screen bg-gray-100">
-        <HeaderValid />
-        <main>
-            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <div class="bg-white shadow sm:rounded-lg">
-                    <div class="px-4 py-5 sm:px-6">
-                        <div class="flex items-center">
-                            <div class="avatar">
-                                <div class="w-24 rounded">
-                                    <img src="../assets/usuario_log.png" alt="Usuario" />
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <div v-if="currentUser">
-                                    <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                                        {{ currentUser.username || "Usuario" }}
-                                    </h1>
-                                    <p class="text-sm font-medium text-gray-500">
-                                        {{ currentUser.email || "email@example.com" }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-t border-gray-200">
-                        <dl class="divide-y divide-gray-200">
-                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                    </svg>
-                                    Teléfono
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ currentUser?.phone || "No disponible" }}
-                                </dd>
-                            </div>
-                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-                                    </svg>
-                                    DNI
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ currentUser?.dni || "No disponible" }}
-                                </dd>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                    Sexo
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ currentUser?.sex || "No disponible" }}
-                                </dd>
-                            </div>
-                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                    </svg>
-                                    Dirección
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ currentUser?.address || "No disponible" }}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <button @click="openModal('update')"
-                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Actualizar Perfil
-                    </button>
-                    <button @click="openModal('password')"
-                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                        Cambiar Contraseña
-                    </button>
-                    <button @click="openModal('delete')"
-                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                        Eliminar Cuenta
-                    </button>
-                    <button @click="handleLogout"
-                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                        Cerrar Sesión
-                    </button>
-                </div>
+    <div class="min-h-screen bg-gray-100 text-gray-800">
+      <!-- Header General -->
+      <Header />
+  
+      <div class="max-w-4xl mx-auto mt-8">
+        <!-- Profile Card -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
+              <UserIcon class="w-12 h-12 text-gray-500" />
             </div>
-        </main>
-
-        <!-- Modal -->
-        <dialog id="my_modal" class="modal">
-            <div class="modal-box">
-                <h3 class="text-lg font-bold" id="modal-title">{{ modalTitle }}</h3>
-                
-                <!-- Update Profile Form -->
-                <form v-if="modalType === 'update'" @submit.prevent="handleUpdateSubmit" class="space-y-4">
-                    <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
-                        <input type="text" id="username" v-model="userData.username"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-                        <input type="email" id="email" v-model="userData.email"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input type="text" id="phone" v-model="userData.phone" @input="validatePhone"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                        <p v-if="phoneError" class="text-red-600 text-sm">{{ phoneError }}</p>
-                    </div>
-                    <div>
-                        <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
-                        <input type="text" id="dni" v-model="userData.dni" @input="validateDNI"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                        <p v-if="dniError" class="text-red-600 text-sm">{{ dniError }}</p>
-                    </div>
-                    <div>
-                        <label for="sex" class="block text-sm font-medium text-gray-700">Sexo</label>
-                        <select id="sex" v-model="userData.sex"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="" disabled selected>Selecciona</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700">Dirección</label>
-                        <input type="text" id="address" v-model="userData.address"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="button" @click="closeModal" class="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Cancelar
-                        </button>
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Guardar Cambios
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Change Password Form -->
-                <form v-if="modalType === 'password'" @submit.prevent="handlePasswordSubmit" class="space-y-4">
-                    <div>
-                        <label for="old-password" class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
-                        <input type="password" id="old-password" v-model="passwordData.oldPassword"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div>
-                        <label for="new-password" class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
-                        <input type="password" id="new-password" v-model="passwordData.newPassword"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div>
-                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirmar Nueva Contraseña</label>
-                        <input type="password" id="confirm-password" v-model="passwordData.confirmPassword"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required>
-                    </div>
-                    <div class="flex justify-end">
-                        <button type="button" @click="closeModal" class="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Cancelar
-                        </button>
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Cambiar Contraseña
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Delete Account Confirmation -->
-                <div v-if="modalType === 'delete'" class="space-y-4">
-                    <p>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.</p>
-                    <div class="flex justify-end">
-                        <button type="button" @click="closeModal" class="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Cancelar
-                        </button>
-                        <button @click="handleDelete" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                            Eliminar Cuenta
-                        </button>
-                    </div>
-                </div>
+            <div>
+              <h2 class="text-2xl font-bold">{{ user.name }}</h2>
+              <p class="text-gray-600">{{ user.email }}</p>
             </div>
-            <div class="modal-action">
-                <button @click="closeModal" class="btn">Cerrar</button>
+          </div>
+  
+          <!-- Profile Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="flex items-center gap-4">
+              <PhoneIcon class="w-5 h-5 text-gray-500" />
+              <span class="font-medium">Teléfono:</span>
+              <span class="text-gray-600">{{ user.phone || 'No disponible' }}</span>
             </div>
-        </dialog>
+            <div class="flex items-center gap-4">
+              <CreditCardIcon class="w-5 h-5 text-gray-500" />
+              <span class="font-medium">DNI:</span>
+              <span class="text-gray-600">{{ user.dni || 'No disponible' }}</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <UserIcon class="w-5 h-5 text-gray-500" />
+              <span class="font-medium">Sexo:</span>
+              <span class="text-gray-600">{{ user.gender || 'No disponible' }}</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <HomeIcon class="w-5 h-5 text-gray-500" />
+              <span class="font-medium">Dirección:</span>
+              <span class="text-gray-600">{{ user.address || 'No disponible' }}</span>
+            </div>
+          </div>
+  
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap gap-4">
+            <button @click="openModal('updateProfile')" class="btn btn-primary">Actualizar Perfil</button>
+            <button @click="openModal('changePassword')" class="btn btn-warning">Cambiar Contraseña</button>
+            <button @click="openModal('deleteAccount')" class="btn btn-error">Eliminar Cuenta</button>
+            <button @click="openModal('logout')" class="btn">Cerrar Sesión</button>
+          </div>
+        </div>
+  
+        <!-- Orders Table -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-bold mb-4">Pedidos Realizados</h3>
+          <div class="overflow-x-auto">
+            <table class="table w-full">
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="text-left p-2">Cantidad</th>
+                  <th class="text-left p-2">Tipo de Producto</th>
+                  <th class="text-left p-2">Precio</th>
+                  <th class="text-left p-2">Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="order in orders" :key="order.id" class="border-b">
+                  <td class="p-2">{{ order.quantity }}</td>
+                  <td class="p-2">{{ order.productType }}</td>
+                  <td class="p-2">S/. {{ order.price.toFixed(2) }}</td>
+                  <td class="p-2">
+                    <span 
+                      class="px-2 py-1 rounded-full text-sm font-medium"
+                      :class="{
+                        'bg-green-100 text-green-800': order.status === 'Completado',
+                        'bg-yellow-100 text-yellow-800': order.status === 'Pendiente',
+                        'bg-blue-100 text-blue-800': order.status === 'En Proceso'
+                      }"
+                    >
+                      {{ order.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Modals -->
+      <div v-if="showModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+          <h3 class="text-xl font-bold mb-4">{{ modalTitle }}</h3>
+          
+          <!-- Update Profile Modal -->
+          <div v-if="currentAction === 'updateProfile'">
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
+              <input v-model="userData.username" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+              <input v-model="userData.email" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+              <input v-model="userData.phone" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">DNI</label>
+              <input v-model="userData.dni" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Sexo</label>
+              <select v-model="userData.sex" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="">Selecciona</option>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Dirección</label>
+              <input v-model="userData.address" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+          </div>
+  
+          <!-- Change Password Modal -->
+          <div v-if="currentAction === 'changePassword'">
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+              <input v-model="passwordData.oldPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+              <input v-model="passwordData.newPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700">Confirmar Nueva Contraseña</label>
+              <input v-model="passwordData.confirmPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+          </div>
+  
+          <!-- Delete Account and Logout Modals -->
+          <p v-if="currentAction === 'deleteAccount' || currentAction === 'logout'" class="mb-6">{{ modalMessage }}</p>
+  
+          <div class="flex justify-end gap-4">
+            <button @click="closeModal" class="btn btn-secondary">Cancelar</button>
+            <button @click="handleAction" class="btn btn-primary">{{ modalAction }}</button>
+          </div>
+        </div>
+      </div>
     </div>
-</template>
-
-<script>
-import HeaderValid from "@/components/HeaderCompo.vue";
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex'; // Importa useStore para acceder al store
-
-export default {
-    components: {
-        HeaderValid,
-    },
-    data() {
-        return {
-            currentUser: {}, // Reemplaza con los datos del usuario actual
-            modalType: '',
-            modalTitle: '',
-            userData: {
-                username: '',
-                email: '',
-                phone: '',
-                dni: '',
-                sex: '',
-                address: '',
-            },
-            passwordData: {
-                oldPassword: '',
-                newPassword: '',
-                confirmPassword: '',
-            },
-            phoneError: '',
-            dniError: '',
-        };
-    },
-    methods: {
-        openModal(type) {
-            this.modalType = type;
-            this.modalTitle = type === 'update' ? 'Actualizar Perfil' : type === 'password' ? 'Cambiar Contraseña' : 'Eliminar Cuenta';
-            if (type === 'update') {
-                this.loadUserData(); // Cargar datos del usuario actual
-            }
-            const modal = document.getElementById('my_modal');
-            modal.showModal();
-        },
-        closeModal() {
-            this.modalType = '';
-            this.phoneError = '';
-            this.dniError = '';
-            this.userData = { username: '', email: '', phone: '', dni: '', sex: '', address: '' }; // Resetear datos
-            this.passwordData = { oldPassword: '', newPassword: '', confirmPassword: '' }; // Resetear contraseña
-            const modal = document.getElementById('my_modal');
-            modal.close();
-        },
-        validatePhone() {
-            const phonePattern = /^[0-9]{9}$/; // Asegúrate de que el número tenga exactamente 9 dígitos
-            this.phoneError = phonePattern.test(this.userData.phone) ? '' : 'El teléfono debe tener 9 dígitos.';
-        },
-        validateDNI() {
-            const dniPattern = /^[0-9]{8}$/; // Asegúrate de que el DNI tenga exactamente 8 números
-            this.dniError = dniPattern.test(this.userData.dni) ? '' : 'El DNI debe tener 8 dígitos.';
-        },
-        handleUpdateSubmit() {
-            if (!this.phoneError && !this.dniError) {
-                // Aquí va la lógica para actualizar el perfil
-                console.log('Actualizando perfil...', this.userData);
-                this.closeModal();
-            }
-        },
-        handlePasswordSubmit() {
-            // Aquí va la lógica para cambiar la contraseña
-            console.log('Cambiando contraseña...', this.passwordData);
-            this.closeModal();
-        },
-        handleDelete() {
-            // Aquí va la lógica para eliminar la cuenta
-            console.log('Eliminando cuenta...');
-            this.closeModal();
-        },
-        handleLogout() {
-            // Aquí va la lógica para cerrar sesión
-            console.log('Cerrando sesión...');
-        },
-        loadUserData() {
-            // Simulando la carga de datos del usuario
-            this.userData = {
-                username: this.currentUser.username || '',
-                email: this.currentUser.email || '',
-                phone: this.currentUser.phone || '',
-                dni: this.currentUser.dni || '',
-                sex: this.currentUser.sex || '',
-                address: this.currentUser.address || '',
-            };
-        },
-    },
-};
-</script>
-
-<style scoped>
-/* Puedes añadir aquí tus estilos */
-</style>
+  </template>
+  
+  <script setup>
+  // añade que se recarge una vez para actualizr los datos
+  import { ref, onMounted } from 'vue'
+  import { useRouter } from 'vue-router' 
+  import { UserIcon, PhoneIcon, CreditCardIcon, HomeIcon } from 'lucide-vue-next'
+  import Header from '@/components/HeaderCompo.vue'
+  
+  const router = useRouter()
+  
+  //onMounted(() => {
+    // Verificamos si ya se ha recargado usando localStorage
+  //  const hasReloaded = localStorage.getItem('hasPageReloaded')
+    
+  //  if (!hasReloaded) {
+      // Establecemos la bandera antes de recargar
+  //    localStorage.setItem('hasPageReloaded', 'true')
+      // Recargamos la página
+  //    window.location.reload()
+  //  } else {
+      // Limpiamos la bandera para la próxima vez
+  //    localStorage.removeItem('hasPageReloaded')
+  //  }
+  //})
+  
+  const user = ref({
+    name: 'Usuario',
+    email: 'email@example.com',
+    phone: 'No disponible',
+    dni: 'No disponible',
+    gender: 'No disponible',
+    address: 'No disponible'
+  })
+  
+  const orders = ref([
+    { id: 1, quantity: 2, productType: 'Puerta', price: 180.00, status: 'Completado' },
+  ])
+  
+  const showModal = ref(false)
+  const modalTitle = ref('')
+  const modalMessage = ref('')
+  const modalAction = ref('')
+  const currentAction = ref('')
+  
+  const userData = ref({
+    username: '',
+    email: '',
+    phone: '',
+    dni: '',
+    sex: '',
+    address: ''
+  })
+  
+  const passwordData = ref({
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  })
+  
+  const openModal = (action) => {
+    currentAction.value = action
+  
+    switch (action) {
+      case 'updateProfile':
+        modalTitle.value = 'Actualizar Perfil'
+        modalAction.value = 'Actualizar'
+        break
+      case 'changePassword':
+        modalTitle.value = 'Cambiar Contraseña'
+        modalAction.value = 'Cambiar'
+        break
+      case 'deleteAccount':
+        modalTitle.value = 'Eliminar Cuenta'
+        modalMessage.value = '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.'
+        modalAction.value = 'Eliminar'
+        break
+      case 'logout':
+        modalTitle.value = 'Cerrar Sesión'
+        modalMessage.value = '¿Estás seguro de que quieres cerrar sesión?'
+        modalAction.value = 'Cerrar'
+        break
+    }
+    showModal.value = true
+  }
+  
+  const closeModal = () => {
+    showModal.value = false
+    currentAction.value = ''
+    userData.value = { username: '', email: '', phone: '', dni: '', sex: '', address: '' }
+    passwordData.value = { oldPassword: '', newPassword: '', confirmPassword: '' }
+  }
+  
+  const handleAction = () => {
+    switch (currentAction.value) {
+      case 'updateProfile':
+        console.log('Perfil actualizado', userData.value)
+        // Aquí iría la lógica para actualizar el perfil en el backend
+        break
+      case 'changePassword':
+        console.log('Contraseña cambiada', passwordData.value)
+        // Aquí iría la lógica para cambiar la contraseña en el backend
+        break
+      case 'deleteAccount':
+        console.log('Cuenta eliminada')
+        // Aquí iría la lógica para eliminar la cuenta en el backend
+        break
+      case 'logout':
+        console.log('Sesión cerrada')
+        // Aquí iría la lógica para cerrar sesión
+        break
+    }
+    closeModal()
+  }
+  </script>
+  
+  <style scoped>
+  .fixed {
+    position: fixed;
+  }
+  .bg-gray-500 {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  </style>
