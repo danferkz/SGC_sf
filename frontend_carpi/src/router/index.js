@@ -18,7 +18,9 @@ import GestionAdmin from '../views/GestionAdminView.vue'
 import ClienteDashboard from '@/views/ClienteDashboard.vue';
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
 import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
-import AdminDashboard from '@/views/AdminDashboard.vue';
+import AdminDashboard from '../views/AdminDashboard.vue';
+import DeliveryView from '@/views/DeliveryView.vue';
+
 
 
 
@@ -119,6 +121,11 @@ const router = createRouter({
       path: '/admindashboard', // Ruta de comodín para capturar todas las rutas no definidas
       name: 'AdminDashboard',
       component: AdminDashboard
+    },
+    {
+      path: '/delivery', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'Delivery',
+      component: DeliveryView
     }
   ]
 })
