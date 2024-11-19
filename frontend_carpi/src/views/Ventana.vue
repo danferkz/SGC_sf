@@ -151,13 +151,7 @@
           </div>
         </div>
       </div>
-
-      <!-- Mensaje de Éxito o Error -->
-      <div v-if="message" :class="['mt-4 text-center', messageClass]">
-        {{ message }}
-      </div>
     </div>
-    <Footer />
   </div>
 </template>
 
