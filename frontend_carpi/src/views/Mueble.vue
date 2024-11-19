@@ -88,11 +88,23 @@
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
         </div>
 
-        <!-- Comentarios Adicionales -->
-        <div>
-          <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios Adicionales</label>
-          <textarea id="comments" v-model="formData.comments" rows="3"
-            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md"></textarea>
+        <!-- Nuevos botones: Validar Datos y Calcular Precio -->
+        <div class="flex justify-between items-center mt-6">
+          <button type="button" @click="handleValidate"
+            class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+            Validar Datos
+          </button>
+          <div class="flex items-center space-x-2">
+            <button type="button" @click="handleCalculatePrice"
+              class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+              Calcular Precio
+            </button>
+            <div class="flex items-center">
+              <span class="mr-1">S/</span>
+              <input type="number" v-model="price" placeholder="Precio en soles" readonly
+                class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
+            </div>
+          </div>
         </div>
 
         <!-- Botón de Envío -->
