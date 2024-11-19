@@ -51,7 +51,7 @@
         </div>
 
         <!-- Color -->
-        <div>
+        <!-- <div>
           <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
           <div class="mt-1 flex items-center space-x-3">
             <span class="inline-block h-8 w-8 rounded-full border" :style="{ backgroundColor: formData.color }"></span>
@@ -60,7 +60,7 @@
             <input type="text" v-model="formData.color"
               class="flex-1 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
-        </div>
+        </div> -->
 
         <!-- Herrajes -->
         <div>
