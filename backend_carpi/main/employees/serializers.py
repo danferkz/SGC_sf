@@ -10,7 +10,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = [
-            'id',
+            'employee_id',
             'user_id',
             'user_data',  # Mostrará información detallada del usuario
             'hire_date',
@@ -22,7 +22,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return {
             'id': obj.user.id,
             'username': obj.user.username,
-            'full_name': obj.user.get_full_name(),
             'email': obj.user.email
         }
 

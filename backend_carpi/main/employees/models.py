@@ -2,8 +2,15 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils import timezone
+import uuid
 
 class Employee(models.Model):
+    employee_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        verbose_name='ID de Empleado'
+    )
     user = models.OneToOneField(
         CustomUser,  # Ahora sí hacemos referencia directa a CustomUser
         on_delete=models.CASCADE,

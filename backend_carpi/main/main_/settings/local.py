@@ -15,6 +15,32 @@ DATABASES = {
 
 
 '''
+import logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'sql_formatter',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+    'formatters': {
+        'sql_formatter': {
+            'format': '%(asctime)s %(name)s %(levelname)s %(message)s %(duration).3fms',
+        },
+    },
+}
+
+
+
 
 DATABASES = {
     'default': {

@@ -1,39 +1,61 @@
 # orders/serializers.py
 from rest_framework import serializers
-from .models import Order, OrderItem
-from users.models import CustomUser
+from .models import Order
+from deliveries.models import Delivery
+from users.models import CustomUser  
 from employees.models import Employee
-from django.utils import timezone
 
 class OrderSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.filter(is_client=True))
-    employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
-    order_items = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    
+    client_detail = serializers.SerializerMethodField()  # Cambiado de user_detail a client_detail
+    employee_detail = serializers.SerializerMethodField()
+    delivery_detail = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ['id', 'client', 'employee', 'status', 'promised_date', 'home_delivery', 'order_items']
-    
-    def validate_status(self, value):
-        if value not in dict(Order.STATUS_CHOICES):
-            raise serializers.ValidationError("Estado inválido.")
-        return value
+        fields = [
+            'orders_id',
+            'client',               # Campo de cliente en lugar de user
+            'client_detail',        # Detalles del cliente
+            'delivery',
+            'delivery_detail',      # Detalles de la entrega
+            'employee',
+            'employee_detail',      # Detalles del empleado
+            'status',
+            'promised_date',
+            'total_price'
+        ]
+        read_only_fields = ['orders_id', 'total_price']
 
-    def validate_promised_date(self, value):
-        if value < timezone.now().date():
-            raise serializers.ValidationError("La fecha prometida no puede ser en el pasado.")
-        return value
+    def get_client_detail(self, obj):
+        """
+        Obtiene los detalles del cliente (CustomUser) que realiza la orden.
+        """
+        client = obj.client  # Aquí usamos client, no user
+        return {
+            "id": client.id,
+            "username": client.username,
+            "email": client.email,
+        }
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
-    
-    class Meta:
-        model = OrderItem
-        fields = ['id', 'order', 'product', 'product_furniture', 'quantity', 'price']
-    
-    def validate(self, data):
-        if not data.get('product') and not data.get('product_furniture'):
-            raise serializers.ValidationError("Debes seleccionar un producto o un mueble.")
-        if data.get('product') and data.get('product_furniture'):
-            raise serializers.ValidationError("Solo puedes seleccionar un producto o un mueble, no ambos.")
-        return data
+    def get_employee_detail(self, obj):
+        """
+        Obtiene los detalles del empleado asignado a la orden.
+        """
+        employee = obj.employee
+        return {
+            "employee_id": employee.employee_id,
+            "specialty": employee.specialty,
+        }
+
+    def get_delivery_detail(self, obj):
+        """
+        Obtiene los detalles de la entrega asociada a la orden.
+        """
+        delivery = obj.delivery
+        return {
+            "delivery_id": delivery.delivery_id,
+            "delivery_option": delivery.delivery_option,
+            "delivery_date": delivery.delivery_date,
+            "additional_cost": delivery.additional_cost,
+            # Incluye otros campos de Delivery según sea necesario
+        }
