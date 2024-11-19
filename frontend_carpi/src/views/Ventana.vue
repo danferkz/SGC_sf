@@ -155,8 +155,10 @@
   </div>
 </template>
 
-<script setup>
-import { ref, reactive } from 'vue'
+<script>
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import Header from '@/components/HeaderCompo.vue' // Importa el componente Header
 
 const formData = reactive({
   windowType: '',
