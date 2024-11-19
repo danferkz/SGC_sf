@@ -166,45 +166,73 @@ import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router' // Importar el enrutador
 import Header from '@/components/HeaderCompo.vue'
 
-export default {
-  name: 'SofaCustomizationForm',
-  components: {
-    Header,
-    Footer, // Aquí estamos importando el Footer
+const formData = reactive({
+  woodType: '',
+  varnished: '',
+  sofaType: '',
+  is_part_of_set: '',
+  features: {
+    reclinable: false,
+    cojinesExtraibles: false,
+    reposacabezas: false,
+    camaConvertible: false,
   },
-  data() {
-    return {
-      formData: {
-        sofaType: '',
-        dimensions: {
-          width: '',
-          depth: '',
-          height: ''
-        },
-        upholsteryMaterial: '',
-        color: '#000000',
-        legStyle: '',
-        features: {
-          reclinable: false,
-          cojinesExtraibles: false,
-          reposacabezas: false,
-          camaConvertible: false,
-        },
-        comments: '',
-      },
-    };
+  dimensions: {
+    weight: '',
   },
-  methods: {
-    handleSubmit() {
-      console.log('Datos del formulario:', this.formData);
-    },
-  },
-};
-</script>
+  upholsteryMaterial: '',
+  
+  set_name: '',
+  comments: '',
+})
 
+const price = ref(0)
+const showValidatedWindow = ref(false)
+const showOrderWindow = ref(false)  // Nueva ventana
+const isDelivery = ref(false)
 
-<style scoped>
-textarea {
-  resize: none; /* Desactiva el redimensionamiento */
+const woodPrices = reactive({
+  Pino: 100,
+  Roble: 150,
+  Cedro: 200,
+  Caoba: 180,
+})
+
+// Computed property to calculate total price
+const totalPrice = computed(() => {
+  let basePrice = woodPrices[formData.sofaType] || 0;
+  let deliveryPrice = isDelivery.value ? 15 : 0;
+  return basePrice + deliveryPrice;
+})
+
+const router = useRouter() // Usar el enrutador de Vue
+
+const handleFinalizeOrder = () => {
+  //showOrderWindow.value = true;  // Muestra la ventana de la orden
 }
-</style>
+
+const handleSubmit = () => {
+  alert('Pedido enviado correctamente');
+}
+
+const handleValidate = () => {
+  showValidatedWindow.value = true;  // Muestra la ventana de validación
+}
+
+const handleCalculatePrice = () => {
+  let basePrice = woodPrices[formData.woodType] || 0;
+  price.value = basePrice;
+}
+
+const finalizeOrder = () => {
+      alert(`Pedido confirmado. Precio total: S/${totalPrice.value}`)
+      showOrderWindow.value = false
+      router.push({ name: 'ClientePerfil' }) // Redirigir a la página de ClientePerfil
+}
+
+const submitOrder = () => {
+      showValidatedWindow.value = false
+      showOrderWindow.value = true
+      router.push({ name: 'Delivery' });
+}
+</script>
