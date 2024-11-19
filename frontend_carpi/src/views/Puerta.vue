@@ -64,68 +64,20 @@
           </div>
         </div>
 
-        <!-- Estilo de Puerta -->
-        <div class="space-y-2">
-          <label class="block text-lg font-medium text-gray-700">Estilo de Puerta</label>
-          <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-8">
-            <div class="flex items-center">
-              <input id="simple" type="radio" v-model="formData.doorStyle" value="simple"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300">
-              <label for="simple" class="ml-3 block text-lg font-medium text-gray-700">Simple</label>
-            </div>
-            <div class="flex items-center">
-              <input id="paneled" type="radio" v-model="formData.doorStyle" value="paneled"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300">
-              <label for="paneled" class="ml-3 block text-lg font-medium text-gray-700">Con Paneles</label>
-            </div>
-            <div class="flex items-center">
-              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300">
-              <label for="glasspane" class="ml-3 block text-lg font-medium text-gray-700">Con Vidrio</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Acabado -->
-        <div class="space-y-2">
-          <label for="finish" class="block text-lg font-medium text-gray-700">Acabado</label>
-          <select id="finish" v-model="formData.finish" required
-            class="block w-full py-3 px-4 border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg">
-            <option value="">Selecciona un acabado</option>
-            <option value="natural">Natural</option>
-            <option value="mate">Mate</option>
-            <option value="brillante">Brillante</option>
-            <option value="satinado">Satinado</option>
-          </select>
-        </div>
-
-        <!-- Herrajes -->
-        <div class="space-y-2">
-          <label class="block text-lg font-medium text-gray-700">Herrajes</label>
-          <div class="space-y-3">
-            <div class="flex items-center">
-              <input id="doorknob" type="checkbox" v-model="formData.hardware.doorknob"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300 rounded-lg">
-              <label for="doorknob" class="ml-3 block text-lg font-medium text-gray-700">Pomo</label>
-            </div>
-            <div class="flex items-center">
-              <input id="lock" type="checkbox" v-model="formData.hardware.lock"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300 rounded-lg">
-              <label for="lock" class="ml-3 block text-lg font-medium text-gray-700">Cerradura</label>
-            </div>
-            <div class="flex items-center">
-              <input id="hinges" type="checkbox" v-model="formData.hardware.hinges"
-                class="focus:ring-amber-500 h-5 w-5 text-amber-600 border-gray-300 rounded-lg">
-              <label for="hinges" class="ml-3 block text-lg font-medium text-gray-700">Bisagras</label>
-            </div>
+       <!-- Número de hojas -->
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="number_of_sheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
+            <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
         </div>
 
         <!-- Comentarios Adicionales -->
-        <div class="space-y-2">
-          <label for="comments" class="block text-lg font-medium text-gray-700">Comentarios Adicionales</label>
-          <textarea id="comments" v-model="formData.comments" rows="4"
-            class="block w-full py-3 px-4 border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg"></textarea>
+        <div>
+          <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios Adicionales</label>
+          <textarea id="comments" v-model="formData.comments" rows="3"
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
         </div>
 
         <!-- Botón de Envío -->
