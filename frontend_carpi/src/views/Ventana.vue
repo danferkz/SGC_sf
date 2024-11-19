@@ -74,37 +74,9 @@
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
-          <!--<div>
-            <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
-            <input type="number" id="width" v-model="formData.width" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
-          </div> -->
         </div>
 
-        <!-- Herrajes -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Herrajes</label>
-          <div class="mt-2 space-y-2">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="handle" type="checkbox" v-model="formData.hardware.handle"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="handle" class="font-medium text-gray-700">Manija</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="lock" type="checkbox" v-model="formData.hardware.lock"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="lock" class="font-medium text-gray-700">Cerradura</label>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         <!-- Comentarios Adicionales -->
         <div>
