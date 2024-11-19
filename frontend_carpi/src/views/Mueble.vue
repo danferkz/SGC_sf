@@ -32,12 +32,20 @@
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="no_varnished" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
-            <!--<div class="flex items-center">
-              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="glasspane" class="ml-3 block text-sm font-medium text-gray-700">Con Vidrio</label>
-            </div> -->
           </div>
+        </div>
+
+        <!-- Tipo de Sofá -->
+        <div>
+          <label for="sofaType" class="block text-sm font-medium text-gray-700">Tipo de Sofá</label>
+          <select id="sofaType" v-model="formData.sofaType" required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
+            <option value="">Selecciona un tipo de sofá</option>
+            <option value="Modular">Modular</option>
+            <option value="Seccional">Seccional</option>
+            <option value="Sofacama">Sofá Cama</option>
+            <option value="Reclinable">Reclinable</option>
+          </select>
         </div>
 
         <!-- Material de Tapicería -->
