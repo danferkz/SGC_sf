@@ -72,13 +72,14 @@ const errorMessage = ref(''); // Para manejar errores
 
 const handleLogin = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/api/users/clients/login/', {
+        const response = await axios.post('http://127.0.0.1:8000/api/users/login/client/', {
             username: username.value,
             password: password.value,
         });
         
         // Maneja la respuesta y almacena el token
         const { access } = response.data; // Solo se necesita el token de acceso
+        console.log('Token:', access); // Mostrar el token en la consola
         localStorage.setItem('token', access);
         
         // Redirigir después de un inicio de sesión exitoso
