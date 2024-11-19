@@ -57,15 +57,25 @@
           </div>
         </div>
 
-        <!-- Color -->
+        <!-- Parte del Set -->
         <div>
-          <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
-          <div class="mt-1 flex items-center space-x-3">
-            <span class="inline-block h-8 w-8 rounded-full border" :style="{ backgroundColor: formData.color }"></span>
-            <input type="color" id="color" v-model="formData.color"
-              class="h-8 w-8 border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
-            <input type="text" v-model="formData.color"
-              class="flex-1 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
+          <label class="block text-sm font-medium text-gray-700">Parte del Set</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="true" type="radio" v-model="formData.is_part_of_set" value="Sí"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="true" class="ml-3 block text-sm font-medium text-gray-700">Sí</label>
+            </div>
+            <div class="flex items-center">
+              <input id="false" type="radio" v-model="formData.is_part_of_set" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="false" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
+            <!-- <div class="flex items-center">
+              <input id="plastico" type="radio" v-model="formData.legStyle" value="plástico"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="plastico" class="ml-3 block text-sm font-medium text-gray-700">Plástico</label>
+            </div> -->
           </div>
         </div>
 
