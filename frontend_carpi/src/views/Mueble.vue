@@ -132,6 +132,32 @@
         </div>
       </div>
 
+      <!-- Nueva ventana modal de orden -->
+      <div v-if="showOrderWindow" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <h3 class="text-xl font-bold mb-4 text-center">Orden</h3>
+          <div class="space-y-4">
+            <p><strong>Tipo de Sofá:</strong> {{ formData.sofaType }}</p>
+            <p><strong>Largo:</strong> {{ formData.dimensions.height }} cm</p>
+            <p><strong>Ancho:</strong> {{ formData.dimensions.width }} cm</p>
+            <p><strong>Profundidad:</strong> {{ formData.dimensions.depth }} cm</p>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="delivery" v-model="isDelivery" class="rounded text-amber-600 focus:ring-amber-500">
+              <label for="delivery">Delivery (S/ 15)</label>
+            </div>
+            <p><strong>Precio Total:</strong> S/{{ totalPrice }}</p>
+          </div>
+          <div class="mt-4 flex justify-center space-x-4">
+            <button @click="showOrderWindow = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">
+              Cancelar
+            </button>
+            <button @click="finalizeOrder" class="px-4 py-2 bg-amber-600 text-white rounded-md">
+              Confirmar Pedido
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
     <Footer />
   </div>
