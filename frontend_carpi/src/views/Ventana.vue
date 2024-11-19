@@ -50,17 +50,21 @@
           </div>
         </div>
 
-        <!-- Tipo de Vidrio -->
+        <!-- Exterior -->
         <div>
-          <label for="glassType" class="block text-sm font-medium text-gray-700">Tipo de Vidrio</label>
-          <select id="glassType" v-model="formData.glassType" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
-            <option value="">Selecciona un tipo de vidrio</option>
-            <option value="templado">Templado</option>
-            <option value="laminado">Laminado</option>
-            <option value="doble">Doble Cristal</option>
-            <option value="reflectante">Reflectante</option>
-          </select>
+          <label class="block text-sm font-medium text-gray-700">Exterior</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="true" type="radio" v-model="formData.exterior" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="true" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
+            </div>
+            <div class="flex items-center">
+              <input id="false" type="radio" v-model="formData.exterior" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="false" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
+          </div>
         </div>
 
         <!-- Color -->
