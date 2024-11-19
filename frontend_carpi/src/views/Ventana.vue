@@ -160,48 +160,78 @@ import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Header from '@/components/HeaderCompo.vue' // Importa el componente Header
 
-const formData = reactive({
-  windowType: '',
-  height: 120,
-  width: 100,
-  glassType: '',
-  color: '#FFFFFF',
-  hardware: {
-    handle: false,
-    lock: false,
+export default {
+  components: {
+    Header, // Declara el componente Header
   },
-  comments: ''
-})
+  setup() {
+    const formData = reactive({
+      windowType: '',
+      varnished: '',
+      length: '',
+      width: '',
+      exterior: '',
+      finish: '',
+      exterior: '',
+      comments: '',
+    })
 
-const message = ref('')
-const messageClass = ref('')
+    const price = ref(0)
+    const showValidatedWindow = ref(false)
+    const showOrderWindow = ref(false)
+    const isDelivery = ref(false)
 
-const validateForm = () => {
-  if (!formData.windowType) return 'Selecciona un tipo de ventana.'
-  if (!formData.glassType) return 'Selecciona un tipo de vidrio.'
-  return ''
+    const router = useRouter()
+
+    const windowPrices = {
+      Corrediza: 100,
+      Abatible: 150,
+      Batiente: 200,
+      Plegable: 180,
+    }
+
+    const handleValidate = () => {
+      showValidatedWindow.value = true
+    }
+
+    const handleCalculatePrice = () => {
+      price.value = windowPrices[formData.windowType] || 0
+    }
+
+    const submitOrder = () => {
+      showValidatedWindow.value = false
+      showOrderWindow.value = true
+      router.push({ name: 'Delivery' });
+    }
+
+    const totalPrice = computed(() => {
+      return isDelivery.value ? price.value + 15 : price.value
+    })
+
+    const finalizeOrder = () => {
+      alert(`Pedido confirmado. Precio total: S/${totalPrice.value}`)
+      showOrderWindow.value = false
+      router.push({ name: 'ClientePerfil' })
+    }
+
+    return {
+      formData,
+      price,
+      showValidatedWindow,
+      showOrderWindow,
+      isDelivery,
+      handleValidate,
+      handleCalculatePrice,
+      submitOrder,
+      totalPrice,
+      finalizeOrder,
+    }
+  },
 }
-
-const handleSubmit = () => {
-  const validationError = validateForm()
-  if (validationError) {
-    message.value = validationError
-    messageClass.value = 'text-red-600'
-  } else {
-    message.value = '¡Pedido realizado con éxito!'
-    messageClass.value = 'text-green-600'
-    // Aquí puedes realizar la lógica para enviar el pedido
-  }
-}
-
-import Header from '@/components/HeaderCompo.vue'
-import Footer from '@/components/FooterCompo.vue'
 </script>
 
 <style scoped>
-
 textarea {
   resize: none; /* Desactiva el redimensionamiento */
 }
-
 </style>
