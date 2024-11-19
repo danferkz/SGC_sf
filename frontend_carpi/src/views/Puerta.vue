@@ -1,21 +1,20 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <Header />
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 space-y-8">
-
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
-      <form @submit.prevent="handleSubmit" class="space-y-8">
+      <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Tipo de Madera -->
-        <div class="space-y-2">
-          <label for="woodType" class="block text-lg font-medium text-gray-700">Tipo de Madera</label>
+        <div>
+          <label for="woodType" class="block text-sm font-medium text-gray-700">Tipo de Madera</label>
           <select id="woodType" v-model="formData.woodType" required
-            class="block w-full py-3 px-4 border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg">
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
             <option value="">Selecciona un tipo de madera</option>
-            <option value="pino">Pino</option>
-            <option value="roble">Roble</option>
-            <option value="cedro">Cedro</option>
-            <option value="caoba">Caoba</option>
+            <option value="Pino">Pino - S/. 100</option>
+            <option value="Roble">Roble - S/. 150</option>
+            <option value="Cedro">Cedro - S/. 200</option>
+            <option value="Caoba">Caoba - S/. 180</option>
           </select>
         </div>
 
