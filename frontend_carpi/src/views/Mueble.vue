@@ -71,35 +71,15 @@
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="false" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
-            <!-- <div class="flex items-center">
-              <input id="plastico" type="radio" v-model="formData.legStyle" value="plástico"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="plastico" class="ml-3 block text-sm font-medium text-gray-700">Plástico</label>
-            </div> -->
           </div>
         </div>
 
-        <!-- Estilo de Patas -->
+        <!-- Nombre del Set -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Estilo de Patas</label>
-          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
-            <div class="flex items-center">
-              <input id="metal" type="radio" v-model="formData.legStyle" value="metal"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="metal" class="ml-3 block text-sm font-medium text-gray-700">Metal</label>
-            </div>
-            <div class="flex items-center">
-              <input id="madera" type="radio" v-model="formData.legStyle" value="madera"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="madera" class="ml-3 block text-sm font-medium text-gray-700">Madera</label>
-            </div>
-            <div class="flex items-center">
-              <input id="plastico" type="radio" v-model="formData.legStyle" value="plástico"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="plastico" class="ml-3 block text-sm font-medium text-gray-700">Plástico</label>
-            </div>
-          </div>
-        </div>
+          <label for="set_name" class="block text-sm font-medium text-gray-700">Nombre del Set</label>
+          <textarea id="set_name" v-model="formData.set_name" rows="3"
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-200 focus:ring-amber-200 focus:border-amber-200 rounded-md resize-none"></textarea>
+        </div>  
 
         <!-- Características adicionales -->
         <div>
