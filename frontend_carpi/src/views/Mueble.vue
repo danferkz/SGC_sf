@@ -5,16 +5,16 @@
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Personaliza tu Sofá</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <!-- Tipo de Sofá -->
+        <!-- Tipo de Madera -->
         <div>
-          <label for="sofaType" class="block text-sm font-medium text-gray-700">Tipo de Sofá</label>
-          <select id="sofaType" v-model="formData.sofaType" required
+          <label for="woodType" class="block text-sm font-medium text-gray-700">Tipo de Madera</label>
+          <select id="woodType" v-model="formData.woodType" required
             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
-            <option value="">Selecciona un tipo de sofá</option>
-            <option value="modular">Modular</option>
-            <option value="seccional">Seccional</option>
-            <option value="sofá-cama">Sofá Cama</option>
-            <option value="reclinable">Reclinable</option>
+            <option value="">Selecciona un tipo de madera</option>
+            <option value="Pino">Pino - S/. 100</option>
+            <option value="Roble">Roble - S/. 150</option>
+            <option value="Cedro">Cedro - S/. 200</option>
+            <option value="Caoba">Caoba - S/. 180</option>
           </select>
         </div>
 
