@@ -105,16 +105,33 @@
                 class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
             </div>
           </div>
-        </div>
-
-        <!-- Botón de Envío -->
-        <!--<div>
-          <button type="submit"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-            Enviar
-          </button>
-        </div> -->
+        </div>        
       </form>
+
+      <!-- Ventana modal con los datos validados -->
+      <div v-if="showValidatedWindow" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <h3 class="text-xl font-bold mb-4 text-center">Resumen de tu Pedido</h3>
+          <div class="space-y-4">
+            <p><strong>Tipo de Madera:</strong> {{ formData.woodType }}</p>
+            <p><strong>Barnizado:</strong> {{ formData.varnished }}</p>
+            <p><strong>Tipo de Sofá:</strong> {{ formData.sofaType }}</p>
+            <p><strong>Peso:</strong> {{ formData.dimensions.weight }}</p>
+            <p><strong>Parte del Set:</strong> {{ formData.is_part_of_set }}</p>
+            <p><strong>Nombre del Set:</strong> {{ formData.set_name }}</p>
+            <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
+          </div>
+          <div class="mt-4 flex justify-center space-x-4">
+            <button @click="showValidatedWindow = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">
+              Cerrar
+            </button>
+            <button @click="submitOrder" class="px-4 py-2 bg-amber-600 text-white rounded-md">
+              Crear Pedido
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
     <Footer />
   </div>
