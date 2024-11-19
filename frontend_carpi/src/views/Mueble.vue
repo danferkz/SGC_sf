@@ -81,47 +81,11 @@
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-200 focus:ring-amber-200 focus:border-amber-200 rounded-md resize-none"></textarea>
         </div>  
 
-        <!-- Características adicionales -->
+        <!-- Comentarios Adicionales -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Características Adicionales</label>
-          <div class="mt-2 space-y-2">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="reclinable" type="checkbox" v-model="formData.features.reclinable"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="reclinable" class="font-medium text-gray-700">Reclinable</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="cojinesExtraibles" type="checkbox" v-model="formData.features.cojinesExtraibles"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="cojinesExtraibles" class="font-medium text-gray-700">Cojines Extraíbles</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="reposacabezas" type="checkbox" v-model="formData.features.reposacabezas"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="reposacabezas" class="font-medium text-gray-700">Reposacabezas</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="camaConvertible" type="checkbox" v-model="formData.features.camaConvertible"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="camaConvertible" class="font-medium text-gray-700">Cama Convertible</label>
-              </div>
-            </div>
-          </div>
+          <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios Adicionales</label>
+          <textarea id="comments" v-model="formData.comments" rows="3"
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
         </div>
 
         <!-- Comentarios Adicionales -->
