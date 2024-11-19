@@ -157,15 +157,14 @@
           </div>
         </div>
       </div>
-
     </div>
-    <Footer />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router' // Importar el enrutador
 import Header from '@/components/HeaderCompo.vue'
-import Footer from '@/components/FooterCompo.vue'
 
 export default {
   name: 'SofaCustomizationForm',
