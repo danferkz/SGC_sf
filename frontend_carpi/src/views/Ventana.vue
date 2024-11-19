@@ -44,9 +44,15 @@
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
+<<<<<<<<< Temporary merge branch 1
+            <label for="height" class="block text-lg font-medium text-gray-700">Alto (cm)</label>
+            <input type="number" id="height" v-model="formData.height" required min="50" max="300"
+              class="block w-full py-3 px-4 border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg h-14">
+=========
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
             <input type="number" id="length" v-model="formData.length" required min="50" max="300"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+>>>>>>>>> Temporary merge branch 2
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
@@ -153,6 +159,7 @@
           <button type="button" @click="handleValidate"
             class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
             Validar Datos
+>>>>>>>>> Temporary merge branch 2
           </button>
           <div class="flex items-center space-x-2">
             <button type="button" @click="handleCalculatePrice"
