@@ -17,7 +17,22 @@
             <option value="Caoba">Caoba - S/. 180</option>
           </select>
         </div>
-
+        <!-- Barnizado-->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Barnizado</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="varnished-yes" type="radio" v-model="formData.varnished" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="varnished-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
+            </div>
+            <div class="flex items-center">
+              <input id="varnished-no" type="radio" v-model="formData.varnished" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="varnished-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
+          </div>
+        </div>
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
