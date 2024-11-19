@@ -36,26 +36,31 @@
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label for="height" class="block text-lg font-medium text-gray-700">Alto (cm)</label>
-            <input type="number" id="height" v-model="formData.height" required min="100" max="300"
-              class="block w-full py-3 px-4 border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg h-14">
+            <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
+            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
           <div>
-            <label for="width" class="block text-lg font-medium text-gray-700">Ancho (cm)</label>
+            <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="60" max="150"
-              class="block w-full py-3 px-4 border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-lg h-14">
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
         </div>
 
-        <!-- Color -->
-        <div class="space-y-2">
-          <label for="color" class="block text-lg font-medium text-gray-700">Color</label>
-          <div class="flex items-center space-x-3">
-            <span class="inline-block h-10 w-10 rounded-full border" :style="{ backgroundColor: formData.color }"></span>
-            <input type="color" id="color" v-model="formData.color"
-              class="h-10 w-10 border-gray-300 rounded-lg shadow-sm focus:ring-amber-500 focus:border-amber-500">
-            <input type="text" v-model="formData.color"
-              class="flex-1 py-3 px-4 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-lg border-gray-300 rounded-lg">
+        <!-- Exteriores -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Exterior</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="exterior-yes" type="radio" v-model="formData.exterior" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="exterior-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
+            </div>
+            <div class="flex items-center">
+              <input id="exterior-no" type="radio" v-model="formData.exterior" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="exterior-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
           </div>
         </div>
 
