@@ -74,9 +74,7 @@
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
-        </div>
-
-        
+        </div>        
 
         <!-- Comentarios Adicionales -->
         <div>
