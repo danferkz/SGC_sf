@@ -2,7 +2,6 @@
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <Header />
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
-
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -12,18 +11,33 @@
           <select id="woodType" v-model="formData.woodType" required
             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
             <option value="">Selecciona un tipo de madera</option>
-            <option value="pino">Pino</option>
-            <option value="roble">Roble</option>
-            <option value="cedro">Cedro</option>
-            <option value="caoba">Caoba</option>
+            <option value="Pino">Pino - S/. 100</option>
+            <option value="Roble">Roble - S/. 150</option>
+            <option value="Cedro">Cedro - S/. 200</option>
+            <option value="Caoba">Caoba - S/. 180</option>
           </select>
         </div>
-
+        <!-- Barnizado-->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Barnizado</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="varnished-yes" type="radio" v-model="formData.varnished" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="varnished-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
+            </div>
+            <div class="flex items-center">
+              <input id="varnished-no" type="radio" v-model="formData.varnished" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="varnished-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
+          </div>
+        </div>
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
-            <input type="number" id="height" v-model="formData.height" required min="100" max="300"
+            <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
+            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
           <div>
@@ -33,84 +47,29 @@
           </div>
         </div>
 
-        <!-- Color -->
+        <!-- Exteriores -->
         <div>
-          <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
-          <div class="mt-1 flex items-center space-x-3">
-            <span class="inline-block h-8 w-8 rounded-full border" :style="{ backgroundColor: formData.color }"></span>
-            <input type="color" id="color" v-model="formData.color"
-              class="h-8 w-8 border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
-            <input type="text" v-model="formData.color"
-              class="flex-1 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
-          </div>
-        </div>
-
-        <!-- Estilo de Puerta -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Estilo de Puerta</label>
+          <label class="block text-sm font-medium text-gray-700">Exterior</label>
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
-              <input id="simple" type="radio" v-model="formData.doorStyle" value="simple"
+              <input id="exterior-yes" type="radio" v-model="formData.exterior" value="Si"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="simple" class="ml-3 block text-sm font-medium text-gray-700">Simple</label>
+              <label for="exterior-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
-              <input id="paneled" type="radio" v-model="formData.doorStyle" value="paneled"
+              <input id="exterior-no" type="radio" v-model="formData.exterior" value="No"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="paneled" class="ml-3 block text-sm font-medium text-gray-700">Con Paneles</label>
-            </div>
-            <div class="flex items-center">
-              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="glasspane" class="ml-3 block text-sm font-medium text-gray-700">Con Vidrio</label>
+              <label for="exterior-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
         </div>
 
-        <!-- Acabado -->
-        <div>
-          <label for="finish" class="block text-sm font-medium text-gray-700">Acabado</label>
-          <select id="finish" v-model="formData.finish" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
-            <option value="">Selecciona un acabado</option>
-            <option value="natural">Natural</option>
-            <option value="mate">Mate</option>
-            <option value="brillante">Brillante</option>
-            <option value="satinado">Satinado</option>
-          </select>
-        </div>
-
-        <!-- Herrajes -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Herrajes</label>
-          <div class="mt-2 space-y-2">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="doorknob" type="checkbox" v-model="formData.hardware.doorknob"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="doorknob" class="font-medium text-gray-700">Pomo</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="lock" type="checkbox" v-model="formData.hardware.lock"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="lock" class="font-medium text-gray-700">Cerradura</label>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="hinges" type="checkbox" v-model="formData.hardware.hinges"
-                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="hinges" class="font-medium text-gray-700">Bisagras</label>
-              </div>
-            </div>
+       <!-- Número de hojas -->
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="number_of_sheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
+            <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
         </div>
 
@@ -118,72 +77,174 @@
         <div>
           <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios Adicionales</label>
           <textarea id="comments" v-model="formData.comments" rows="3"
-            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md"></textarea>
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
         </div>
 
-        <!-- Botón de Envío -->
-        <div>
-          <button type="submit"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-            Realizar Pedido
-          </button>
+        <!-- Botones: Validar Datos y Calcular Precio -->
+        <div class="flex justify-between items-center mt-6">
+          <button type="button" @click="showValidatedWindow = true"
+  class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+  Validar Datos
+</button>
+          <div class="flex items-center space-x-2">
+            <button type="button" @click="handleCalculatePrice"
+              class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+              Calcular Precio
+            </button>
+            <div class="flex items-center">
+              <span class="mr-1">S/</span>
+              <input type="number" v-model="price" placeholder="Precio en soles" readonly
+                class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
+            </div>
+          </div>
         </div>
       </form>
 
-      <!-- Mensaje de Éxito o Error -->
-      <div v-if="message" :class="['mt-4 text-center', messageClass]">
-        {{ message }}
+      <!-- Ventana modal con los datos validados -->
+      <div v-if="showValidatedWindow" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <h3 class="text-xl font-bold mb-4 text-center">Resumen de tu Pedido</h3>
+          <div class="space-y-4">
+            <p><strong>Tipo de Madera:</strong> {{ formData.woodType }}</p>
+            <p><strong>Barnizado:</strong> {{ formData.varnished }}</p>
+            <p><strong>Largo:</strong> {{ formData.length }} cm</p>
+            <p><strong>Ancho:</strong> {{ formData.width }} cm</p>
+            <p><strong>Exterior:</strong> {{ formData.exterior }}</p>
+            <p><strong>Número de Hojas:</strong> {{ formData.number_of_sheets }}</p>
+            <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
+          </div>
+          <div class="mt-4 flex justify-center space-x-4">
+            <button @click="showValidatedWindow = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">
+              Cerrar
+            </button>
+            <button @click="createProduct" class="px-4 py-2 bg-amber-600 text-white rounded-md">
+              Crear Pedido
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
-<script setup>
+<script>
+import { ref, reactive } from 'vue';
+import axios from 'axios';
+import Header from "@/components/HeaderCompo.vue";
 
-import { ref, reactive } from 'vue'
-
-const formData = reactive({
-  woodType: '',
-  height: 200,
-  width: 80,
-  color: '#8B4513',
-  doorStyle: 'simple',
-  finish: '',
-  hardware: {
-    doorknob: false,
-    lock: false,
-    hinges: false
+export default {
+  components: {
+    Header,
   },
-  comments: ''
-})
+  setup() {
+    const formData = reactive({
+      woodType: '',
+      varnished: '', // 'Si' o 'No'
+      length: '',
+      width: '',
+      exterior: '', // 'Si' o 'No'
+      number_of_sheets: '',
+      comments: '',
+    });
 
-const message = ref('')
-const messageClass = ref('')
+    const showValidatedWindow = ref(false);
+    const showOrderWindow = ref(false);
+    const price = ref(0);
 
-const validateForm = () => {
-  if (!formData.woodType) return 'Selecciona un tipo de madera.'
-  if (!formData.finish) return 'Selecciona un acabado.'
-  return ''
-}
+    // Obtener el token desde el localStorage
+    const getToken = () => {
+      return localStorage.getItem('token');
+    };
 
-const handleSubmit = () => {
-  const validationError = validateForm()
-  if (validationError) {
-    message.value = validationError
-    messageClass.value = 'text-red-600'
-  } else {
-    message.value = '¡Pedido realizado con éxito!'
-    messageClass.value = 'text-green-600'
-  }
-}
+    // Crear el producto a través de la API(Johanna)
 
-import Header from '@/components/HeaderCompo.vue'
-import Footer from '@/components/FooterCompo.vue'
+    const createProduct = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          alert('No se encontró un token de autenticación.');
+          return;
+        }
+
+        const payload = {
+          wood_type: formData.woodType,
+          is_varnished: formData.varnished === 'Si',
+          length: parseFloat(formData.length),
+          width: parseFloat(formData.width),
+          is_exterior: formData.exterior === 'Si',
+          number_of_sheets: parseInt(formData.number_of_sheets),
+          cost_price: parseFloat(price.value),
+        };
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
+        
+        if (response.status === 201) {
+          alert('Producto creado exitosamente');
+          showValidatedWindow.value = false;
+        } else {
+          alert('Hubo un error al crear el producto.');
+        }
+      } catch (error) {
+        console.error('Error al crear el producto:', error);
+        alert('Hubo un error al crear el producto.');
+      }
+    };
+
+    // Calcular el precio a través de la API
+    const handleCalculatePrice = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          alert('No se encontró un token de autenticación. Por favor, inicia sesión.');
+          return;
+        }
+
+        const payload = {
+          wood_type: formData.woodType,
+          is_varnished: formData.varnished === 'Si',
+          length: parseFloat(formData.length),
+          width: parseFloat(formData.width),
+          is_exterior: formData.exterior === 'Si',
+          number_of_sheets: parseInt(formData.number_of_sheets),
+        };
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.post(
+          'http://localhost:8000/api/products/calcular-precio-puerta/',
+          payload,
+          config
+        );
+
+        price.value = response.data.cost_price.toFixed(2);
+      } catch (error) {
+        console.error('Error al calcular el precio:', error);
+        alert('Hubo un error al calcular el precio. Por favor, verifica los datos.');
+      }
+    };
+
+    return {
+      formData,
+      showValidatedWindow,
+      showOrderWindow,
+      price,
+      handleCalculatePrice,
+      createProduct,
+    };
+  },
+};
 </script>
 
 <style scoped>
-textarea {
-  resize: none; /* Desactiva el redimensionamiento */
-}
+
 </style>

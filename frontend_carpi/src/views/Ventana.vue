@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
+    <!-- Componente Header importado -->
     <Header />
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Ventana Personalizada</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
-
         <!-- Tipo de Ventana -->
         <div>
           <label for="windowType" class="block text-sm font-medium text-gray-700">Tipo de Ventana</label>
@@ -33,6 +33,11 @@
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="no_varnished" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
+            <!--<div class="flex items-center">
+              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="glasspane" class="ml-3 block text-sm font-medium text-gray-700">Con Vidrio</label>
+            </div> -->
           </div>
         </div>
 
@@ -64,6 +69,11 @@
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="false" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
+            <!--<div class="flex items-center">
+              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="glasspane" class="ml-3 block text-sm font-medium text-gray-700">Con Vidrio</label>
+            </div> -->
           </div>
         </div>
 
@@ -74,7 +84,62 @@
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
-        </div>        
+          <!--<div>
+            <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
+            <input type="number" id="width" v-model="formData.width" required min="60" max="150"
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          </div> -->
+        </div>
+
+        <!-- Tipo de Vidrio -->
+        <!--<div>
+          <label for="glassType" class="block text-sm font-medium text-gray-700">Tipo de Vidrio</label>
+          <select id="glassType" v-model="formData.glassType" required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
+            <option value="">Selecciona un tipo de vidrio</option>
+            <option value="templado">Templado</option>
+            <option value="laminado">Laminado</option>
+            <option value="doble">Doble Cristal</option>
+            <option value="reflectante">Reflectante</option>
+          </select>
+        </div>-->
+
+        <!-- Color -->
+        <!--<div>
+          <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
+          <div class="mt-1 flex items-center space-x-3">
+            <span class="inline-block h-8 w-8 rounded-full border" :style="{ backgroundColor: formData.color }"></span>
+            <input type="color" id="color" v-model="formData.color"
+              class="h-8 w-8 border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+            <input type="text" v-model="formData.color"
+              class="flex-1 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
+          </div>
+        </div>-->
+
+        <!-- Herrajes -->
+        <!--<div>
+          <label class="block text-sm font-medium text-gray-700">Herrajes</label>
+          <div class="mt-2 space-y-2">
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="handle" type="checkbox" v-model="formData.hardware.handle"
+                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="handle" class="font-medium text-gray-700">Manija</label>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="lock" type="checkbox" v-model="formData.hardware.lock"
+                  class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300 rounded">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="lock" class="font-medium text-gray-700">Cerradura</label>
+              </div>
+            </div>
+          </div>
+        </div>-->
 
         <!-- Comentarios Adicionales -->
         <div>
@@ -100,7 +165,7 @@
                 class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
             </div>
           </div>
-        </div>      
+        </div>
       </form>
 
       <!-- Ventana modal con los datos validados -->

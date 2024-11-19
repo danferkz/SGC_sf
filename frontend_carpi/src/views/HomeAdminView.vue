@@ -27,7 +27,7 @@
             <p>Gestiona tus pedidos</p>
           </router-link>
           <!-- Gestión de Administradores -->
-          <router-link to="/gestionadmin"
+          <router-link to="/admindashboard"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />

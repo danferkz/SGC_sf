@@ -15,7 +15,7 @@ import Puerta from '../views/Puerta.vue'
 import ClienteGestion from '../views/ClientePerfilVista.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
-import ClienteDashboard from '../views/ClienteDashboard.vue';
+import ClienteDashboard from '@/views/ClienteDashboard.vue';
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
 import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
 import AdminDashboard from '../views/AdminDashboard.vue';

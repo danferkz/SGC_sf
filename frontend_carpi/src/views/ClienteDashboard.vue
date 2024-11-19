@@ -4,16 +4,15 @@
       <HeaderAdmin class="header-admin" />
       <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-12">
           <h1 class="text-3xl font-bold text-gray-900">Gestión de Clientes</h1>
+        </div>
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+          <!-- Búsqueda y filtros -->
           <button @click="abrirModalAgregar" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <PlusIcon class="h-5 w-5 inline-block mr-1" />
             Agregar Cliente
           </button>
-        </div>
-        
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-          <!-- Búsqueda y filtros -->
           <div class="p-4 border-b border-gray-200">
             <div class="flex flex-wrap items-center justify-between gap-4">
               <div class="flex-1 min-w-0 max-w-xs">
@@ -29,39 +28,42 @@
           </div>
 
           <!-- Tabla de clientes -->
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ cliente.nombre }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.email }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.telefono }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.direccion }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button @click="editarCliente(cliente)" class="text-indigo-600 hover:text-indigo-900 mr-2">
-                      <PencilIcon class="h-5 w-5" />
-                    </button>
-                    <button @click="eliminarCliente(cliente)" class="text-red-600 hover:text-red-900">
-                      <TrashIcon class="h-5 w-5" />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="overflow-auto">
+
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <!-- Centramos el texto de las cabeceras -->
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono</th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
+        <td class="px-6 py-4 text-center whitespace-nowrap text-sm font-medium text-gray-900">{{ cliente.nombre }}</td>
+        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">{{ cliente.email }}</td>
+        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">{{ cliente.telefono }}</td>
+        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">{{ cliente.direccion }}</td>
+        <td class="px-6 py-4 text-center whitespace-nowrap text-sm font-medium">
+          <button @click="editarCliente(cliente)" class="text-indigo-600 hover:text-indigo-900 mr-2">
+            <PencilIcon class="h-5 w-5" />
+          </button>
+          <button @click="eliminarCliente(cliente)" class="text-red-600 hover:text-red-900">
+            <TrashIcon class="h-5 w-5" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
           <!-- Paginación -->
           <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div class="flex-1 flex justify-between sm:hidden">
+            <div class="flex justify-center sm:hidden">
+
               <button @click="paginaAnterior" :disabled="paginaActual === 1" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                 Anterior
               </button>
@@ -232,3 +234,86 @@ const guardarCliente = () => {
   cerrarModal()
 }
  </script>
+ <style scoped>
+ /* Contenedor principal */
+ .min-h-screen {
+  display: flex;
+  flex-direction: row;
+  background-color: #FFFFFF;
+}
+#dashboard {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+ /* Estilos del header admin */
+ .header-admin {
+   width: 250px;
+   background-color: #FFFFFF;
+   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+   height: 100vh; /* Asegura que el header ocupe toda la altura */
+ }
+ /* Sección del dashboard */
+ #dashboard {
+   padding: 20px;
+   background-color: #FFFFFF;
+   flex: 1;
+   margin-left: 120px; /* Se agrega separación de 120px entre el header y el contenido */
+ }
+ /* Contenedor de imagen */
+ .image-container {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 0.5rem;
+   overflow: hidden;
+   height: 150px; /* Altura fija para las imágenes */
+ }
+ /* Imagen del dashboard */
+ .dashboard-image {
+   max-width: 100%;
+   max-height: 100%;
+   height: auto;
+   width: auto;
+   border-radius: 0.5rem;
+ }
+ /* Alineación del contenido */
+ .container {
+   padding: 20px;
+ }
+ /* Estilos de las tarjetas */
+ .card {
+   background-color: #FFFBEB;
+   padding: 1.5rem;
+   border-radius: 0.5rem;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   text-align: center;
+   transition: background-color 0.3s;
+ }
+ .card:hover {
+   background-color: #FFECB3;
+ }
+ /* Ajustes de la tabla */
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.min-w-full {
+  text-align: center; /* Centra el texto dentro de la tabla */
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+ </style>
+ 
