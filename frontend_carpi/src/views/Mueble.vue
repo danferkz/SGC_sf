@@ -48,16 +48,13 @@
           </select>
         </div>
 
-        <!-- Material de Tapicería -->
-        <div>
-          <label for="upholsteryMaterial" class="block text-sm font-medium text-gray-700">Material de Tapicería</label>
-          <select id="upholsteryMaterial" v-model="formData.upholsteryMaterial" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
-            <option value="">Selecciona un material</option>
-            <option value="cuero">Cuero</option>
-            <option value="tela">Tela</option>
-            <option value="terciopelo">Terciopelo</option>
-          </select>
+        <!-- Dimensiones -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="weight" class="block text-sm font-medium text-gray-700">Peso (cm)</label>
+            <input type="number" id="weight" v-model="formData.dimensions.weight" required min="100" max="300"
+              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          </div>
         </div>
 
         <!-- Color -->
