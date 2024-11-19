@@ -80,21 +80,50 @@
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
         </div>
 
-        <!-- Botón de Envío -->
-        <div>
-          <button type="submit"
-            class="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-lg text-lg font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-            Realizar Pedido
-          </button>
+        <!-- Botones: Validar Datos y Calcular Precio -->
+        <div class="flex justify-between items-center mt-6">
+          <button type="button" @click="showValidatedWindow = true"
+  class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+  Validar Datos
+</button>
+          <div class="flex items-center space-x-2">
+            <button type="button" @click="handleCalculatePrice"
+              class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+              Calcular Precio
+            </button>
+            <div class="flex items-center">
+              <span class="mr-1">S/</span>
+              <input type="number" v-model="price" placeholder="Precio en soles" readonly
+                class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
+            </div>
+          </div>
         </div>
       </form>
 
-      <!-- Mensaje de Éxito o Error -->
-      <div v-if="message" :class="['mt-4 text-center', messageClass]">
-        {{ message }}
+      <!-- Ventana modal con los datos validados -->
+      <div v-if="showValidatedWindow" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+          <h3 class="text-xl font-bold mb-4 text-center">Resumen de tu Pedido</h3>
+          <div class="space-y-4">
+            <p><strong>Tipo de Madera:</strong> {{ formData.woodType }}</p>
+            <p><strong>Barnizado:</strong> {{ formData.varnished }}</p>
+            <p><strong>Largo:</strong> {{ formData.length }} cm</p>
+            <p><strong>Ancho:</strong> {{ formData.width }} cm</p>
+            <p><strong>Exterior:</strong> {{ formData.exterior }}</p>
+            <p><strong>Número de Hojas:</strong> {{ formData.number_of_sheets }}</p>
+            <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
+          </div>
+          <div class="mt-4 flex justify-center space-x-4">
+            <button @click="showValidatedWindow = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">
+              Cerrar
+            </button>
+            <button @click="createProduct" class="px-4 py-2 bg-amber-600 text-white rounded-md">
+              Crear Pedido
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
