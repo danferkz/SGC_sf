@@ -18,22 +18,25 @@
           </select>
         </div>
 
-        <!-- Dimensiones -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
-            <input type="number" id="width" v-model="formData.dimensions.width" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
-          </div>
-          <div>
-            <label for="depth" class="block text-sm font-medium text-gray-700">Profundidad (cm)</label>
-            <input type="number" id="depth" v-model="formData.dimensions.depth" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
-          </div>
-          <div>
-            <label for="height" class="block text-sm font-medium text-gray-700">Alto (cm)</label>
-            <input type="number" id="height" v-model="formData.dimensions.height" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-8">
+        <!-- Barnizado -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Barnizado</label>
+          <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
+            <div class="flex items-center">
+              <input id="true" type="radio" v-model="formData.varnished" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="is_varnished" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
+            </div>
+            <div class="flex items-center">
+              <input id="false" type="radio" v-model="formData.varnished" value="No"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="no_varnished" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+            </div>
+            <!--<div class="flex items-center">
+              <input id="glasspane" type="radio" v-model="formData.doorStyle" value="glasspane"
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+              <label for="glasspane" class="ml-3 block text-sm font-medium text-gray-700">Con Vidrio</label>
+            </div> -->
           </div>
         </div>
 
