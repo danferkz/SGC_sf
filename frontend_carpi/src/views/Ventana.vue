@@ -12,10 +12,10 @@
           <select id="windowType" v-model="formData.windowType" required
             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
             <option value="">Selecciona un tipo de ventana</option>
-            <option value="corrediza">Corrediza</option>
-            <option value="abatible">Abatible</option>
-            <option value="batiente">Batiente</option>
-            <option value="plegable">Plegable</option>
+            <option value="Corrediza">Corrediza - S/. 100</option>
+            <option value="Abatible">Abatible - S/. 150</option>
+            <option value="Batiente">Batiente - S/. 200</option>
+            <option value="Plegable">Plegable - S/. 180</option>
           </select>
         </div>
 
