@@ -127,50 +127,88 @@
   </div>
 </template>
 
-<script setup>
-import { ref, reactive } from 'vue'
+<script>
+import { ref, reactive } from 'vue';
+import axios from 'axios';
+import Header from "@/components/HeaderCompo.vue";
 
-const formData = reactive({
-  woodType: '',
-  height: 200,
-  width: 80,
-  color: '#8B4513',
-  doorStyle: 'simple',
-  finish: '',
-  hardware: {
-    doorknob: false,
-    lock: false,
-    hinges: false
+export default {
+  components: {
+    Header,
   },
-  comments: ''
-})
+  setup() {
+    const formData = reactive({
+      woodType: '',
+      varnished: '', // 'Si' o 'No'
+      length: '',
+      width: '',
+      exterior: '', // 'Si' o 'No'
+      number_of_sheets: '',
+      comments: '',
+    });
 
-const message = ref('')
-const messageClass = ref('')
+    const showValidatedWindow = ref(false);
+    const showOrderWindow = ref(false);
+    const price = ref(0);
 
-const validateForm = () => {
-  if (!formData.woodType) return 'Selecciona un tipo de madera.'
-  if (!formData.finish) return 'Selecciona un acabado.'
-  return ''
-}
+    // Obtener el token desde el localStorage
+    const getToken = () => {
+      return localStorage.getItem('token');
+    };
 
-const handleSubmit = () => {
-  const validationError = validateForm()
-  if (validationError) {
-    message.value = validationError
-    messageClass.value = 'text-red-600'
-  } else {
-    message.value = '¡Pedido realizado con éxito!'
-    messageClass.value = 'text-green-600'
-  }
-}
+    // Crear el producto a través de la API(Johanna)
 
-import Header from '@/components/HeaderCompo.vue'
-import Footer from '@/components/FooterCompo.vue'
+
+
+    // Calcular el precio a través de la API
+    const handleCalculatePrice = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          alert('No se encontró un token de autenticación. Por favor, inicia sesión.');
+          return;
+        }
+
+        const payload = {
+          wood_type: formData.woodType,
+          is_varnished: formData.varnished === 'Si',
+          length: parseFloat(formData.length),
+          width: parseFloat(formData.width),
+          is_exterior: formData.exterior === 'Si',
+          number_of_sheets: parseInt(formData.number_of_sheets),
+        };
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.post(
+          'http://localhost:8000/api/products/calcular-precio-puerta/',
+          payload,
+          config
+        );
+
+        price.value = response.data.cost_price.toFixed(2);
+      } catch (error) {
+        console.error('Error al calcular el precio:', error);
+        alert('Hubo un error al calcular el precio. Por favor, verifica los datos.');
+      }
+    };
+
+    return {
+      formData,
+      showValidatedWindow,
+      showOrderWindow,
+      price,
+      handleCalculatePrice,
+      createProduct,
+    };
+  },
+};
 </script>
 
 <style scoped>
-textarea {
-  resize: none; /* Desactiva el redimensionamiento */
-}
+
 </style>
