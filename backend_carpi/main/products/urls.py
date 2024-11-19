@@ -1,14 +1,22 @@
 # products/urls.py
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import PuertaViewSet, VentanaViewSet, MuebleViewSet, ProductoPedidoViewSet
-
-router = DefaultRouter()
-router.register(r'puertas', PuertaViewSet)
-router.register(r'ventanas', VentanaViewSet)
-router.register(r'muebles', MuebleViewSet)
-router.register(r'productos_pedido', ProductoPedidoViewSet)
+from django.urls import path
+from .views import (
+    CalcularPrecioPuertaView,
+    CalcularPrecioVentanaView,
+    CalcularPrecioMuebleView,
+    ProductDoorCreateView,
+    ProductWindowCreateView,
+    ProductFurnitureCreateView
+)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # ============ VISTAS DE CALCULO PRECIO ============
+    path('calcular-precio-puerta/', CalcularPrecioPuertaView.as_view(), name='calcular-precio-puerta'),
+    path('calcular-precio-ventana/', CalcularPrecioVentanaView.as_view(), name='calcular-precio-ventana'),
+    path('calcular-precio-mueble/', CalcularPrecioMuebleView.as_view(), name='calcular-precio-mueble'),
+    
+    # ============ VISTAS DE CREACION PRODUCTOS ============
+    path('product-door-create/', ProductDoorCreateView.as_view(), name='product-door-create'),
+    path('product-window-create/', ProductWindowCreateView.as_view(), name='product-window-create'),
+    path('product-furniture-create/', ProductFurnitureCreateView.as_view(), name='product-furniture-create'),
 ]

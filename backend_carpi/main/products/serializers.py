@@ -1,38 +1,57 @@
 # products/serializers.py
 from rest_framework import serializers
 from .models import DoorWindow, Furniture
-from employees.models import Employee
 
-class BaseProductSerializer(serializers.ModelSerializer):
-    producer_id = serializers.IntegerField(write_only=True)
 
-    class Meta:
-        abstract = True
-        fields = ['id', 'wood_type', 'cost_price', 'is_varnished', 'producer_id', 'created_at', 'updated_at']
-
-    def validate_producer_id(self, value):
-        # Verifica si el usuario con este ID es un productor
-        if not Employee.objects.filter(id=value).exists():
-            raise serializers.ValidationError("El productor no existe.")
-        return value
-
-class DoorWindowSerializer(BaseProductSerializer):
-    product_type = serializers.ChoiceField(choices=DoorWindow.PRODUCT_TYPES)
+class DoorWindowPriceCalculationSerializer(serializers.ModelSerializer):
     length = serializers.DecimalField(max_digits=10, decimal_places=2)
     width = serializers.DecimalField(max_digits=10, decimal_places=2)
     is_exterior = serializers.BooleanField()
     number_of_sheets = serializers.IntegerField()
+    is_varnished = serializers.BooleanField()
+    wood_type = serializers.CharField()
 
-    class Meta(BaseProductSerializer.Meta):
+    class Meta:
         model = DoorWindow
-        fields = BaseProductSerializer.Meta.fields + ['product_type', 'length', 'width', 'is_exterior', 'number_of_sheets']
+        fields = ['wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets']
 
-class FurnitureSerializer(BaseProductSerializer):
-    piece_name = serializers.CharField(max_length=100)
+class FurniturePriceCalculationSerializer(serializers.ModelSerializer):
+    piece_name = serializers.CharField()
     weight = serializers.DecimalField(max_digits=10, decimal_places=2)
     is_part_of_set = serializers.BooleanField()
-    set_name = serializers.CharField(max_length=100, required=False)
+    set_name = serializers.CharField(required=False, allow_null=True)
+    is_varnished = serializers.BooleanField()
+    wood_type = serializers.CharField()
 
-    class Meta(BaseProductSerializer.Meta):
+    class Meta:
         model = Furniture
-        fields = BaseProductSerializer.Meta.fields + ['piece_name', 'weight', 'is_part_of_set', 'set_name']
+        fields = ['wood_type', 'is_varnished', 'piece_name', 'weight', 'is_part_of_set', 'set_name']
+
+from rest_framework import serializers
+
+class ProductDoorCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoorWindow
+        fields = ['wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
+
+    def create(self, validated_data):
+        validated_data['product_type'] = 'door'  # Establecer el valor por defecto
+        return super().create(validated_data)
+
+class ProductWindowCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoorWindow
+        fields = ['wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
+
+    def create(self, validated_data):
+        validated_data['product_type'] = 'window'  # Establecer el valor por defecto
+        return super().create(validated_data)
+
+class ProductFurnitureCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Furniture
+        fields = ['wood_type', 'is_varnished', 'piece_name', 'weight', 'is_part_of_set', 'set_name', 'cost_price']
+
+    def create(self, validated_data):
+        validated_data['product_type'] = 'furniture'  # Establecer el valor por defecto
+        return super().create(validated_data)
