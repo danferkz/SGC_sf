@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -55,6 +55,16 @@ const handleLogout = () => {
     store.dispatch('sessions/logout');
     router.push('/'); // Ajusta según tu ruta
 };
+
+// Watch para detectar cambios en la autenticación
+watch(isAuthenticated, (newValue) => {
+    if (!newValue) {
+        router.push('/login');
+    }
+});
+
+
+
 </script>
 
 <style scoped>

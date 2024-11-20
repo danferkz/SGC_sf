@@ -4,6 +4,8 @@
     <!-- Header -->
     <Header />
 
+
+    
     <!-- Hero Section -->
     <section>
       <div class="hero">
@@ -32,33 +34,39 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Producto 1 -->
           <div class="card bg-base-100 w-96 shadow-xl mb-4">
-            <figure>
-              <img src="../assets/puerta.png" alt="Shoes" />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Puertas</h2>
-              <p>Puertas interiores y exteriores a medida</p>
-            </div>
+            <router-link to="/puerta" class="block">
+              <figure>
+                <img src="../assets/puerta.png" alt="Puertas" />
+              </figure>
+              <div class="card-body">
+                <h2 class="card-title">Puertas</h2>
+                <p>Puertas interiores y exteriores a medida</p>
+              </div>
+            </router-link>
           </div>
           <!-- Producto 2 -->
           <div class="card bg-base-100 w-96 shadow-xl mb-4">
-            <figure>
-              <img src="../assets/ventana.png" alt="Shoes" />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Ventanas</h2>
-              <p>Ventanas de diversos estilos y tamaños</p>
-            </div>
+            <router-link to="/ventana" class="block">
+              <figure>
+                <img src="../assets/ventana.png" alt="Ventanas" />
+              </figure>
+              <div class="card-body">
+                <h2 class="card-title">Ventanas</h2>
+                <p>Ventanas de diversos estilos y tamaños</p>
+              </div>
+            </router-link>
           </div>
           <!-- Producto 3 -->
           <div class="card bg-base-100 w-96 shadow-xl mb-4">
-            <figure>
-              <img src="../assets/muebles.png" alt="Shoes" />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Muebles</h2>
-              <p>Muebles personalizados para tu hogar</p>
-            </div>
+            <router-link to="/mueble" class="block">
+              <figure>
+                <img src="../assets/muebles.png" alt="Muebles" />
+              </figure>
+              <div class="card-body">
+                <h2 class="card-title">Muebles</h2>
+                <p>Muebles personalizados para tu hogar</p>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>

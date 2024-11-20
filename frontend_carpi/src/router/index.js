@@ -12,13 +12,17 @@ import Producto from '../views/Producto.vue'
 import Mueble from '../views/Mueble.vue'
 import Ventana from '../views/Ventana.vue'
 import Puerta from '../views/Puerta.vue'
-import ClienteGestion from '../views/ClientePerfilVista.vue'
+import ClienteGestion from '../views/ClientePerfil.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
 import ClienteDashboard from '../views/ClienteDashboard.vue';
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
 import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
-import AdminDashboard from '../views/AdminDashboard.vue';
+import GestionEmpleados from '@/views/GestionEmpleados.vue';
+import AdminDashboard from '../views/DashboardAdminn.vue';
+import DeliveryView from '@/views/DeliveryView.vue';
+import ClientePerfil from '@/views/ClientePerfil.vue';
+
 
 
 
@@ -116,9 +120,24 @@ const router = createRouter({
       component: Gestionpresupuesto
     },
     {
+      path: '/gestionempleados', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'Gestionempleados',
+      component: GestionEmpleados
+    },
+    {
       path: '/admindashboard', // Ruta de comodín para capturar todas las rutas no definidas
       name: 'AdminDashboard',
       component: AdminDashboard
+    },
+    {
+      path: '/clienteperfil', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'ClientePerfil',
+      component: ClientePerfil
+    },
+    {
+      path: '/delivery', // Ruta de comodín para capturar todas las rutas no definidas
+      name: 'Delivery',
+      component: DeliveryView
     }
   ]
 })

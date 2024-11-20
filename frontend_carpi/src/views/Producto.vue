@@ -13,7 +13,7 @@
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
               <!-- Imagen de Puertas -->
-              <img src="../assets/puerta.png" alt="Puertas" class="product-image" />
+              <img src="../assets/puerta (1).png" alt="Puertas" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Puertas</h4>
             <p>Puertas interiores y exteriores a medida</p>
@@ -24,7 +24,7 @@
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
               <!-- Imagen de Ventanas -->
-              <img src="../assets/ventana.png" alt="Ventanas" class="product-image" />
+              <img src="../assets/ventana (1).png" alt="Ventanas" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
             <p>Ventanas de diversos estilos y tamaños</p>
@@ -35,7 +35,7 @@
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
               <!-- Imagen de Muebles -->
-              <img src="../assets/muebles.png" alt="Muebles" class="product-image" />
+              <img src="../assets/muebles (1).png" alt="Muebles" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Muebles</h4>
             <p>Muebles personalizados para tu hogar</p>

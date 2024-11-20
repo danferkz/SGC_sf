@@ -52,7 +52,7 @@ const API_BASE_URL = 'http://localhost:8000';
 
 const handleLogin = async () => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/users/admins/login/`, {
+        const response = await axios.post(`${API_BASE_URL}/api/users/login/admin/`, {
             username: username.value,
             password: password.value
         });

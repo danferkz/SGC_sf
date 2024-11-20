@@ -44,6 +44,15 @@
             <h4 class="text-xl font-semibold mb-2">PRESUPUESTOS</h4>
             <p>Gestiona los presupuestos</p>
           </router-link>
+          <!-- Gestión de Empleados -->
+          <router-link to="/gestionempleados"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestionempleados_icon.png" alt="Presupuestos" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">EMPLEADOS</h4>
+            <p>Gestiona los empleados</p>
+          </router-link>
         </div>
       </div>
     </section>
