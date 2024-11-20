@@ -169,6 +169,12 @@ export default {
           return;
         }
 
+        // Validar que el precio no sea cero o no esté definido
+        if (!price.value || price.value <= 0) {
+          alert('El precio debe ser mayor que cero y debe estar definido.');
+          return;
+        }
+
         const payload = {
           wood_type: formData.woodType,
           is_varnished: formData.varnished === 'Si',
