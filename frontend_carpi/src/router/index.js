@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store';
 import ClientView from '../views/ClientView.vue'
 import AdminView from '../views/LoginAdminView.vue'
 import LoginClient from '../views/LoginCliente.vue'
@@ -22,9 +21,6 @@ import GestionEmpleados from '@/views/GestionEmpleados.vue';
 import AdminDashboard from '../views/DashboardAdminn.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
 import ClientePerfil from '@/views/ClientePerfil.vue';
-
-
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -105,37 +101,37 @@ const router = createRouter({
       component: GestionAdmin
     },
     {
-      path: '/:pathMatch(.)', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/:pathMatch(.*)*',
       name: 'Error404',
       component: Erroraoa
     },
     {
-      path: '/gestionpedidos', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionpedidos',
       name: 'Gestionpedidos',
       component: Gestionpedidos
     },
     {
-      path: '/gestionpresupuesto', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionpresupuesto',
       name: 'Gestionpresupuesto',
       component: Gestionpresupuesto
     },
     {
-      path: '/gestionempleados', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionempleados',
       name: 'Gestionempleados',
       component: GestionEmpleados
     },
     {
-      path: '/admindashboard', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/admindashboard',
       name: 'AdminDashboard',
       component: AdminDashboard
     },
     {
-      path: '/clienteperfil', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/clienteperfil',
       name: 'ClientePerfil',
       component: ClientePerfil
     },
     {
-      path: '/delivery', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/delivery',
       name: 'Delivery',
       component: DeliveryView
     }

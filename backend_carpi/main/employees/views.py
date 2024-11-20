@@ -47,3 +47,38 @@ class EmployeeListView(generics.ListAPIView):
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Employee.objects.all()
+    
+
+# actualizar datos de un empleado
+class EmployeeUpdateView(generics.UpdateAPIView):
+    serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    queryset = Employee.objects.all()
+    
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+            employee = self.get_object()
+            
+            # Actualizar solo los datos de specialty y is_active
+            employee.specialty = serializer.validated_data.get(
+                'specialty', employee.specialty
+            )
+            employee.is_active = serializer.validated_data.get(
+                'is_active', employee.is_active
+            )
+            employee.save()
+            
+            # Devolver los datos del empleado actualizado
+            return Response(
+                EmployeeSerializer(employee).data,
+                status=status.HTTP_200_OK
+            )
+            
+        except serializers.ValidationError as e:
+            return Response(
+                {'detail': e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
