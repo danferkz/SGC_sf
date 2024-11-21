@@ -13,7 +13,6 @@ DATABASES = {
     }
 }
 
-
 '''
 import logging
 
