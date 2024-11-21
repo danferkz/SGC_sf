@@ -37,7 +37,7 @@ class DeliveryCreateView(generics.CreateAPIView):
 
             # Crear el objeto Delivery
             delivery = Delivery(
-                delivery_date=serializer.validated_data['delivery_date'],
+                delivery_date=serializer.validated_data.get('delivery_date'),
                 delivery_notes=serializer.validated_data.get('delivery_notes', ''),
                 signature_received=serializer.validated_data.get('signature_received', False),
                 delivery_option=delivery_option,

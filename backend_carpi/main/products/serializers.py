@@ -32,7 +32,7 @@ from rest_framework import serializers
 class ProductDoorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoorWindow
-        fields = ['wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
+        fields = ['product_id', 'wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
 
     def create(self, validated_data):
         validated_data['product_type'] = 'door'  # Establecer el valor por defecto
@@ -41,7 +41,7 @@ class ProductDoorCreateSerializer(serializers.ModelSerializer):
 class ProductWindowCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoorWindow
-        fields = ['wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
+        fields = ['product_id', 'wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
 
     def create(self, validated_data):
         validated_data['product_type'] = 'window'  # Establecer el valor por defecto
@@ -50,7 +50,7 @@ class ProductWindowCreateSerializer(serializers.ModelSerializer):
 class ProductFurnitureCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Furniture
-        fields = ['wood_type', 'is_varnished', 'piece_name', 'weight', 'is_part_of_set', 'set_name', 'cost_price']
+        fields = ['product_id', 'wood_type', 'is_varnished', 'piece_name', 'weight', 'is_part_of_set', 'set_name', 'cost_price']
 
     def create(self, validated_data):
         validated_data['product_type'] = 'furniture'  # Establecer el valor por defecto

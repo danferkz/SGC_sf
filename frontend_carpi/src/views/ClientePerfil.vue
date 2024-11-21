@@ -105,10 +105,17 @@
             <label class="block text-sm font-medium text-gray-700">Teléfono</label>
             <input v-model="userData.phone" type="tel" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
           </div>
-          <div class="mb-4">
+            <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">DNI</label>
-            <input v-model="userData.dni" type="text" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-          </div>
+            <input 
+              v-model="userData.dni" 
+              type="number"
+              min="0"
+              maxlength="8"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+            </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Sexo</label>
             <select v-model="userData.sex" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -210,12 +217,11 @@ const fetchUserProfile = async () => {
   try {
     const token = obtenerToken(); // Obtener el token
     
-
     const response = await fetch('http://127.0.0.1:8000/api/users/clients/profile', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Incluir el token en los encabezados
+        'Authorization': `Bearer ${token}`
       }
     });
 
@@ -224,7 +230,10 @@ const fetchUserProfile = async () => {
     }
 
     const data = await response.json();
-    console.log('Datos del perfil recibidos:', data); // Verifica los datos
+    console.log('Datos del perfil recibidos:', data);
+
+    // Guardar el ID del usuario en localStorage
+    localStorage.setItem('userId', data.id);
 
     // Actualiza el estado del usuario con los datos recibidos
     user.value = {
@@ -254,45 +263,47 @@ const fetchUserProfile = async () => {
   };
   
   const updateUserProfile = async () => {
-  try {
-    const token = obtenerToken(); // Obtener el token
-    const userId = user.value.id; // Asumiendo que has agregado el id al objeto user
+    try {
+      const token = obtenerToken(); // Obtener el token
+      const userId = user.value.id; // Asumiendo que has agregado el id al objeto user
 
-    const response = await fetch(`http://127.0.0.1:8000/api/users/clients/update/${userId}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        username: userData.value.username,
-        email: userData.value.email,
-        dni: userData.value.dni,
-        gender: userData.value.sex === 'male' ? 'M' : userData.value.sex === 'female' ? 'F' : null,
-        address: userData.value.address,
-        phone: userData.value.phone
-      })
-    });
+      const response = await fetch(`http://127.0.0.1:8000/api/users/clients/update/${userId}/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: userData.value.username,
+          email: userData.value.email,
+          dni: userData.value.dni,
+          gender: userData.value.sex === 'male' ? 'M' : userData.value.sex === 'female' ? 'F' : null,
+          address: userData.value.address,
+          phone: userData.value.phone
+        })
+      });
 
-    if (!response.ok) {
-      throw new Error('Error al actualizar el perfil');
+      if (!response.ok) {
+        throw new Error('Error al actualizar el perfil');
+      }
+
+      const updatedData = await response.json();
+      console.log('Perfil actualizado:', updatedData);
+
+      // Actualiza el estado del usuario con los nuevos datos
+      user.value = {
+        ...user.value,
+        ...updatedData // Suponiendo que la respuesta incluye todos los campos actualizados
+      };
+
+      alert('Perfil actualizado con éxito');
+      // Recarga la página después de actualizar exitosamente
+      router.go(0);
+    } catch (error) {
+      console.error('Error al actualizar el perfil:', error);
+      alert('No se pudo actualizar el perfil. Intenta nuevamente más tarde.');
     }
-
-    const updatedData = await response.json();
-    console.log('Perfil actualizado:', updatedData);
-
-    // Actualiza el estado del usuario con los nuevos datos
-    user.value = {
-      ...user.value,
-      ...updatedData // Suponiendo que la respuesta incluye todos los campos actualizados
-    };
-
-    alert('Perfil actualizado con éxito');
-  } catch (error) {
-    console.error('Error al actualizar el perfil:', error);
-    alert('No se pudo actualizar el perfil. Intenta nuevamente más tarde.');
-  }
-};
+  };
 
 const updatePassword = async () => {
   // Validar que la nueva contraseña y la confirmación coincidan
