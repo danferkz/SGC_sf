@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <Header />
-    
+
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Mueble Personalizado</h2>
 
@@ -17,6 +17,7 @@
             <option value="Cedro">Cedro - S/. 200</option>
             <option value="Caoba">Caoba - S/. 180</option>
           </select>
+          <p v-if="errors.woodType" class="text-red-500 text-xs italic">{{ errors.woodType }}</p>
         </div>
 
         <!-- Barnizado -->
@@ -24,23 +25,25 @@
           <label class="block text-sm font-medium text-gray-700">Barnizado</label>
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
-              <input id="varnished-yes" type="radio" v-model="formData.varnished" :value="true"
+              <input id="varnished-yes" type="radio" v-model="formData.varnished" value="Si"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
-              <input id="varnished-no" type="radio" v-model="formData.varnished" :value="false"
+              <input id="varnished-no" type="radio" v-model="formData.varnished" value="No"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
+          <p v-if="errors.varnished" class="text-red-500 text-xs italic">{{ errors.varnished }}</p>
         </div>
 
         <!-- Nombre de la Pieza -->
         <div>
           <label for="pieceName" class="block text-sm font-medium text-gray-700">Nombre de la Pieza</label>
-          <input type="text" id="pieceName" v-model="formData.piece_name" required
+          <input type="text" id="pieceName" v-model="formData.pieceName" required
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          <p v-if="errors.pieceName" class="text-red-500 text-xs italic">{{ errors.pieceName }}</p>
         </div>
 
         <!-- Peso -->
@@ -48,6 +51,7 @@
           <label for="weight" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
           <input type="number" id="weight" v-model="formData.weight" required min="0"
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          <p v-if="errors.weight" class="text-red-500 text-xs italic">{{ errors.weight }}</p>
         </div>
 
         <!-- Parte de un Juego -->
@@ -55,23 +59,33 @@
           <label class="block text-sm font-medium text-gray-700">Parte de un Juego</label>
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
-              <input id="part-of-set-yes" type="radio" v-model="formData.is_part_of_set" :value="true"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
-              <label for="part-of-set-yes" class="ml-3 block text-sm font-medium text-gray-700"> Si</label>
+              <input id="part-of-set-yes" type="radio" v-model="formData.isPartOfSet" value="Si"
+                class="focus:ring-amber-500 h-4 w-4 text -amber-600 border-gray-300">
+              <label for="part-of-set-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
-              <input id="part-of-set-no" type="radio" v-model=" formData.is_part_of_set" :value="false"
+              <input id="part-of-set-no" type="radio" v-model="formData.isPartOfSet" value="No"
                 class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="part-of-set-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
+          <p v-if="errors.isPartOfSet" class="text-red-500 text-xs italic">{{ errors.isPartOfSet }}</p>
         </div>
 
         <!-- Nombre del Juego -->
-        <div v-if="formData.is_part_of_set">
+        <div v-if="formData.isPartOfSet === 'Si'">
           <label for="setName" class="block text-sm font-medium text-gray-700">Nombre del Juego</label>
-          <input type="text" id="setName" v-model="formData.set_name"
-            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12" required>
+          <input type="text" id="setName" v-model="formData.setName" required
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          <p v-if="errors.setName" class="text-red-500 text-xs italic">{{ errors.setName }}</p>
+        </div>
+
+        <!-- Número de Hojas -->
+        <div>
+          <label for="numberOfSheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
+          <input type="number" id="numberOfSheets" v-model="formData.numberOfSheets" required min="1" max="5"
+            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+          <p v-if="errors.numberOfSheets" class="text-red-500 text-xs italic">{{ errors.numberOfSheets }}</p>
         </div>
 
         <!-- Comentarios Adicionales -->
@@ -83,12 +97,12 @@
 
         <!-- Botones: Validar Datos y Calcular Precio -->
         <div class="flex justify-between items-center mt-6">
-          <button type="button" @click="validateAndShow" 
+          <button type="button" @click="handleSubmit"
             class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
             Validar Datos
           </button>
           <div class="flex items-center space-x-2">
-            <button type="button" @click="validateAndCalculatePrice"
+            <button type="button" @click="handleCalculatePrice"
               class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
               Calcular Precio
             </button>
@@ -108,10 +122,11 @@
           <div class="space-y-4">
             <p><strong>Tipo de Madera:</strong> {{ formData.woodType }}</p>
             <p><strong>Barnizado:</strong> {{ formData.varnished }}</p>
-            <p><strong>Nombre de la Pieza:</strong> {{ formData.piece_name }}</p>
+            <p><strong>Nombre de la Pieza:</strong> {{ formData.pieceName }}</p>
             <p><strong>Peso:</strong> {{ formData.weight }} kg</p>
-            <p><strong>Parte de un Juego:</strong> {{ formData.is_part_of_set }}</p>
-            <p v-if="formData.is_part_of_set"><strong>Nombre del Juego:</strong> {{ formData.set_name }}</p>
+            <p><strong>Parte de un Juego:</strong> {{ formData.isPartOfSet }}</p>
+            <p v-if="formData.isPartOfSet === 'Si'"><strong>Nombre del Juego:</strong> {{ formData.setName }}</p>
+            <p><strong>Número de Hojas:</strong> {{ formData.numberOfSheets }}</p>
             <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
           </div>
           <div class="mt-4 flex justify-center space-x-4">
@@ -124,55 +139,112 @@
           </div>
         </div>
       </div>
+
+      <section id="productos" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Producto 1: Puertas -->
+            <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Puertas</h4>
+              
+            </router-link>
+
+            <!-- Producto 2: Ventanas -->
+            <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
+              
+            </router-link>
+
+            <!-- Producto 3: Muebles -->
+            <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              <h4 class="text-xl font-semibold mb-2">Muebles</h4>
+              
+            </router-link>
+          </div>
+        </div>
+      </section>
     </div>
+    <Footer class="footer" />
   </div>
 </template>
-
 <script>
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
+import Footer from "@/components/FooterCompo.vue";
 
 export default {
   components: {
     Header,
+    Footer,
   },
   setup() {
     const formData = reactive({
-      woodType: '', // Tipo de madera
-      varnished: false , // Estado de barnizado
-      piece_name: '', // Nombre de la pieza
-      weight: null, // Peso de la pieza
-      is_part_of_set: false, // Indica si es parte de un set
-      set_name: '', // Nombre del set (si aplica)
-      comments: '', // Comentarios adicionales
+      woodType: '',
+      varnished: '',
+      pieceName: '',
+      weight: null,
+      isPartOfSet: '',
+      setName: '',
+      numberOfSheets: '',
+      comments: '',
+    });
+
+    const errors = reactive({
+      woodType: '',
+      varnished: '',
+      pieceName: '',
+      weight: '',
+      isPartOfSet: '',
+      setName: '',
+      numberOfSheets: '',
     });
 
     const showValidatedWindow = ref(false);
     const price = ref(0);
 
-    const getToken = () => {
-      return localStorage.getItem('token');
-    };
-
     const validateForm = () => {
+      let isValid = true;
+      Object.keys(errors).forEach(key => errors[key] = '');
+
       if (!formData.woodType) {
-        alert('Por favor, selecciona un tipo de madera.');
-        return false;
+        errors.woodType = 'El tipo de madera es obligatorio.';
+        isValid = false;
       }
-      if (!formData.piece_name) {
-        alert('Por favor, ingresa el nombre de la pieza.');
-        return false;
+      if (!formData.varnished) {
+        errors.varnished = 'Debes seleccionar si está barnizado.';
+        isValid = false;
+      }
+      if (!formData.pieceName) {
+        errors.pieceName = 'El nombre de la pieza es obligatorio.';
+        isValid = false;
       }
       if (formData.weight === null || formData.weight < 0) {
-        alert('Por favor, ingresa un peso válido.');
-        return false;
+        errors.weight = 'El peso debe ser un número positivo.';
+        isValid = false;
       }
-      if (formData.is_part_of_set && !formData.set_name) {
-        alert('Por favor, ingresa el nombre del juego.');
-        return false;
+      if (formData.isPartOfSet === 'Si' && !formData.setName) {
+        errors.setName = 'El nombre del juego es obligatorio si es parte de un set.';
+        isValid = false;
       }
-      return true;
+      if (!formData.numberOfSheets || formData.numberOfSheets < 1 || formData.numberOfSheets > 5) {
+        errors.numberOfSheets = 'El número de hojas debe estar entre 1 y 5.';
+        isValid = false;
+      }
+      return isValid;
+    };
+
+    const handleSubmit = () => {
+      if (validateForm()) {
+        showValidatedWindow.value = true;
+      }
+    };
+
+    const getToken = () => {
+      return localStorage.getItem('token');
     };
 
     const createProduct = async () => {
@@ -181,22 +253,18 @@ export default {
       try {
         const token = getToken();
         if (!token) {
-          alert('No se encontró un token de autenticación.');
-          return;
-        }
-
-        if (!price.value || price.value <= 0) {
-          alert('El precio debe ser mayor que cero y debe estar definido.');
+          alert('No se encontró un token de autenticación. Por favor, inicia sesión.');
           return;
         }
 
         const payload = {
           wood_type: formData.woodType,
-          is_varnished: formData.varnished,
-          piece_name: formData.piece_name,
+          is_varnished: formData.varnished.toLowerCase() === 'si',
+          piece_name: formData.pieceName,
           weight: parseFloat(formData.weight),
-          is_part_of_set: formData.is_part_of_set,
-          set_name: formData.is_part_of_set ? formData.set_name : null,
+          is_part_of_set: formData.isPartOfSet === 'Si',
+          set_name: formData.isPartOfSet === 'Si' ? formData.setName : null,
+          number_of_sheets: parseInt(formData.numberOfSheets),
           cost_price: parseFloat(price.value),
         };
 
@@ -207,7 +275,7 @@ export default {
         };
 
         const response = await axios.post('http://localhost:8000/api/products/product-furniture-create/', payload, config);
-        
+
         if (response.status === 201) {
           alert('Producto creado exitosamente');
           showValidatedWindow.value = false;
@@ -232,11 +300,12 @@ export default {
 
         const payload = {
           wood_type: formData.woodType,
-          is_varnished: formData.varnished,
-          piece_name: formData.piece_name,
+          is_varnished: formData.varnished === 'Si',
+          piece_name: formData.pieceName,
           weight: parseFloat(formData.weight),
-          is_part_of_set: formData.is_part_of_set,
-          set_name: formData.is_part_of_set ? formData.set_name : null,
+          is_part_of_set: formData.isPartOfSet === 'Si',
+          set_name: formData.isPartOfSet === 'Si' ? formData.setName : null,
+          number_of_sheets: parseInt(formData.numberOfSheets),
         };
 
         const config = {
@@ -262,27 +331,24 @@ export default {
       }
     };
 
-    const validateAndShow = () => {
-      if (validateForm()) {
-        showValidatedWindow.value = true;
-      }
-    };
-
-    const validateAndCalculatePrice = () => {
-      if (validateForm()) {
-        handleCalculatePrice();
-      }
-    };
-
     return {
       formData,
+      errors,
       showValidatedWindow,
       price,
       handleCalculatePrice,
       createProduct,
-      validateAndShow,
-      validateAndCalculatePrice,
+      handleSubmit,
     };
   },
 };
 </script>
+
+<style scoped>
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
+</style>

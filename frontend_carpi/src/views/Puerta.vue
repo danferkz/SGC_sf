@@ -133,7 +133,36 @@
           </div>
         </div>
       </div>
+      <section id="productos" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Producto 1: Puertas -->
+            <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Puertas</h4>
+            
+            </router-link>
+
+            <!-- Producto 2: Ventanas -->
+            <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
+              
+            </router-link>
+
+            <!-- Producto 3: Muebles -->
+            <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Muebles</h4>
+              
+            </router-link>
+          </div>
+        </div>
+      </section>
     </div>
+    <!-- Footer -->
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -141,12 +170,14 @@
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
+import Footer from "@/components/FooterCompo.vue";
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
 export default {
   components: {
     Header,
+    Footer,
   },
   setup() {
     const router = useRouter();
@@ -311,5 +342,10 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos específicos si los necesitas */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
 </style>
