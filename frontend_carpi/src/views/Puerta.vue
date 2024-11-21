@@ -305,6 +305,7 @@ export default {
       createProduct,
       handleSubmit,
     };
+    
   },
 };
 </script>
