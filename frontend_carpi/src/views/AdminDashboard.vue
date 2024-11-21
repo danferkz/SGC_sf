@@ -219,6 +219,7 @@ const eliminarAdministrador = (admin) => {
 }
 
 
+
 const cerrarModal = () => {
   mostrarModal.value = false
 }

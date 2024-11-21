@@ -41,7 +41,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
-            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
+            <input type="number" id="length" v-model="formData.length" required min="60" max="300"
+
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           </div>
           <div>
@@ -168,6 +169,14 @@ export default {
           alert('No se encontró un token de autenticación.');
           return;
         }
+
+
+        // Validar que el precio no sea cero o no esté definido
+        if (!price.value || price.value <= 0) {
+          alert('El precio debe ser mayor que cero y debe estar definido.');
+          return;
+        }
+
 
         const payload = {
           wood_type: formData.woodType,

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store';
 import ClientView from '../views/ClientView.vue'
 import AdminView from '../views/LoginAdminView.vue'
 import LoginClient from '../views/LoginCliente.vue'
@@ -12,16 +11,17 @@ import Producto from '../views/Producto.vue'
 import Mueble from '../views/Mueble.vue'
 import Ventana from '../views/Ventana.vue'
 import Puerta from '../views/Puerta.vue'
-import ClienteGestion from '../views/ClientePerfilVista.vue'
+import ClienteGestion from '../views/ClientePerfil.vue'
 import Erroraoa from '../views/Erroraoa.vue'
 import GestionAdmin from '../views/GestionAdminView.vue'
 import ClienteDashboard from '@/views/ClienteDashboard.vue';
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
 import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
-import AdminDashboard from '../views/AdminDashboard.vue';
+
+import GestionEmpleados from '@/views/GestionEmpleados.vue';
+import AdminDashboard from '../views/DashboardAdminn.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
-
-
+import ClientePerfil from '@/views/ClientePerfil.vue';
 
 
 const router = createRouter({
@@ -103,27 +103,39 @@ const router = createRouter({
       component: GestionAdmin
     },
     {
-      path: '/:pathMatch(.)', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/:pathMatch(.*)*',
       name: 'Error404',
       component: Erroraoa
     },
     {
-      path: '/gestionpedidos', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionpedidos',
       name: 'Gestionpedidos',
       component: Gestionpedidos
     },
     {
-      path: '/gestionpresupuesto', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionpresupuesto',
       name: 'Gestionpresupuesto',
       component: Gestionpresupuesto
     },
     {
-      path: '/admindashboard', // Ruta de comodín para capturar todas las rutas no definidas
+      path: '/gestionempleados',
+      name: 'Gestionempleados',
+      component: GestionEmpleados
+    },
+    {
+      path: '/admindashboard',
       name: 'AdminDashboard',
       component: AdminDashboard
     },
     {
-      path: '/delivery', // Ruta de comodín para capturar todas las rutas no definidas
+
+      path: '/clienteperfil',
+      name: 'ClientePerfil',
+      component: ClientePerfil
+    },
+    {
+      path: '/delivery',
+
       name: 'Delivery',
       component: DeliveryView
     }

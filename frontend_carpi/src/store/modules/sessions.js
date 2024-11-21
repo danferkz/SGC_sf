@@ -24,7 +24,7 @@ const mutations = {
 const actions = {
     async login({ commit }, credentials) {
         try {
-            const response = await axios.post('http://localhost:8000/api/users/clients/login/', credentials);
+            const response = await axios.post('http://127.0.0.1:8000/api/users/login/client/', credentials);
             const { access, user } = response.data;
 
             // Guardar el token y el usuario en el estado
