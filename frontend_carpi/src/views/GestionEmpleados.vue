@@ -124,7 +124,7 @@
             <label class="block text-gray-700">Especialidad</label>
             <input v-model="nuevoEmpleado.specialty" type="text" class="w-full border rounded-md px-4 py-2" required />
           </div>
-          < <div class="flex justify-end space-x-4">
+          <div class="flex justify-end space-x-4">
             <button @click="cerrarModal" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
               Cancelar
             </button>
@@ -159,7 +159,7 @@ export default {
       empleados: [],
       nextPage: null,
       previousPage: null,
-      currentPage: 1, // Add this line
+      currentPage: 1,
     };
   },
   methods: {
@@ -171,12 +171,46 @@ export default {
     },
     cerrarModal() {
       this.modalActivo = null;
+      this.resetForm();
     },
-    // Add this method to extract page number from URL
-    extractPageNumber(url) {
-      if (!url) return null;
-      const params = new URLSearchParams(url.split('?')[1]);
-      return parseInt(params.get('page')) || 1;
+    resetForm() {
+      this.nuevoStaff = { username: "", email: "" };
+      this.nuevoEmpleado = {
+        user_id: null,
+        hire_date: "",
+        specialty: "",
+        is_active: true,
+      };
+    },
+    async crearStaff() {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/users/staff/create/", this.nuevoStaff, {
+          headers: {
+            Authorization: `Bearer ${this.obtenerToken()}`,
+          },
+        });
+        // Guardar el user_id del nuevo staff
+        this.nuevoEmpleado.user_id = response.data.id; // Ajusta esto según la respuesta de la API
+        this.abrirModal('crearEmpleado'); // Abre el modal para crear el empleado
+      } catch (error) {
+        console.error("Error al crear staff:", error);
+        alert("Error al crear el staff. Por favor, inténtelo de nuevo.");
+      }
+    },
+    async crearEmpleado() {
+      try {
+        await axios.post("http://127.0.0.1:8000/api/employees/create/", this.nuevoEmpleado, {
+          headers: {
+            Authorization: `Bearer ${this.obtenerToken()}`,
+          },
+        });
+        alert("Empleado creado exitosamente.");
+        this.cerrarModal();
+        this.obtenerEmpleados(); // Refrescar la lista de empleados
+      } catch (error) {
+        console.error("Error al crear empleado:", error);
+        alert("Error al crear el empleado. Por favor, inténtelo de nuevo.");
+      }
     },
     async obtenerEmpleados(url = "http://127.0.0.1:8000/api/employees/list/") {
       try {
@@ -191,7 +225,6 @@ export default {
 
         this.nextPage = response.data.next;
         this.previousPage = response.data.previous;
-        // Update current page based on next/previous URLs
         if (this.nextPage) {
           this.currentPage = this.extractPageNumber(this.nextPage) - 1;
         } else if (this.previousPage) {
@@ -213,7 +246,12 @@ export default {
       if (this.nextPage) {
         this.obtenerEmpleados(this.nextPage);
       }
-    }
+    },
+    extractPageNumber(url) {
+      if (!url) return null;
+      const params = new URLSearchParams(url.split('?')[1]);
+      return parseInt(params.get('page')) || 1;
+    },
   },
   created() {
     this.obtenerEmpleados();
