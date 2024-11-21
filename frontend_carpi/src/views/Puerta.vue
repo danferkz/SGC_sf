@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <!-- Componente Header añadido aquí -->
     <Header />
-    
+
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
@@ -120,7 +120,7 @@
             <p><strong>Largo:</strong> {{ formData.length }} cm</p>
             <p><strong>Ancho:</strong> {{ formData.width }} cm</p>
             <p><strong>Exterior:</strong> {{ formData.exterior }}</p>
-            <p><strong>Número de Hojas:</strong > {{ formData.number_of_sheets }}</p>
+            <p><strong>Número de Hojas:</strong> {{ formData.number_of_sheets }}</p>
             <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
           </div>
           <div class="mt-4 flex justify-center space-x-4">
@@ -149,6 +149,7 @@ export default {
     Header,
   },
   setup() {
+    const router = useRouter();
     const formData = reactive({
       woodType: '',
       varnished: '', // 'Si' o 'No'
@@ -244,11 +245,12 @@ export default {
         };
 
         const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
-        
+
         if (response.status === 201) {
+          console.log('Respuesta del servidor:', response.data); // Added console log
           alert('Producto creado exitosamente');
           showValidatedWindow.value = false;
-          window.location.href = '/delivery';
+          router.push('/delivery'); // Cambia esta línea para usar router.push
         } else {
           alert('Hubo un error al crear el producto.');
         }
