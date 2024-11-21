@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: [
     "./index.html",
@@ -9,7 +10,7 @@ export default {
   },
   plugins: [require('daisyui'),],
   daisyui: {
-    themes: ["forest", "halloween"], // or false if you don't want default themes
+    themes: ["light"], // or false if you don't want default themes
     base: true, // applies daisyUI base styles
     styled: true, // applies daisyUI component styles
     utils: true, // adds daisyUI utilities

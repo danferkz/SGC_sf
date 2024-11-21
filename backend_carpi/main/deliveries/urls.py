@@ -1,11 +1,7 @@
 # deliveries/urls.py
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import EntregaViewSet
-
-router = DefaultRouter()
-router.register(r'entregas', EntregaViewSet)
+from django.urls import path
+from .views import DeliveryCreateView  # Cambiado de CreateDeliveryView a DeliveryCreateView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('create/', DeliveryCreateView.as_view(), name='create_delivery'),
 ]

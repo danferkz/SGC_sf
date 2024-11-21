@@ -5,25 +5,25 @@
             <div class="max-w-md w-full space-y-8 bg-[#FFFBEB] p-10 rounded-xl shadow-2xl">
                 <div>
                     <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Iniciar Sesión
+                        ADMINISTRADOR
                     </h2>
                     <p class="mt-2 text-center text-sm text-gray-600">
-                        Accede a tu cuenta de Carpintería Maderera El Bosque
+                        Crear nuevo usuario
                     </p>
                 </div>
                 <form class="mt-8 space-y-6">
                     <div class="rounded-md shadow-sm -space-y-px">
                         <div>
                             <!-- Changed margin-bottom to 5px -->
-                            <label for="email-address" class="sr-only">Correo electrónico</label>
+                            <label for="username" class="sr-only">Nombre de Usuario</label>
                             <input
-                                id="email-address"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
+                                id="username"
+                                name="username"
+                                type="username"
+                                autocomplete="current-username"
                                 required
                                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-t-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
-                                placeholder="Correo electrónico"
+                                placeholder="Nombre de Usuario"
                             />
                         </div>
                         <div>
@@ -39,7 +39,7 @@
                             />
                         </div>
                     </div>
-
+  
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <input
@@ -52,14 +52,14 @@
                                 Recordarme
                             </label>
                         </div>
-
+  
                         <div class="text-sm">
                             <a href="#" class="font-medium text-amber-600 hover:text-amber-500">
                                 ¿Olvidaste tu contraseña?
                             </a>
                         </div>
                     </div>
-
+  
                     <div>
                         <button
                             type="submit"
@@ -72,21 +72,18 @@
                         </button>
                     </div>
                 </form>
-                <div class="text-center">
-                    ¿No tienes una cuenta?
-                    <router-link to="/registro" class="font-medium text-amber-600 hover:text-amber-500">
-                        Regístrate aquí
-                    </router-link>
-                </div>
+                
             </div>
         </div>
     </div>
-</template>
-
-<script setup>
-// importa el componente header
-import Header from '@/components/HeaderCompo.vue'
-</script>
-
-<style>
-</style>
+  </template>
+  
+  
+  <script setup>
+  // importa el componente header
+  import Header from '@/components/HeaderCompo.vue'
+  </script>
+  
+  <style>
+  </style>
+  

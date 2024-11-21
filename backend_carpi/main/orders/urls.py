@@ -1,11 +1,7 @@
 # orders/urls.py
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import PedidoViewSet
-
-router = DefaultRouter()
-router.register(r'pedidos', PedidoViewSet)
+from django.urls import path
+from .views import OrderCreateAPIView  # Importa la vista de creación
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('orders-create/', OrderCreateAPIView.as_view(), name='order-create'),
 ]
