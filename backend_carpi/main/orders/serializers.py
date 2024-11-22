@@ -42,10 +42,12 @@ class OrderSerializer(serializers.ModelSerializer):
         Obtiene los detalles del empleado asignado a la orden.
         """
         employee = obj.employee
-        return {
-            "employee_id": employee.employee_id,
-            "specialty": employee.specialty,
-        }
+        if employee is not None:
+            return {
+                "employee_id": employee.employee_id,
+                "specialty": employee.specialty,
+            }
+        return None
 
     def get_delivery_detail(self, obj):
         """
@@ -97,10 +99,12 @@ class OrderSerializerclient(serializers.ModelSerializer):
         Obtiene los detalles del empleado asignado a la orden.
         """
         employee = obj.employee
-        return {
-            "employee_id": employee.employee_id,
-            "specialty": employee.specialty,
-        }
+        if employee is not None:
+            return {
+                "employee_id": employee.employee_id,
+                "specialty": employee.specialty,
+            }
+        return None
 
     def get_delivery_detail(self, obj):
         """

@@ -119,6 +119,9 @@ const getToken = () => {
 };
 
 export default {
+  components: {
+    Header,
+  },
   setup() {
     const router = useRouter();
 

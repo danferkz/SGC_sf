@@ -49,14 +49,16 @@ class OrderCreateAPIView(CreateAPIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Obtener el empleado
-            try:
-                employee = Employee.objects.get(pk=employee_id)
-            except Employee.DoesNotExist:
-                return Response(
-                    {"error": "Employee not found"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+            # Obtener el empleado si se proporciona un ID
+            employee = None
+            if employee_id:
+                try:
+                    employee = Employee.objects.get(pk=employee_id)
+                except Employee.DoesNotExist:
+                    return Response(
+                        {"error": "Employee not found"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
             # Calcular el precio total usando la función de utils
             total_price = calculate_total_price(cost_price, additional_cost)
@@ -71,7 +73,6 @@ class OrderCreateAPIView(CreateAPIView):
             return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
 class OrderListAPIViewAdmin(ListAPIView):
     serializer_class = OrderSerializer
