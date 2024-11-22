@@ -191,10 +191,10 @@ export default {
 
         // Create Order
         if (deliveryResponse.status === 201) {
-          // Calculate promised date (next year from now)
-          const promisedDate = new Date();
-          promisedDate.setFullYear(promisedDate.getFullYear() + 1);
-          const formattedPromisedDate = promisedDate.toISOString().split('T')[0];
+          // Use the selected delivery date and add one year to it
+          const selectedDate = new Date(fechaEntrega.value);
+          selectedDate.setFullYear(selectedDate.getFullYear() + 1);
+          const formattedPromisedDate = selectedDate.toISOString().split('T')[0];
 
           const orderData = {
             client: userId,

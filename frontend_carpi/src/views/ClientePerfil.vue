@@ -51,39 +51,39 @@
 
       <!-- Orders Table -->
       <div class="bg-white rounded-lg shadow-lg p-6">
-        <h3 class="text-xl font-bold mb-4">Pedidos Realizados</h3>
-        <div class="overflow-x-auto">
-          <table class="table w-full">
-            <thead>
-              <tr class="bg-gray-100">
-                <th class="text-left p-2">Cantidad</th>
-                <th class="text-left p-2">Tipo de Producto</th>
-                <th class="text-left p-2">Precio</th>
-                <th class="text-left p-2">Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="order in orders" :key="order.id" class="border-b">
-                <td class="p-2">{{ order.quantity }}</td>
-                <td class="p-2">{{ order.productType }}</td>
-                <td class="p-2">S/. {{ order.price.toFixed(2) }}</td>
-                <td class="p-2">
-                  <span 
-                    class="px-2 py-1 rounded-full text-sm font-medium"
-                    :class="{
-                      'bg-green-100 text-green-800': order.status === 'Completado',
-                      'bg-yellow-100 text-yellow-800': order.status === 'Pendiente',
-                      'bg-blue-100 text-blue-800': order.status === 'En Proceso'
-                    }"
-                  >
-                    {{ order.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <h3 class="text-xl font-bold mb-4">Pedidos Realizados</h3>
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="text-left p-2">ID del Pedido</th>
+            <th class="text-left p-2">Fecha Prometida</th>
+            <th class="text-left p-2">Precio Total</th>
+            <th class="text-left p-2">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order.orders_id" class="border-b">
+            <td class="p-2">{{ order.orders_id }}</td>
+            <td class="p-2">{{ formatDate(order.promised_date) }}</td>
+            <td class="p-2">S/. {{ Number(order.total_price).toFixed(2) }}</td>
+            <td class="p-2">
+              <span 
+                class="px-2 py-1 rounded-full text-sm font-medium"
+                :class="{
+                  'bg-green-100 text-green-800': order.status === 'completed',
+                  'bg-yellow-100 text-yellow-800': order.status === 'pending',
+                  'bg-blue-100 text-blue-800': order.status === 'in_process'
+                }"
+              >
+                {{ translateStatus(order.status) }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
     </div>
 
     <!-- Modals -->
@@ -175,7 +175,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router' 
 import { UserIcon, PhoneIcon, CreditCardIcon, HomeIcon } from 'lucide-vue-next'
 import Header from '@/components/HeaderCompo.vue'
-
+import axios from 'axios'
 const router = useRouter()
 
 
@@ -194,9 +194,7 @@ const user = ref({
   address: 'No disponible'
 })
 
-const orders = ref([
-  { id: 1, quantity: 2, productType: 'Puerta', price: 180.00, status: 'Completado' },
-])
+const orders = ref([])
 
 const showModal = ref(false)
 const modalTitle = ref('')
@@ -458,18 +456,47 @@ const handleAction = async () => {
   closeModal()
 }
 
+const fetchOrders = async () => {
+  try {
+    const token = obtenerToken(); // Obtener el token
+    const response = await axios.get('http://localhost:8000/api/orders/orders-list-client/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    orders.value = response.data.results; // Guardar los pedidos en la referencia
+  } catch (error) {
+    console.error('Error al obtener los pedidos:', error);
+  }
+}
+
+// Modificar onMounted para incluir la llamada a fetchOrders
 onMounted(async () => {
   await fetchUserProfile();
+  await fetchOrders(); // Llamada a fetchOrders
 
-    // Using a flag in localStorage to control one-time reload
-    if (!localStorage.getItem('pageLoaded')) {
-      localStorage.setItem('pageLoaded', 'true');
-      router.go(0);
-    } else {
-      localStorage.removeItem('pageLoaded');
-    }
+  // Using a flag in localStorage to control one-time reload
+  if (!localStorage.getItem('pageLoaded')) {
+    localStorage.setItem('pageLoaded', 'true');
+    router.go(0);
+  } else {
+    localStorage.removeItem('pageLoaded');
   }
-);
+});
+
+// Métodos para formatear la fecha y traducir el estado
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('es-ES');
+};
+
+const translateStatus = (status) => {
+  const statusMap = {
+    'pending': 'Pendiente',
+    'completed': 'Completado',
+    'in_process': 'En Proceso'
+  };
+  return statusMap[status] || status;
+};
 </script>
 
 <style scoped>
