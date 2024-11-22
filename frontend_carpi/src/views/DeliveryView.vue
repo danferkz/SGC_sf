@@ -48,11 +48,13 @@
               </label>
               <div class="flex space-x-4">
                 <label class="label cursor-pointer">
-                  <input v-model="deseaDelivery" type="radio" name="delivery" :value="true" class="radio radio-primary" />
+                  <input v-model="deseaDelivery" type="radio" name="delivery" :value="true"
+                    class="radio radio-primary" />
                   <span class="label-text ml-2">Sí</span>
                 </label>
                 <label class="label cursor-pointer">
-                  <input v-model="deseaDelivery" type="radio" name="delivery" :value="false" class="radio radio-primary" />
+                  <input v-model="deseaDelivery" type="radio" name="delivery" :value="false"
+                    class="radio radio-primary" />
                   <span class="label-text ml-2">No</span>
                 </label>
               </div>
@@ -66,9 +68,10 @@
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text font-semibold">Comentarios</span>
+                  <span class="label-text font -semibold">Comentarios</span>
                 </label>
-                <textarea v-model="comentarios" class="textarea textarea-bordered h-24" placeholder="Notas sobre la entrega"></textarea>
+                <textarea v-model="comentarios" class="textarea textarea-bordered h-24"
+                  placeholder="Notas sobre la entrega"></textarea>
               </div>
             </div>
           </div>
@@ -179,8 +182,8 @@ export default {
 
         // Create Delivery
         const deliveryResponse = await axios.post(
-          'http://localhost:8000/api/deliveries/create/', 
-          deliveryData, 
+          'http://localhost:8000/api/deliveries/create/',
+          deliveryData,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -191,21 +194,28 @@ export default {
 
         // Create Order
         if (deliveryResponse.status === 201) {
-          // Use the selected delivery date and add one year to it
-          const selectedDate = new Date(fechaEntrega.value);
-          selectedDate.setFullYear(selectedDate.getFullYear() + 1);
-          const formattedPromisedDate = selectedDate.toISOString().split('T')[0];
+          // Determine the promised date based on user input
+          let promisedDate;
+          if (deseaDelivery.value && fechaEntrega.value) {
+            // Use the user's selected date
+            promisedDate = new Date(fechaEntrega.value);
+          } else {
+            // Set to 7 days from now if no delivery date is selected
+            promisedDate = new Date();
+            promisedDate.setDate(promisedDate.getDate() + 7);
+          }
+          const formattedPromisedDate = promisedDate.toISOString().split('T')[0];
 
           const orderData = {
             client: userId,
             product: producto.value.productId,
-            delivery: deliveryResponse.data.delivery_id,
+            delivery: deliveryResponse.data.delivery_id, // This will always be set
             promised_date: formattedPromisedDate
           };
 
           const orderResponse = await axios.post(
-            'http://localhost:8000/api/orders/orders-create/', 
-            orderData, 
+            'http://localhost:8000/api/orders/orders-create/',
+            orderData,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -216,7 +226,13 @@ export default {
 
           if (orderResponse.status === 201) {
             router.push('/cliente');
+          } else {
+            console.error('Error creating order:', orderResponse.data);
+            alert('Hubo un problema al crear la orden. Por favor, inténtelo de nuevo.');
           }
+        } else {
+          console.error('Error creating delivery:', deliveryResponse.data);
+          alert('Hubo un problema al crear el delivery. Por favor, inténtelo de nuevo.');
         }
       } catch (error) {
         console.error('Error creating delivery/order:', error);

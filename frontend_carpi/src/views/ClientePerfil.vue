@@ -51,85 +51,87 @@
 
       <!-- Orders Table -->
       <div class="bg-white rounded-lg shadow-lg p-6">
-    <h3 class="text-xl font-bold mb-4">Pedidos Realizados</h3>
-    <div class="overflow-x-auto">
-      <table class="table w-full">
-        <thead>
-          <tr class="bg-gray-100">
-            <th class="text-left p-2">ID del Pedido</th>
-            <th class="text-left p-2">Fecha Prometida</th>
-            <th class="text-left p-2">Precio Total</th>
-            <th class="text-left p-2">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="order in orders" :key="order.orders_id" class="border-b">
-            <td class="p-2">{{ order.orders_id }}</td>
-            <td class="p-2">{{ formatDate(order.promised_date) }}</td>
-            <td class="p-2">S/. {{ Number(order.total_price).toFixed(2) }}</td>
-            <td class="p-2">
-              <span 
-                class="px-2 py-1 rounded-full text-sm font-medium"
-                :class="{
-                  'bg-green-100 text-green-800': order.status === 'completed',
-                  'bg-yellow-100 text-yellow-800': order.status === 'pending',
-                  'bg-blue-100 text-blue-800': order.status === 'in_process'
-                }"
-              >
-                {{ translateStatus(order.status) }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+        <h3 class="text-xl font-bold mb-4">Pedidos Realizados</h3>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="text-left p-2">ID del Pedido</th>
+                <th class="text-left p-2">Fecha Prometida</th>
+                <th class="text-left p-2">Precio Total</th>
+                <th class="text-left p-2">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in orders" :key="order.orders_id" class="border-b">
+                <td class="p-2">{{ order.orders_id }}</td>
+                <td class="p-2">{{ formatDate(order.promised_date) }}</td>
+                <td class="p-2">S/. {{ Number(order.total_price).toFixed(2) }}</td>
+                <td class="p-2">
+                  <span class="px-2 py-1 rounded-full text-sm font-medium" :class="{
+                    'bg-green-100 text-green-800': order.status === 'completed',
+                    'bg-yellow-100 text-yellow-800': order.status === 'pending',
+                    'bg-blue-100 text-blue-800': order.status === 'in_process'
+                  }">
+                    {{ translateStatus(order.status) }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex justify-center pb-4">
+          <div class="join">
+            <button @click="paginaAnterior" :disabled="!previousPage" class="join-item btn"
+              :class="{ 'btn-disabled': !previousPage }">
+              «
+            </button>
+            <button class="join-item btn">
+              Página {{ currentPage }}
+            </button>
+            <button @click="siguientePagina" :disabled="!nextPage" class="join-item btn"
+              :class="{ 'btn-disabled': !nextPage }">
+              »
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Modals -->
     <div v-if="showModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
       <div class="bg-white p-6 rounded-lg shadow-lg w-96">
         <h3 class="text-xl font-bold mb-4">{{ modalTitle }}</h3>
-        
+
         <!-- Update Profile Modal -->
         <div v-if="currentAction === 'updateProfile'">
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
-            <input 
-              v-model="userData.username" 
-              type="text" 
-              @input="userData.username = userData.username.replace(/\s/g, '')"
-              placeholder="Sin espacios"
+            <input v-model="userData.username" type="text"
+              @input="userData.username = userData.username.replace(/\s/g, '')" placeholder="Sin espacios"
               class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-            <input v-model="userData.email" type="email" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <input v-model="userData.email" type="email"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-            <input 
-              v-model="userData.phone" 
-              type="tel" 
-              maxlength="9"
-              @input="userData.phone = userData.phone.replace(/\D/g, '').slice(0, 9)"
-              placeholder="Máximo 9 dígitos"
+            <input v-model="userData.phone" type="tel" maxlength="9"
+              @input="userData.phone = userData.phone.replace(/\D/g, '').slice(0, 9)" placeholder="Máximo 9 dígitos"
               class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
-            <div class="mb-4">
+          <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">DNI</label>
-            <input 
-              v-model="userData.dni" 
-              type="number"
-              min="0"
-              maxlength="8"
+            <input v-model="userData.dni" type="number" min="0" maxlength="8"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3"
-            >
-            </div>
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+          </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Sexo</label>
-            <select v-model="userData.sex" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <select v-model="userData.sex"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
               <option value="">Selecciona</option>
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
@@ -138,7 +140,8 @@
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Dirección</label>
-            <input v-model="userData.address" type="text" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <input v-model="userData.address" type="text"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
         </div>
 
@@ -146,15 +149,18 @@
         <div v-if="currentAction === 'changePassword'">
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
-            <input v-model="passwordData.oldPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <input v-model="passwordData.oldPassword" type="password"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
-            <input v-model="passwordData.newPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <input v-model="passwordData.newPassword" type="password"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Confirmar Nueva Contraseña</label>
-            <input v-model="passwordData.confirmPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
+            <input v-model="passwordData.confirmPassword" type="password"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
         </div>
 
@@ -172,7 +178,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router' 
+import { useRouter } from 'vue-router'
 import { UserIcon, PhoneIcon, CreditCardIcon, HomeIcon } from 'lucide-vue-next'
 import Header from '@/components/HeaderCompo.vue'
 import axios from 'axios'
@@ -194,7 +200,10 @@ const user = ref({
   address: 'No disponible'
 })
 
-const orders = ref([])
+const orders = ref([]);
+const nextPage = ref(null);
+const previousPage = ref(null);
+const currentPage = ref(1);
 
 const showModal = ref(false)
 const modalTitle = ref('')
@@ -225,7 +234,7 @@ const obtenerToken = () => {
 const fetchUserProfile = async () => {
   try {
     const token = obtenerToken(); // Obtener el token
-    
+
     const response = await fetch('http://127.0.0.1:8000/api/users/clients/profile', {
       method: 'GET',
       headers: {
@@ -265,54 +274,54 @@ const fetchUserProfile = async () => {
       address: data.address || ''
     };
 
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+  }
+};
+
+const updateUserProfile = async () => {
+  try {
+    const token = obtenerToken(); // Obtener el token
+    const userId = user.value.id; // Asumiendo que has agregado el id al objeto user
+
+    const response = await fetch(`http://127.0.0.1:8000/api/users/clients/update/${userId}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        username: userData.value.username,
+        email: userData.value.email,
+        dni: userData.value.dni,
+        gender: userData.value.sex === 'male' ? 'M' : userData.value.sex === 'female' ? 'F' : null,
+        address: userData.value.address,
+        phone: userData.value.phone
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al actualizar el perfil');
     }
-  };
-  
-  const updateUserProfile = async () => {
-    try {
-      const token = obtenerToken(); // Obtener el token
-      const userId = user.value.id; // Asumiendo que has agregado el id al objeto user
 
-      const response = await fetch(`http://127.0.0.1:8000/api/users/clients/update/${userId}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          username: userData.value.username,
-          email: userData.value.email,
-          dni: userData.value.dni,
-          gender: userData.value.sex === 'male' ? 'M' : userData.value.sex === 'female' ? 'F' : null,
-          address: userData.value.address,
-          phone: userData.value.phone
-        })
-      });
+    const updatedData = await response.json();
+    console.log('Perfil actualizado:', updatedData);
 
-      if (!response.ok) {
-        throw new Error('Error al actualizar el perfil');
-      }
+    // Actualiza el estado del usuario con los nuevos datos
+    user.value = {
+      ...user.value,
+      ...updatedData // Suponiendo que la respuesta incluye todos los campos actualizados
+    };
 
-      const updatedData = await response.json();
-      console.log('Perfil actualizado:', updatedData);
-
-      // Actualiza el estado del usuario con los nuevos datos
-      user.value = {
-        ...user.value,
-        ...updatedData // Suponiendo que la respuesta incluye todos los campos actualizados
-      };
-
-      alert('Perfil actualizado con éxito');
-      // Recarga la página después de actualizar exitosamente
-      router.go(0);
-    } catch (error) {
-      console.error('Error al actualizar el perfil:', error);
-      alert('No se pudo actualizar el perfil. Intenta nuevamente más tarde.');
-    }
-  };
+    alert('Perfil actualizado con éxito');
+    // Recarga la página después de actualizar exitosamente
+    router.go(0);
+  } catch (error) {
+    console.error('Error al actualizar el perfil:', error);
+    alert('No se pudo actualizar el perfil. Intenta nuevamente más tarde.');
+  }
+};
 
 const updatePassword = async () => {
   // Validar que la nueva contraseña y la confirmación coincidan
@@ -393,8 +402,8 @@ const deleteUserAccount = async () => {
 };
 
 const handleLogout = () => {
-    store.dispatch('sessions/logout'); // Llama a la acción de logout en Vuex
-    router.push('/'); // Redirige a la página principal
+  store.dispatch('sessions/logout'); // Llama a la acción de logout en Vuex
+  router.push('/'); // Redirige a la página principal
 };
 
 const openModal = (action) => {
@@ -438,7 +447,7 @@ const handleAction = async () => {
       // Aquí iría la lógica para actualizar el perfil en el backend
       break
     case 'changePassword':
-    await updatePassword();
+      await updatePassword();
       console.log('Contraseña cambiada', passwordData.value)
       // Aquí iría la lógica para cambiar la contraseña en el backend
       break
@@ -450,45 +459,68 @@ const handleAction = async () => {
     case 'logout':
       await handleLogout();
       console.log('Sesión cerrada')
-       // Redirige a la página principal
+      // Redirige a la página principal
       break
   }
   closeModal()
 }
 
-const fetchOrders = async () => {
+// Función para obtener los pedidos
+const fetchOrders = async (url = 'http://localhost:8000/api/orders/orders-list-client/') => {
   try {
     const token = obtenerToken(); // Obtener el token
-    const response = await axios.get('http://localhost:8000/api/orders/orders-list-client/', {
+    const response = await axios.get(url, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     });
     orders.value = response.data.results; // Guardar los pedidos en la referencia
+    nextPage.value = response.data.next;
+    previousPage.value = response.data.previous;
+    updateCurrentPage();
   } catch (error) {
     console.error('Error al obtener los pedidos:', error);
+    alert('No se pudieron obtener los pedidos. Intenta nuevamente más tarde.');
   }
-}
+};
 
-// Modificar onMounted para incluir la llamada a fetchOrders
-onMounted(async () => {
-  await fetchUserProfile();
-  await fetchOrders(); // Llamada a fetchOrders
-
-  // Using a flag in localStorage to control one-time reload
-  if (!localStorage.getItem('pageLoaded')) {
-    localStorage.setItem('pageLoaded', 'true');
-    router.go(0);
+// Actualiza la página actual basado en la URL de paginación
+const updateCurrentPage = () => {
+  if (nextPage.value) {
+    currentPage.value = extractPageNumber(nextPage.value) - 1;
+  } else if (previousPage.value) {
+    currentPage.value = extractPageNumber(previousPage.value) + 1;
   } else {
-    localStorage.removeItem('pageLoaded');
+    currentPage.value = 1;
   }
-});
+};
 
-// Métodos para formatear la fecha y traducir el estado
+// Extrae el número de página de la URL
+const extractPageNumber = (url) => {
+  if (!url) return null;
+  const params = new URLSearchParams(url.split('?')[1]);
+  return parseInt(params.get('page')) || 1;
+};
+
+// Funciones de paginación
+const paginaAnterior = () => {
+  if (previousPage.value) {
+    fetchOrders(previousPage.value);
+  }
+};
+
+const siguientePagina = () => {
+  if (nextPage.value) {
+    fetchOrders(nextPage.value);
+  }
+};
+
+// Función para formatear la fecha
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString('es-ES');
 };
 
+// Función para traducir el estado
 const translateStatus = (status) => {
   const statusMap = {
     'pending': 'Pendiente',
@@ -497,12 +529,27 @@ const translateStatus = (status) => {
   };
   return statusMap[status] || status;
 };
+
+// Carga inicial de datos
+onMounted(async () => {
+  await fetchUserProfile(); // Asumiendo que esta función está definida en otro lugar
+  await fetchOrders(); // Llamada a fetchOrders
+
+  // Controlar una recarga única usando localStorage
+  if (!localStorage.getItem('pageLoaded')) {
+    localStorage.setItem('pageLoaded', 'true');
+    router.go(0);
+  } else {
+    localStorage.removeItem('pageLoaded');
+  }
+});
 </script>
 
 <style scoped>
 .fixed {
   position: fixed;
 }
+
 .bg-gray-500 {
   background-color: rgba(0, 0, 0, 0.5);
 }
