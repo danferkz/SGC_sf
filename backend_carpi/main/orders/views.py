@@ -1,13 +1,15 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Order
 from .serializers import OrderSerializer
 from orders.total_price import calculate_total_price  # Asegúrate de que esta importación sea correcta
 from deliveries.models import Delivery
 from employees.models import Employee
 from products.models import DoorWindow, Furniture  # Importa los modelos específicos
+from users.views import BaseAuthenticatedView, IsAdminUser
 
 class OrderCreateAPIView(CreateAPIView):
     queryset = Order.objects.all()
@@ -69,3 +71,21 @@ class OrderCreateAPIView(CreateAPIView):
             return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class OrderListAPIViewAdmin(ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user)
+    
+
+class OrderListAPIViewCliente(ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user)
