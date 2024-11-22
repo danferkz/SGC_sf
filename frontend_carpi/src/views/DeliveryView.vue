@@ -68,40 +68,15 @@
                 <label class="label">
                   <span class="label-text font-semibold">Comentarios</span>
                 </label>
-                <textarea v-model="comentarios" class="block text-sm font-medium text-white-700 resize-none"></textarea>
+                <textarea v-model="comentarios" class="textarea textarea-bordered h-24" placeholder="Notas sobre la entrega"></textarea>
               </div>
-              <button @click="confirmarDelivery" class="btn btn-primary w-full">Aceptar Delivery</button>
             </div>
           </div>
         </div>
 
-        <!-- Botón de Ordenar -->
-        <div class="text-center">
-          <button @click="confirmarOrden" class="btn btn-lg btn-accent hover:btn-accent-focus transition duration-300 ease-in-out transform hover:scale-105">
-            Ordenar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modales de Confirmación -->
-    <div v-if="showDeliveryModal" class="modal modal-open">
-      <div class="modal-box bg-white rounded-lg shadow-xl">
-        <h3 class="font-bold text-lg text-white-800">Confirmación de Delivery</h3>
-        <p class="py-4">¿Desea confirmar el delivery?</p>
-        <div class="modal-action">
-          <button @click="aceptarDelivery" class="btn btn-primary">Aceptar</button>
-          <button @click="cancelarDelivery" class="btn btn-outline">Cancelar</button>
-        </div>
-      </div>
-    </div>
-    <div v-if="showOrdenModal" class="modal modal-open">
-      <div class="modal-box bg-white rounded-lg shadow-xl">
-        <h3 class="font-bold text-lg text-green-800">Confirmación de Orden</h3>
-        <p class="py-4">¿Desea confirmar la orden?</p>
-        <div class="modal-action">
-          <button @click="aceptarOrden" class="btn btn-accent">Aceptar</button>
-          <button @click="cancelarOrden" class="btn btn-outline">Cancelar</button>
+        <!-- Botón para Aceptar Delivery -->
+        <div class="flex justify-end">
+          <button @click="aceptarDelivery" class="btn btn-primary">Ordenar</button>
         </div>
       </div>
     </div>
@@ -114,43 +89,27 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Header from "@/components/HeaderCompo.vue";
 
-const getToken = () => {
-  return localStorage.getItem('token');
-};
-
 export default {
   components: {
     Header,
   },
   setup() {
     const router = useRouter();
-
-    const producto = ref({
-      productId: '',
-      tipoProducto: '',
-      tipoMadera: '',
-      barnizado: '',
-      largo: '',
-      ancho: '',
-      exterior: '',
-      numHojas: '',
-      costo: '',
-      nombrePieza: '',
-      peso: '',
-      parteDeSet: '',
-      nombreSet: ''
-    });
-
+    const producto = ref({});
     const deseaDelivery = ref(false);
     const fechaEntrega = ref('');
     const comentarios = ref('');
-    const showDeliveryModal = ref(false);
-    const showOrdenModal = ref(false);
+    const rawProductData = ref(null);
 
     onMounted(async () => {
       try {
         const productId = localStorage.getItem('product_id');
-        const token = getToken();
+        const token = localStorage.getItem('token');
+
+        if (!productId || !token) {
+          router.push('/login');
+          return;
+        }
 
         const response = await axios.get(
           `http://localhost:8000/api/products/product/${productId}`,
@@ -161,61 +120,100 @@ export default {
           }
         );
 
-        const data = response.data;
-
-        if (data.product_type === 'furniture') {
-          producto.value = {
-            productId: data.product_id,
-            tipoProducto: 'Mueble',
-            tipoMadera: data.wood_type,
-            barnizado: data.is_varnished ? 'Sí' : 'No',
-            nombrePieza: data.piece_name || 'N/A',
-            peso: `${data.weight} Kg`,
-            parteDeSet: data.is_part_of_set ? 'Sí' : 'No',
-            nombreSet: data.set_name || 'N/A',
-            costo: `$${parseFloat(data.cost_price).toFixed(2)}`
-          };
-        } else {
-          producto.value = {
-            productId : data.product_id,
-            tipoProducto: data.product_type === 'door' ? 'Puerta' : 'Ventana',
-            tipoMadera: data.wood_type,
-            barnizado: data.is_varnished ? 'Sí' : 'No',
-            largo: `${data.length} cm`,
-            ancho: `${data.width} cm`,
-            exterior: data.is_exterior ? 'Sí' : 'No',
-            numHojas: data.number_of_sheets,
-            costo: `$${parseFloat(data.cost_price).toFixed(2)}`
-          };
-        }
+        rawProductData.value = response.data;
+        mapProductData(response.data);
       } catch (error) {
         console.error('Error fetching product:', error);
+        router.push('/productos');
       }
     });
 
-    const confirmarDelivery = () => {
-      showDeliveryModal.value = true;
+    const mapProductData = (data) => {
+      if (data.product_type === 'furniture') {
+        producto.value = {
+          productId: data.product_id,
+          tipoProducto: 'Mueble',
+          tipoMadera: data.wood_type,
+          barnizado: data.is_varnished ? 'Sí' : 'No',
+          nombrePieza: data.piece_name || 'N/A',
+          peso: `${data.weight} Kg`,
+          parteDeSet: data.is_part_of_set ? 'Sí' : 'No',
+          nombreSet: data.set_name || 'N/A',
+          costo: `$${parseFloat(data.cost_price).toFixed(2)}`
+        };
+      } else {
+        producto.value = {
+          productId: data.product_id,
+          tipoProducto: data.product_type === 'door' ? 'Puerta' : 'Ventana',
+          tipoMadera: data.wood_type,
+          barnizado: data.is_varnished ? 'Sí' : 'No',
+          largo: `${data.length} cm`,
+          ancho: `${data.width} cm`,
+          exterior: data.is_exterior ? 'Sí' : 'No',
+          numHojas: data.number_of_sheets,
+          costo: `$${parseFloat(data.cost_price).toFixed(2)}`
+        };
+      }
     };
 
-    const aceptarDelivery = () => {
-      showDeliveryModal.value = false;
-    };
+    const aceptarDelivery = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
 
-    const cancelarDelivery = () => {
-      showDeliveryModal.value = false;
-    };
+        // Prepare Delivery Data dynamically
+        const deliveryData = {
+          delivery_date: deseaDelivery.value ? fechaEntrega.value : null,
+          delivery_notes: comentarios.value,
+          delivery_option: deseaDelivery.value
+        };
 
-    const confirmarOrden = () => {
-      showOrdenModal.value = true;
-    };
 
-    const aceptarOrden = () => {
-      showOrdenModal.value = false;
-      router.push({ name: 'ClientePerfil' });
-    };
+        // Create Delivery
+        const deliveryResponse = await axios.post(
+          'http://localhost:8000/api/deliveries/create/', 
+          deliveryData, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
 
-    const cancelarOrden = () => {
-      showOrdenModal.value = false;
+        // Create Order
+        if (deliveryResponse.status === 201) {
+          // Calculate promised date (next year from now)
+          const promisedDate = new Date();
+          promisedDate.setFullYear(promisedDate.getFullYear() + 1);
+          const formattedPromisedDate = promisedDate.toISOString().split('T')[0];
+
+          const orderData = {
+            client: userId,
+            product: producto.value.productId,
+            delivery: deliveryResponse.data.id,
+            promised_date: formattedPromisedDate
+          };
+
+          const orderResponse = await axios.post(
+            'http://localhost:8000/api/orders/orders-create/', 
+            orderData, 
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            }
+          );
+
+          if (orderResponse.status === 201) {
+            router.push('/ordenes');
+          }
+        }
+      } catch (error) {
+        console.error('Error creating delivery/order:', error);
+        alert('Hubo un problema al procesar su pedido.');
+      }
     };
 
     return {
@@ -223,19 +221,8 @@ export default {
       deseaDelivery,
       fechaEntrega,
       comentarios,
-      showDeliveryModal,
-      showOrdenModal,
-      confirmarDelivery,
-      aceptarDelivery,
-      cancelarDelivery,
-      confirmarOrden,
-      aceptarOrden,
-      cancelarOrden
+      aceptarDelivery
     };
   }
 };
 </script>
-
-<style>
-/* Añade estilos según tus necesidades */
-</style>
