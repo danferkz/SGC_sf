@@ -248,48 +248,49 @@ export default {
 
     const createProduct = async () => {
       try {
-        const token = getToken();
-        if (!token) {
-          alert('No se encontró un token de autenticación.');
-          return;
-        }
+      const token = getToken();
+      if (!token) {
+        alert('No se encontró un token de autenticación.');
+        return;
+      }
 
-        if (!price.value || price.value <= 0) {
-          alert('El precio debe ser mayor que cero y debe estar definido.');
-          return;
-        }
+      if (!price.value || price.value <= 0) {
+        alert('El precio debe ser mayor que cero y debe estar definido.');
+        return;
+      }
 
-        const payload = {
-          wood_type: formData.woodType,
-          is_varnished: formData.varnished === 'Si',
-          length: parseFloat(formData.length),
-          width: parseFloat(formData.width),
-          is_exterior: formData.exterior === 'Si',
-          number_of_sheets: parseInt(formData.number_of_sheets),
-          cost_price: parseFloat(price.value),
-        };
+      const payload = {
+        wood_type: formData.woodType,
+        is_varnished: formData.varnished === 'Si',
+        length: parseFloat(formData.length),
+        width: parseFloat(formData.width),
+        is_exterior: formData.exterior === 'Si',
+        number_of_sheets: parseInt(formData.number_of_sheets),
+        cost_price: parseFloat(price.value),
+      };
 
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
+      const config = {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+      };
 
-        const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
+      const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
 
-        if (response.status === 201) {
-          console.log('Respuesta del servidor:', response.data); // Added console log
-          alert('Producto creado exitosamente');
-          showValidatedWindow.value = false;
-          router.push('/delivery'); // Cambia esta línea para usar router.push
-        } else {
-          alert('Hubo un error al crear el producto.');
-        }
-      } catch (error) {
-        console.error('Error al crear el producto:', error);
+      if (response.status === 201) {
+        console.log('Respuesta del servidor:', response.data.product_id);
+        localStorage.setItem('door_product_id', response.data.product_id); // Changed to door_product_id
+        alert('Producto creado exitosamente');
+        showValidatedWindow.value = false;
+        router.push('/delivery');
+      } else {
         alert('Hubo un error al crear el producto.');
       }
-    };
+      } catch (error) {
+      console.error('Error al crear el producto:', error);
+      alert('Hubo un error al crear el producto.');
+      }
+        };
 
     const handleCalculatePrice = async () => {
       try {

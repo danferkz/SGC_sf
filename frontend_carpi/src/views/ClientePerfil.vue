@@ -241,7 +241,7 @@ const fetchUserProfile = async () => {
     }
 
     const data = await response.json();
-    console.log('Datos del perfil recibidos:', data);
+    console.log('Datos del perfil recibidos:', data.id);
 
     // Guardar el ID del usuario en localStorage
     localStorage.setItem('userId', data.id);
