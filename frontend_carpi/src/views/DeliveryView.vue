@@ -168,6 +168,14 @@ export default {
           delivery_option: deseaDelivery.value
         };
 
+        // Dynamically add furniture or door_window based on product type
+        if (rawProductData.value.product_type === 'furniture') {
+          deliveryData.furniture = producto.value.productId;
+        } else if (rawProductData.value.product_type === 'door') {
+          deliveryData.door_window = producto.value.productId;
+        } else if (rawProductData.value.product_type === 'window') {
+          deliveryData.door_window = producto.value.productId;
+        }
 
         // Create Delivery
         const deliveryResponse = await axios.post(
@@ -191,7 +199,7 @@ export default {
           const orderData = {
             client: userId,
             product: producto.value.productId,
-            delivery: deliveryResponse.data.id,
+            delivery: deliveryResponse.data.delivery_id,
             promised_date: formattedPromisedDate
           };
 
@@ -207,7 +215,7 @@ export default {
           );
 
           if (orderResponse.status === 201) {
-            router.push('/ordenes');
+            router.push('/cliente');
           }
         }
       } catch (error) {
