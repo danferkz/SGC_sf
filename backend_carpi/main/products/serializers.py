@@ -55,3 +55,14 @@ class ProductFurnitureCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['product_type'] = 'furniture'  # Establecer el valor por defecto
         return super().create(validated_data)
+    
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoorWindow  # Puedes hacer esto para DoorWindow y Furniture
+        fields = ['product_id', 'product_type', 'wood_type', 'is_varnished', 'length', 'width', 'is_exterior', 'number_of_sheets', 'cost_price']
+
+class FurnitureDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Furniture
+        fields = ['product_id', 'product_type', 'wood_type', 'is_varnished', 'piece_name', 'weight', 'is_part_of_set', 'set_name', 'cost_price']

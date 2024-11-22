@@ -6,7 +6,8 @@ from .views import (
     CalcularPrecioMuebleView,
     ProductDoorCreateView,
     ProductWindowCreateView,
-    ProductFurnitureCreateView
+    ProductFurnitureCreateView,
+    ProductDetailView
 )
 
 urlpatterns = [
@@ -19,4 +20,6 @@ urlpatterns = [
     path('product-door-create/', ProductDoorCreateView.as_view(), name='product-door-create'),
     path('product-window-create/', ProductWindowCreateView.as_view(), name='product-window-create'),
     path('product-furniture-create/', ProductFurnitureCreateView.as_view(), name='product-furniture-create'),
+    
+    path('product/<uuid:product_id>/', ProductDetailView.as_view(), name='product-detail'),  # Nueva URL para obtener producto
 ]

@@ -1,6 +1,8 @@
 # productos/views.py
 from rest_framework.views import APIView
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
+from .models import DoorWindow, Furniture
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import (
@@ -8,7 +10,8 @@ from .serializers import (
     FurniturePriceCalculationSerializer,
     ProductDoorCreateSerializer,
     ProductWindowCreateSerializer,
-    ProductFurnitureCreateSerializer
+    ProductFurnitureCreateSerializer,
+    ProductDetailSerializer
 )
 from .pricing import (
     calcular_precio_puerta,
@@ -80,3 +83,17 @@ class ProductFurnitureCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class ProductDetailView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProductDetailSerializer
+
+    def get_object(self):
+        product_id = self.kwargs['product_id']
+        try:
+            # Intenta buscar el producto en DoorWindow
+            return DoorWindow.objects.get(product_id=product_id)
+        except DoorWindow.DoesNotExist:
+            # Si no se encuentra, intenta buscar en Furniture
+            return Furniture.objects.get(product_id=product_id)
