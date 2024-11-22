@@ -60,7 +60,7 @@
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
               <input id="part-of-set-yes" type="radio" v-model="formData.isPartOfSet" value="Si"
-                class="focus:ring-amber-500 h-4 w-4 text -amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
               <label for="part-of-set-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
@@ -78,14 +78,6 @@
           <input type="text" id="setName" v-model="formData.setName" required
             class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
           <p v-if="errors.setName" class="text-red-500 text-xs italic">{{ errors.setName }}</p>
-        </div>
-
-        <!-- Número de Hojas -->
-        <div>
-          <label for="numberOfSheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
-          <input type="number" id="numberOfSheets" v-model="formData.numberOfSheets" required min="1" max="5"
-            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
-          <p v-if="errors.numberOfSheets" class="text-red-500 text-xs italic">{{ errors.numberOfSheets }}</p>
         </div>
 
         <!-- Comentarios Adicionales -->
@@ -126,7 +118,6 @@
             <p><strong>Peso:</strong> {{ formData.weight }} kg</p>
             <p><strong>Parte de un Juego:</strong> {{ formData.isPartOfSet }}</p>
             <p v-if="formData.isPartOfSet === 'Si'"><strong>Nombre del Juego:</strong> {{ formData.setName }}</p>
-            <p><strong>Número de Hojas:</strong> {{ formData.numberOfSheets }}</p>
             <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
           </div>
           <div class="mt-4 flex justify-center space-x-4">
@@ -142,26 +133,20 @@
 
       <section id="productos" class="py-16 px-6 bg-white">
         <div class="container mx-auto">
-          
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Producto 1: Puertas -->
             <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
-              
               <h4 class="text-xl font-semibold mb-2">Puertas</h4>
-              
             </router-link>
 
             <!-- Producto 2: Ventanas -->
             <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
-              
               <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
-              
             </router-link>
 
             <!-- Producto 3: Muebles -->
             <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
               <h4 class="text-xl font-semibold mb-2">Muebles</h4>
-              
             </router-link>
           </div>
         </div>
@@ -191,7 +176,6 @@ export default {
       weight: null,
       isPartOfSet: '',
       setName: '',
-      numberOfSheets: '',
       comments: '',
     });
 
@@ -202,7 +186,6 @@ export default {
       weight: '',
       isPartOfSet: '',
       setName: '',
-      numberOfSheets: '',
     });
 
     const showValidatedWindow = ref(false);
@@ -230,10 +213,6 @@ export default {
       }
       if (formData.isPartOfSet === 'Si' && !formData.setName) {
         errors.setName = 'El nombre del juego es obligatorio si es parte de un set.';
-        isValid = false;
-      }
-      if (!formData.numberOfSheets || formData.numberOfSheets < 1 || formData.numberOfSheets > 5) {
-        errors.numberOfSheets = 'El número de hojas debe estar entre 1 y 5.';
         isValid = false;
       }
       return isValid;
@@ -264,9 +243,8 @@ export default {
           is_varnished: formData.varnished.toLowerCase() === 'si',
           piece_name: formData.pieceName,
           weight: parseFloat(formData.weight),
-          is_part_of_set: formData.isPartOfSet === 'Si',
+          is_part_of_set: formData.isPartOfSet === ' Si',
           set_name: formData.isPartOfSet === 'Si' ? formData.setName : null,
-          number_of_sheets: parseInt(formData.numberOfSheets),
           cost_price: parseFloat(price.value),
         };
 
@@ -309,7 +287,6 @@ export default {
           weight: parseFloat(formData.weight),
           is_part_of_set: formData.isPartOfSet === 'Si',
           set_name: formData.isPartOfSet === 'Si' ? formData.setName : null,
-          number_of_sheets: parseInt(formData.numberOfSheets),
         };
 
         const config = {

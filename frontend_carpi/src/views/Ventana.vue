@@ -27,12 +27,12 @@
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
               <input id="varnished-yes" type="radio" v-model="formData.varnished" value="Si"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
               <input id="varnished-no" type="radio" v-model="formData.varnished" value="No"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
@@ -43,7 +43,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
-            <input type="number" id="length" v-model="formData.length" required min="60" max="300"
+            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
             <p v-if="errors.length" class="text-red-500 text-xs italic">{{ errors.length }}</p>
           </div>
@@ -61,12 +61,12 @@
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
               <input id="exterior-yes" type="radio" v-model="formData.exterior" value="Si"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="exterior-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
               <input id="exterior-no" type="radio" v-model="formData.exterior" value="No"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="exterior-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
@@ -161,6 +161,7 @@
         </div>
       </section>
     </div>
+    <!-- Footer -->
     <Footer class="footer" />
   </div>
 </template>
@@ -170,6 +171,8 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
 import Footer from "@/components/FooterCompo.vue";
+import { useRouter } from 'vue-router';
+
 
 export default {
   components: {
@@ -177,6 +180,7 @@ export default {
     Footer,
   },
   setup() {
+    const router = useRouter();
     const formData = reactive({
       woodType: '',
       varnished: '', // 'Si' o 'No'
@@ -244,46 +248,49 @@ export default {
 
     const createProduct = async () => {
       try {
-        const token = getToken();
-        if (!token) {
-          alert('No se encontró un token de autenticación.');
-          return;
-        }
+      const token = getToken();
+      if (!token) {
+        alert('No se encontró un token de autenticación.');
+        return;
+      }
 
-        if (!price.value || price.value <= 0) {
-          alert('El precio debe ser mayor que cero y debe estar definido.');
-          return;
-        }
+      if (!price.value || price.value <= 0) {
+        alert('El precio debe ser mayor que cero y debe estar definido.');
+        return;
+      }
 
-        const payload = {
-          wood_type: formData.woodType,
-          is_varnished: formData.varnished === 'Si',
-          length: parseFloat(formData.length),
-          width: parseFloat(formData.width),
-          is_exterior: formData.exterior === 'Si',
-          number_of_sheets: parseInt(formData.number_of_sheets),
-          cost_price: parseFloat(price.value),
-        };
+      const payload = {
+        wood_type: formData.woodType,
+        is_varnished: formData.varnished === 'Si',
+        length: parseFloat(formData.length),
+        width: parseFloat(formData.width),
+        is_exterior: formData.exterior === 'Si',
+        number_of_sheets: parseInt(formData.number_of_sheets),
+        cost_price: parseFloat(price.value),
+      };
 
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
+      const config = {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+      };
 
-        const response = await axios.post('http://localhost:8000/api/products/product-window-create/', payload, config);
-        
-        if (response.status === 201) {
-          alert('Producto creado exitosamente');
-          showValidatedWindow.value = false;
-        } else {
-          alert('Hubo un error al crear el producto.');
-        }
-      } catch (error) {
-        console.error('Error al crear el producto:', error);
+      const response = await axios.post('http://localhost:8000/api/products/product-window-create/', payload, config);
+
+      if (response.status === 201) {
+        console.log('Respuesta del servidor:', response.data.product_id);
+        localStorage.setItem('product_id', response.data.product_id); // Changed to door_product_id
+        alert('Producto creado exitosamente');
+        showValidatedWindow.value = false;
+        router.push('/delivery');
+      } else {
         alert('Hubo un error al crear el producto.');
       }
-    };
+      } catch (error) {
+      console.error('Error al crear el producto:', error);
+      alert('Hubo un error al crear el producto.');
+      }
+        };
 
     const handleCalculatePrice = async () => {
       try {
@@ -296,7 +303,7 @@ export default {
         const payload = {
           wood_type: formData.woodType,
           is_varnished: formData.varnished === 'Si',
-          length: parseFloat(formData.length ),
+          length: parseFloat(formData.length),
           width: parseFloat(formData.width),
           is_exterior: formData.exterior === 'Si',
           number_of_sheets: parseInt(formData.number_of_sheets),
@@ -330,6 +337,7 @@ export default {
       createProduct,
       handleSubmit,
     };
+    
   },
 };
 </script>

@@ -2,6 +2,11 @@
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import NotFound
+from .models import DoorWindow, Furniture, BaseProduct
+from .serializers import ProductDetailSerializer, FurnitureDetailSerializer
 from .models import DoorWindow, Furniture
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -11,7 +16,8 @@ from .serializers import (
     ProductDoorCreateSerializer,
     ProductWindowCreateSerializer,
     ProductFurnitureCreateSerializer,
-    ProductDetailSerializer
+    ProductDetailSerializer,
+    FurnitureDetailSerializer
 )
 from .pricing import (
     calcular_precio_puerta,
@@ -87,13 +93,35 @@ class ProductFurnitureCreateView(APIView):
 
 class ProductDetailView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = ProductDetailSerializer
+
+    def get_serializer_class(self):
+        product_id = self.kwargs['product_id']
+        
+        # Revisa primero si es un mueble
+        furniture = Furniture.objects.filter(product_id=product_id).first()
+        if furniture:
+            return FurnitureDetailSerializer
+        
+        # Si no es mueble, asume que es puerta/ventana
+        doorwindow = DoorWindow.objects.filter(product_id=product_id).first()
+        if doorwindow:
+            return ProductDetailSerializer
+        
+        # Si no se encuentra, usa el serializador por defecto
+        return ProductDetailSerializer
 
     def get_object(self):
         product_id = self.kwargs['product_id']
-        try:
-            # Intenta buscar el producto en DoorWindow
-            return DoorWindow.objects.get(product_id=product_id)
-        except DoorWindow.DoesNotExist:
-            # Si no se encuentra, intenta buscar en Furniture
-            return Furniture.objects.get(product_id=product_id)
+        
+        # Primero busca en Furniture
+        furniture = Furniture.objects.filter(product_id=product_id).first()
+        if furniture:
+            return furniture
+        
+        # Luego busca en DoorWindow
+        doorwindow = DoorWindow.objects.filter(product_id=product_id).first()
+        if doorwindow:
+            return doorwindow
+        
+        # Si no se encuentra, lanza un error
+        raise NotFound(detail="Producto no encontrado")
