@@ -172,7 +172,7 @@ import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
 import Footer from "@/components/FooterCompo.vue";
 import { useRouter } from 'vue-router';
-const router = useRouter();
+
 
 export default {
   components: {
@@ -279,7 +279,7 @@ export default {
 
       if (response.status === 201) {
         console.log('Respuesta del servidor:', response.data.product_id);
-        localStorage.setItem('door_product_id', response.data.product_id); // Changed to door_product_id
+        localStorage.setItem('product_id', response.data.product_id); // Changed to door_product_id
         alert('Producto creado exitosamente');
         showValidatedWindow.value = false;
         router.push('/delivery');

@@ -175,6 +175,7 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
 import Footer from "@/components/FooterCompo.vue";
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -182,6 +183,7 @@ export default {
     Footer,
   },
   setup() {
+    const router = useRouter();
     const formData = reactive({
       woodType: '',
       varnished: '',
@@ -277,8 +279,10 @@ export default {
         const response = await axios.post('http://localhost:8000/api/products/product-furniture-create/', payload, config);
 
         if (response.status === 201) {
+          localStorage.setItem('product_id', response.data.product_id);
           alert('Producto creado exitosamente');
           showValidatedWindow.value = false;
+          router.push('/delivery');
         } else {
           alert('Hubo un error al crear el producto.');
         }
