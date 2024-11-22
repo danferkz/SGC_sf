@@ -100,11 +100,11 @@
               type="text" 
               @input="userData.username = userData.username.replace(/\s/g, '')"
               placeholder="Sin espacios"
-              class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-            <input v-model="userData.email" type="email" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <input v-model="userData.email" type="email" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Teléfono</label>
@@ -114,7 +114,7 @@
               maxlength="9"
               @input="userData.phone = userData.phone.replace(/\D/g, '').slice(0, 9)"
               placeholder="Máximo 9 dígitos"
-              class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
             <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">DNI</label>
@@ -124,12 +124,12 @@
               min="0"
               maxlength="8"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-              class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3"
             >
             </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Sexo</label>
-            <select v-model="userData.sex" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <select v-model="userData.sex" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
               <option value="">Selecciona</option>
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
@@ -138,7 +138,7 @@
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Dirección</label>
-            <input v-model="userData.address" type="text" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <input v-model="userData.address" type="text" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
         </div>
 
@@ -146,15 +146,15 @@
         <div v-if="currentAction === 'changePassword'">
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
-            <input v-model="passwordData.oldPassword" type="password" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <input v-model="passwordData.oldPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
-            <input v-model="passwordData.newPassword" type="password" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <input v-model="passwordData.newPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Confirmar Nueva Contraseña</label>
-            <input v-model="passwordData.confirmPassword" type="password" class="h-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <input v-model="passwordData.confirmPassword" type="password" class="h-10 mt-1 block w-full rounded-md border border-gray-200 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3">
           </div>
         </div>
 
