@@ -110,7 +110,8 @@ export default {
         const token = localStorage.getItem('token');
 
         if (!productId || !token) {
-          router.push('/login');
+          alert('No hay producto seleccionado');
+          router.push('/producto');
           return;
         }
 
@@ -127,7 +128,7 @@ export default {
         mapProductData(response.data);
       } catch (error) {
         console.error('Error fetching product:', error);
-        router.push('/productos');
+        router.push('/producto');
       }
     });
 
@@ -163,6 +164,13 @@ export default {
       try {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
+        const productId = localStorage.getItem('product_id');
+
+        if (!productId) {
+          alert('No hay producto seleccionado');
+          router.push('/producto');
+          return;
+        }
 
         // Prepare Delivery Data dynamically
         const deliveryData = {
@@ -171,16 +179,12 @@ export default {
           delivery_option: deseaDelivery.value
         };
 
-        // Dynamically add furniture or door_window based on product type
         if (rawProductData.value.product_type === 'furniture') {
           deliveryData.furniture = producto.value.productId;
-        } else if (rawProductData.value.product_type === 'door') {
-          deliveryData.door_window = producto.value.productId;
-        } else if (rawProductData.value.product_type === 'window') {
+        } else if (['door', 'window'].includes(rawProductData.value.product_type)) {
           deliveryData.door_window = producto.value.productId;
         }
 
-        // Create Delivery
         const deliveryResponse = await axios.post(
           'http://localhost:8000/api/deliveries/create/',
           deliveryData,
@@ -192,15 +196,11 @@ export default {
           }
         );
 
-        // Create Order
         if (deliveryResponse.status === 201) {
-          // Determine the promised date based on user input
           let promisedDate;
           if (deseaDelivery.value && fechaEntrega.value) {
-            // Use the user's selected date
             promisedDate = new Date(fechaEntrega.value);
           } else {
-            // Set to 7 days from now if no delivery date is selected
             promisedDate = new Date();
             promisedDate.setDate(promisedDate.getDate() + 7);
           }
@@ -209,7 +209,7 @@ export default {
           const orderData = {
             client: userId,
             product: producto.value.productId,
-            delivery: deliveryResponse.data.delivery_id, // This will always be set
+            delivery: deliveryResponse.data.delivery_id,
             promised_date: formattedPromisedDate
           };
 
@@ -225,6 +225,8 @@ export default {
           );
 
           if (orderResponse.status === 201) {
+            // Limpiar el product_id del localStorage
+            localStorage.removeItem('product_id');
             router.push('/cliente');
           } else {
             console.error('Error creating order:', orderResponse.data);

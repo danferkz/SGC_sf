@@ -327,9 +327,8 @@ export default {
 
 <style scoped>
 .footer {
-  position: fixed;
-  bottom: 0;
+  position: relative;
   width: 100%;
-  z-index: 10;
+  margin-top: auto;
 }
 </style>

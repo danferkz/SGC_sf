@@ -1,56 +1,68 @@
 <template>
-    <div class="min-h-screen bg-gray-100 text-gray-800 flex">
-      <!-- Header -->
-      <HeaderAdmin class="header-admin" />
-      <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="text-3xl font-bold text-gray-900">Gestión de Clientes</h1>
-          <button @click="abrirModalAgregar" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <PlusIcon class="h-5 w-5 inline-block mr-1" />
-            Agregar Cliente
-          </button>
-        </div>
-        
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-          <!-- Búsqueda y filtros -->
-          <div class="p-4 border-b border-gray-200">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-              <div class="flex-1 min-w-0 max-w-xs">
-                <label for="busqueda" class="sr-only">Buscar clientes</label>
-                <div class="relative rounded-md shadow-sm">
-                  <input type="text" id="busqueda" v-model="busqueda" placeholder="Buscar clientes..." class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md">
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <SearchIcon class="h-5 w-5 text-gray-400" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="min-h-screen bg-gray-100 text-gray-800 flex">
+    <!-- Header -->
+    <HeaderAdmin class="header-admin" />
+    <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex-1">
+            <div class="max-w-7xl mx-auto">
+                <!-- Título principal -->
+                <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Usuarios</h3>
 
+                <!-- Botón para agregar usuario -->
+                <div class="flex justify-end mb-6">
+                    <button @click="abrirModalAgregar"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none">
+                        Agregar Cliente
+                    </button>
+                </div>
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
           <!-- Tabla de clientes -->
           <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección</th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nombre
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Teléfono
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Dirección
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Acciones
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ cliente.nombre }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.email }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.telefono }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ cliente.direccion }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button @click="editarCliente(cliente)" class="text-indigo-600 hover:text-indigo-900 mr-2">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ cliente.nombre }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ cliente.email }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ cliente.telefono }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ cliente.direccion }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                      @click="editarCliente(cliente)"
+                      class="text-indigo-600 hover:text-indigo-900 mr-2"
+                    >
                       <PencilIcon class="h-5 w-5" />
                     </button>
-                    <button @click="eliminarCliente(cliente)" class="text-red-600 hover:text-red-900">
+                    <button
+                      @click="eliminarCliente(cliente)"
+                      class="text-red-600 hover:text-red-900"
+                    >
                       <TrashIcon class="h-5 w-5" />
                     </button>
                   </td>
@@ -59,93 +71,54 @@
             </table>
           </div>
 
-          <!-- Paginación -->
+          <!-- Nuevo Control de Paginación -->
           <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div class="flex-1 flex justify-between sm:hidden">
-              <button @click="paginaAnterior" :disabled="paginaActual === 1" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Anterior
+            <div class="flex justify-center pb-4 space-x-2">
+              <button
+                @click="paginaAnterior"
+                :disabled="!previousPage"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
               </button>
-              <button @click="paginaSiguiente" :disabled="paginaActual === totalPaginas" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                Siguiente
+              <button
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Página {{ currentPage }}
               </button>
-            </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm text-gray-700">
-                  Mostrando <span class="font-medium">{{ (paginaActual - 1) * clientesPorPagina + 1 }}</span> a <span class="font-medium">{{ Math.min(paginaActual * clientesPorPagina, clientesFiltrados.length) }}</span> de <span class="font-medium">{{ clientesFiltrados.length }}</span> resultados
-                </p>
-              </div>
-              <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <button @click="paginaAnterior" :disabled="paginaActual === 1" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Anterior</span>
-                    <ChevronLeftIcon class="h-5 w-5" />
-                  </button>
-                  <button @click="paginaSiguiente" :disabled="paginaActual === totalPaginas" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <span class="sr-only">Siguiente</span>
-                    <ChevronRightIcon class="h-5 w-5" />
-                  </button>
-                </nav>
-              </div>
+              <button
+                @click="siguientePagina"
+                :disabled="!nextPage"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</template>
 
-      <!-- Modal para agregar/editar cliente -->
-      <div v-if="mostrarModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-          <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <form @submit.prevent="guardarCliente">
-              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                      {{ clienteEditando ? 'Editar Cliente' : 'Agregar Cliente' }}
-                    </h3>
-                    <div class="mt-2 space-y-4">
-                      <div>
-                        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" id="nombre" v-model="clienteForm.nombre" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      </div>
-                      <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="email" v-model="clienteForm.email" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      </div>
-                      <div>
-                        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input type="tel" id="telefono" v-model="clienteForm.telefono" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      </div>
-                      <div>
-                        <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
-                        <input type="text" id="direccion" v-model="clienteForm.direccion" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                  Guardar
-                </button>
-                <button @click="cerrarModal" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                  Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    </template>
-    
+
+
 <script setup>
-    import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
-    import { ref, computed } from 'vue'
-    import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
+import { ref, computed } from 'vue'
+import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
 
 // Datos de ejemplo (reemplazar con datos reales de la API)
 const clientes = ref([
@@ -161,7 +134,7 @@ const clientesPorPagina = 10
 
 const clientesFiltrados = computed(() => {
   return clientes.value
-    .filter(cliente => 
+    .filter(cliente =>
       cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       cliente.email.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       cliente.telefono.includes(busqueda.value)
@@ -216,10 +189,16 @@ const eliminarCliente = (cliente) => {
 
 const cerrarModal = () => {
   mostrarModal.value = false
+  clienteEditando.value = null
+  clienteForm.value = {
+    nombre: '',
+    email: '',
+    telefono: '',
+    direccion: ''
+  }
 }
 
 const guardarCliente = () => {
-  
   if (clienteEditando.value) {
     // Actualizar cliente existente
     const index = clientes.value.findIndex(c => c.id === clienteEditando.value.id)
@@ -231,4 +210,5 @@ const guardarCliente = () => {
   }
   cerrarModal()
 }
- </script>
+</script>
+

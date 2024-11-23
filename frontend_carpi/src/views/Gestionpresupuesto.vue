@@ -1,69 +1,70 @@
 <template>
-    <div class="min-h-screen bg-gray-100 text-gray-800 flex">
+  <div class="min-h-screen bg-gray-100 text-gray-800 flex">
       <!-- Header -->
       <HeaderAdmin class="header-admin" />
-      <section id="dashboard" class="flex-1 py-16 px-6 bg-white">
-      <div class="container mx-auto">
-        <h3 class="text-3xl font-bold text-center mb-12">Presupuesto de Compras</h3>
 
-      <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <!-- Filtros -->
-        <div class="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center space-x-4">
-            <div>
-              <label for="fechaInicio" class="block text-sm font-medium text-gray-700">Fecha Inicio:</label>
-              <input type="date" id="fechaInicio" v-model="filtros.fechaInicio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-            </div>
-            <div>
-              <label for="fechaFin" class="block text-sm font-medium text-gray-700">Fecha Fin:</label>
-              <input type="date" id="fechaFin" v-model="filtros.fechaFin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-            </div>
-          </div>
-          <div>
-            <label for="tipoProducto" class="block text-sm font-medium text-gray-700">Tipo de Producto:</label>
-            <select id="tipoProducto" v-model="filtros.tipoProducto" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option value="">Todos</option>
-              <option value="Ventana">Ventana</option>
-              <option value="Puerta">Puerta</option>
-              <option value="Mesa">Mesa</option>
-              <option value="Mueble">Mueble</option>
-            </select>
-          </div>
-        </div>
+      <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex-1">
+          <div class="max-w-7xl mx-auto">
+              <h3 class="text-3xl font-bold text-center mb-12">Presupuesto de Compras</h3>
 
-        <!-- Tabla de compras -->
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="compra in comprasFiltradas" :key="compra.id">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ compra.cliente }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ compra.producto }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatearFecha(compra.fecha) }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatearPrecio(compra.precio) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                  <!-- Filtros -->
+                  <div class="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
+                      <div class="flex items-center space-x-4">
+                          <div>
+                              <label for="fechaInicio" class="block text-sm font-medium text-gray-700">Fecha Inicio:</label>
+                              <input type="date" id="fechaInicio" v-model="filtros.fechaInicio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                          </div>
+                          <div>
+                              <label for="fechaFin" class="block text-sm font-medium text-gray-700">Fecha Fin:</label>
+                              <input type="date" id="fechaFin" v-model="filtros.fechaFin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                          </div>
+                      </div>
+                      <div>
+                          <label for="tipoProducto" class="block text-sm font-medium text-gray-700">Tipo de Producto:</label>
+                          <select id="tipoProducto" v-model="filtros.tipoProducto" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                              <option value="">Todos</option>
+                              <option value="Ventana">Ventana</option>
+                              <option value="Puerta">Puerta</option>
+                              <option value="Mesa">Mesa</option>
+                              <option value="Mueble">Mueble</option>
+                          </select>
+                      </div>
+                  </div>
 
-        <!-- Total -->
-        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
-          <div class="text-right">
-            <p class="text-lg font-semibold text-gray-700">Total: {{ formatearPrecio(totalCompras) }}</p>
+                  <!-- Tabla de compras -->
+                  <div class="overflow-x-auto">
+                      <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-gray-50">
+                              <tr>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                              </tr>
+                          </thead>
+                          <tbody class="bg-white divide-y divide-gray-200">
+                              <tr v-for="compra in comprasFiltradas" :key="compra.id">
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ compra.cliente }}</td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ compra.producto }}</td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatearFecha(compra.fecha) }}</td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ formatearPrecio(compra.precio) }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+
+                  <!-- Total -->
+                  <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                      <div class="text-right">
+                          <p class="text-lg font-semibold text-gray-700">Total: {{ formatearPrecio(totalCompras) }}</p>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
-  </section>
-    </div>
-    </template>
+  </div>
+</template>
     
     <script setup>
     import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
@@ -106,59 +107,4 @@ const formatearFecha = (fecha) => {
 const formatearPrecio = (precio) => {
   return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(precio)
 }
-    </script>
-    <style scoped>
-    /* Contenedor principal */
-    .min-h-screen {
-      display: flex;
-      background-color: #FFFFFF; /* Fondo blanco para el contenedor principal */
-    }
-    /* Estilos del header admin */
-    .header-admin {
-      width: 250px;
-      background-color: #FFFFFF;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-      height: 100vh; /* Asegura que el header ocupe toda la altura */
-    }
-    /* Sección del dashboard */
-    #dashboard {
-      padding: 20px;
-      background-color: #FFFFFF;
-      flex: 1;
-      margin-left: 120px; /* Se agrega separación de 120px entre el header y el contenido */
-    }
-    /* Contenedor de imagen */
-    .image-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      height: 150px; /* Altura fija para las imágenes */
-    }
-    /* Imagen del dashboard */
-    .dashboard-image {
-      max-width: 100%;
-      max-height: 100%;
-      height: auto;
-      width: auto;
-      border-radius: 0.5rem;
-    }
-    /* Alineación del contenido */
-    .container {
-      padding: 20px;
-    }
-    /* Estilos de las tarjetas */
-    .card {
-      background-color: #FFFBEB;
-      padding: 1.5rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: background-color 0.3s;
-    }
-    .card:hover {
-      background-color: #FFECB3;
-    }
-    </style>
+</script>
