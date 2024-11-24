@@ -15,12 +15,13 @@ class Order(models.Model):
     ]
 
     orders_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name='ID')
-    client = models.ForeignKey(CustomUser ,on_delete=models.PROTECT,limit_choices_to={'is_client': True},verbose_name='Cliente')
-    delivery = models.OneToOneField(Delivery,on_delete=models.CASCADE,related_name='order',verbose_name='Entrega')
+    client = models.ForeignKey(CustomUser, on_delete=models.PROTECT, limit_choices_to={'is_client': True}, verbose_name='Cliente')
+    delivery = models.OneToOneField(Delivery, on_delete=models.CASCADE, related_name='order', verbose_name='Entrega')
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT, null=True, blank=True, verbose_name='Empleado')
-    status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='pending',verbose_name='Estado')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='Estado')
     promised_date = models.DateField(verbose_name='Fecha Prometida')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio Total', editable=False)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
 
     class Meta:
         db_table = 'orders'
