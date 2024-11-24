@@ -69,9 +69,11 @@
                 <td class="p-2">S/. {{ Number(order.total_price).toFixed(2) }}</td>
                 <td class="p-2">
                   <span class="px-2 py-1 rounded-full text-sm font-medium" :class="{
-                    'bg-green-100 text-green-800': order.status === 'completed',
                     'bg-yellow-100 text-yellow-800': order.status === 'pending',
-                    'bg-blue-100 text-blue-800': order.status === 'in_process'
+                    'bg-blue-100 text-blue-800': order.status === 'in_progress',
+                    'bg-green-100 text-green-800': order.status === 'completed',
+                    'bg-purple-100 text-purple-800': order.status === 'delivered',
+                    'bg-red-100 text-red-800': order.status === 'cancelled'
                   }">
                     {{ translateStatus(order.status) }}
                   </span>
@@ -523,11 +525,13 @@ const formatDate = (date) => {
 // Función para traducir el estado
 const translateStatus = (status) => {
   const statusMap = {
-    'pending': 'Pendiente',
-    'completed': 'Completado',
-    'in_process': 'En Proceso'
+    pending: 'Pendiente',
+    in_progress: 'En Proceso', // Asegúrate de que coincida con el estado
+    completed: 'Completado',
+    delivered: 'Entregado', // Si tienes este estado
+    cancelled: 'Cancelado' // Si tienes este estado
   };
-  return statusMap[status] || status;
+  return statusMap[status] || status; // Retorna el estado traducido o el estado original si no se encuentra
 };
 
 // Carga inicial de datos
