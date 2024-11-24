@@ -184,6 +184,20 @@ class AdminListClientView(ListAPIView):
 
     def get_queryset(self):
         return CustomUser.objects.filter(is_client=True)
+    
+    
+
+class CheckAdminView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        """
+        Verificar si el usuario autenticado es administrador
+        """
+        if request.user.is_staff:
+            return Response({"is_admin": True}, status=200)
+        return Response({"is_admin": False}, status=200)
 
 # ============ VISTAS DE STAFF ============
 

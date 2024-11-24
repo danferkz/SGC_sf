@@ -21,7 +21,8 @@ from .views import (
     LogoutView,
     UserListView,
     ChangePasswordView,
-    AdminListClientView
+    AdminListClientView,
+    CheckAdminView
 )
 
 urlpatterns = [
@@ -41,6 +42,7 @@ urlpatterns = [
     path('admins/delete/<int:pk>/', AdminDestroyView.as_view(), name='admin-delete'),  # Eliminar administrador
     path('admins/profile/', AdminProfileView.as_view(), name='admin-profile'),  # Obtener perfil del administrador
     path('admins/clients-list/', AdminListClientView.as_view(), name='admin-list-client'),  # Listar clientes
+    path('admins/check-admin/', CheckAdminView.as_view(), name='check_admin'),
 
     # ============ VISTAS DE STAFF ============
     path('staff/', StaffListView.as_view(), name='staff-list'),  # Listar miembros del staff
