@@ -66,7 +66,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ pedido.client_detail?.username || 'N/A' }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span
-                        :class="[ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full', estadoClases[pedido.status] || 'bg-gray-100 text-gray-800' ]"
+                        :class="[ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full', estadoClases[pedido.status] || ' bg-gray-100 text-gray-800' ]"
                       >
                         {{ pedido.status }}
                       </span>
@@ -237,7 +237,7 @@
                   <span :class="['px-2 py-1 text-xs font-semibold rounded-full mt-1 inline-block', estadoClases[selectedPedido?.status]]">
                     {{ selectedPedido?.status }}
                   </span>
-                </div>
+                </ div>
                 <button
                   @click="isOpen = false"
                   class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
@@ -247,6 +247,59 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Actualización de Estado -->
+    <div v-if="isStatusModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-md p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold">Actualizar Estado del Pedido #{{ selectedPedido?.orders_id }}</h3>
+          <button @click="isStatusModalOpen = false" class="text-gray-500 hover:text-gray-700">
+            <XIcon class="h-5 w-5" />
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <label for="newStatus" class="block text-sm font-medium text-gray-700 mb-2">
+            Nuevo Estado
+          </label>
+          <select
+            id="newStatus"
+            v-model="newStatus"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option value="pending">Pendiente</option>
+            <option value="in_progress">En Progreso</option>
+            <option value="completed">Completado</option>
+            <option value="delivered">Entregado</option>
+            <option value="cancelled">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <button
+            @click="isStatusModalOpen = false"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+          >
+            Cancelar
+          </button>
+          <button
+            @click="actualizarEstado"
+            :disabled="statusUpdating"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
+          >
+            {{ statusUpdating ? 'Actualizando...' : 'Actualizar Estado' }}
+          </button>
+        </div>
+
+        <!-- Mensaje de éxito o error -->
+        <div v-if="statusMessage" :class="[
+          'mt-3 p-2 rounded text-sm',
+          statusSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+        ]">
+          {{ statusMessage }}
         </div>
       </div>
     </div>
@@ -269,6 +322,11 @@ const isOpen = ref(false)
 const selectedPedido = ref(null)
 const loading = ref(false)
 const orderDetails = ref(null)
+const isStatusModalOpen = ref(false)
+const newStatus = ref('')
+const statusUpdating = ref(false)
+const statusMessage = ref('')
+const statusSuccess = ref(false)
 
 // Función para cargar pedidos desde la API
 const cargarPedidos = async (url = 'http://localhost:8000/api/orders/orders-list-admin/') => {
@@ -357,14 +415,50 @@ const fetchOrderDetails = async (deliveryId) => {
   }
 }
 
-const editarPedido = pedido => {
-  // Implementar lógica para editar el pedido
-  console.log('Editar pedido:', pedido.orders_id)
+const editarPedido = (pedido) => {
+  selectedPedido.value = pedido
+  newStatus.value = pedido.status
+  isStatusModalOpen.value = true
 }
 
-const eliminarPedido = pedido => {
-  // Implementar lógica para eliminar el pedido
-  console.log('Eliminar pedido:', pedido.orders_id)
+const actualizarEstado = async () => {
+  if (!selectedPedido.value || !newStatus.value) return
+
+  statusUpdating.value = true
+  statusMessage.value = ''
+  
+  try {
+    const token = localStorage.getItem('token')
+    await axios.patch(
+      `http://localhost:8000/api/orders/orders-update/${selectedPedido.value.orders_id}/update-status/`,
+      { status: newStatus.value },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+
+    // Actualizar el estado en la lista local
+    const pedidoIndex = pedidos.value.findIndex(p => p.orders_id === selectedPedido.value.orders_id)
+    if (pedidoIndex !== -1) {
+      pedidos.value[pedidoIndex].status = newStatus.value
+    }
+
+    statusSuccess.value = true
+    statusMessage.value = 'Estado actualizado correctamente'
+    
+    // Cerrar el modal después de un breve delay
+    setTimeout(() => {
+      isStatusModalOpen.value = false
+      statusMessage.value = ''
+    }, 1500)
+    
+  } catch (error) {
+    console.error('Error al actualizar el estado:', error)
+    statusSuccess.value = false
+    statusMessage.value = 'Error al actualizar el estado. Por favor, intente nuevamente.'
+  } finally {
+    statusUpdating.value = false
+  }
 }
 
 // Limpiar los detalles cuando se cierra el modal
@@ -372,6 +466,16 @@ watch(isOpen, (newValue) => {
   if (!newValue) {
     orderDetails.value = null
     selectedPedido.value = null
+  }
+})
+
+watch(isStatusModalOpen, (newValue) => {
+  if (!newValue) {
+    statusMessage.value = ''
+    statusSuccess.value = false
+    if (!isOpen.value) { // Only clear if details modal is also closed
+      selectedPedido.value = null
+    }
   }
 })
 
