@@ -6,13 +6,13 @@
         <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex-1">
             <div class="max-w-7xl mx-auto">
                 <!-- Título principal -->
-                <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Usuarios</h3>
+                <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de usuarios Administrador</h3>
 
                 <!-- Botón para agregar usuario -->
                 <div class="flex justify-end mb-6">
                     <button @click="openCreateModal"
                         class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none">
-                        CREAR ADMIN
+                        CREAR ADMINISTRADOR
                     </button>
                 </div>
 
@@ -60,6 +60,25 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Paginación -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex justify-center pb-4 space-x-2">
+                        <button @click="previousPage" :disabled="!prevPageUrl"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <ChevronLeftIcon class="h-5 w-5" />
+                        </button>
+                        <button
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Página {{ currentPage }}
+                        </button>
+                        <button @click="nextPage" :disabled="!nextPageUrl"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <ChevronRightIcon class="h-5 w-5" />
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -73,7 +92,8 @@
                     <div class="mb-4">
                         <label class="block text-gray-700">Nombre</label>
                         <input v-model="currentUser.username" type="text" class="w-full border rounded-md px-4 py-2"
-                            placeholder="Nombre del usuario" required />
+                            placeholder="Nombre del usuario" required
+                            @input="currentUser.username = currentUser.username.replace(/\s/g, '')" />
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Email</label>
@@ -145,47 +165,68 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import HeaderAdmin from "@/components/NabvarVerticalAdmin.vue"
-import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, InfoIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+import { PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+
+// Endpoints corregidos para coincidir con tu API
+const API_URL = 'http://127.0.0.1:8000/api/users'
+const ENDPOINTS = {
+    LIST: `${API_URL}/admins/`,                 // Endpoint base para listar
+    CREATE: `${API_URL}/admins/create/`,        // Endpoint para crear
+    DELETE: `${API_URL}/admins/delete/`,        // Endpoint para eliminar
+    UPDATE: `${API_URL}/admins/update/`,        // Endpoint para actualizar
+    DETAIL: `${API_URL}/admins/detail/`         // Endpoint para detalles
+}
 
 // Variables reactivas
-const users = ref([]) // Lista de usuarios
-const showModal = ref(false) // Control del modal de creación/edición
-const showDeleteModal = ref(false) // Control del modal de confirmación de eliminación
-const showDetailModal = ref(false) // Control del modal de detalles
-const isEditing = ref(false) // Estado de edición
-const currentUser = reactive({ id: null, username: '', email: '', password: '', password2: '' }) // Usuario actual
+const users = ref([])
+const currentPage = ref(1)
+const nextPageUrl = ref(null)
+const prevPageUrl = ref(null)
+const showModal = ref(false)
+const showDeleteModal = ref(false)
+const showDetailModal = ref(false)
+const isEditing = ref(false)
+const currentUser = reactive({ id: null, username: '', email: '', password: '', password2: '' })
 
-// Token desde local storage
 const token = localStorage.getItem('token')
 
+// Headers comunes
+const getHeaders = () => ({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json'
+})
+
 // Función para obtener la lista de administradores
-const fetchAdmins = async () => {
+const fetchAdmins = async (page = 1) => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/users/admins/', {
+        const url = `${ENDPOINTS.LIST}?page=${page}`
+        const response = await fetch(url, {
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: getHeaders()
         })
-        if (!response.ok) throw new Error('Error al obtener los administradores')
+        
+        if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.message || 'Error al obtener administradores')
+        }
+        
         const data = await response.json()
         users.value = data.results
+        nextPageUrl.value = data.next
+        prevPageUrl.value = data.previous
+        currentPage.value = page
     } catch (error) {
-        console.error(error)
-        alert('Hubo un problema al cargar los administradores.')
+        console.error('Error en fetchAdmins:', error)
+        alert('Error al cargar los administradores')
     }
 }
 
 // Función para crear un administrador
 const createAdmin = async () => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/users/admins/create/', {
+        const response = await fetch(ENDPOINTS.CREATE, {
             method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
+            headers: getHeaders(),
             body: JSON.stringify({
                 username: currentUser.username,
                 email: currentUser.email,
@@ -193,61 +234,93 @@ const createAdmin = async () => {
                 password2: currentUser.password2
             })
         })
-        if (!response.ok) throw new Error('Error al crear el administrador')
-        const newAdmin = await response.json()
-        users.value.push(newAdmin)
-        alert('Administrador creado con éxito.')
+
+        if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.message || 'Error al crear administrador')
+        }
+
+        await response.json()
+        await fetchAdmins(currentPage.value)
+        alert('Administrador creado exitosamente')
         closeModal()
     } catch (error) {
-        console.error(error)
-        alert('Hubo un problema al crear el administrador.')
+        console.error('Error en createAdmin:', error)
+        alert(error.message || 'Error al crear el administrador')
     }
 }
 
 // Función para eliminar un administrador
 const deleteUser = async () => {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/users/admins/delete/${currentUser.id}/`, {
+        const response = await fetch(`${ENDPOINTS.DELETE}${currentUser.id}/`, {
             method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: getHeaders()
         })
-        if (!response.ok) throw new Error('Error al eliminar el administrador')
-        users.value = users.value.filter(user => user.id !== currentUser.id)
-        alert('Administrador eliminado con éxito.')
+
+        if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.message || 'Error al eliminar administrador')
+        }
+
+        await fetchAdmins(currentPage.value)
+        alert('Administrador eliminado exitosamente')
         closeDeleteModal()
     } catch (error) {
-        console.error(error)
-        alert('Hubo un problema al eliminar el administrador.')
+        console.error('Error en deleteUser:', error)
+        alert(error.message || 'Error al eliminar el administrador')
     }
 }
 
-// Función para abrir el modal de creación
+// Funciones de paginación
+const nextPage = () => {
+    if (nextPageUrl.value) {
+        const nextPageNumber = currentPage.value + 1
+        fetchAdmins(nextPageNumber)
+    }
+}
+
+const previousPage = () => {
+    if (prevPageUrl.value) {
+        const prevPageNumber = currentPage.value - 1
+        fetchAdmins(prevPageNumber)
+    }
+}
+
+// Funciones de modal
 const openCreateModal = () => {
     isEditing.value = false
     Object.assign(currentUser, { id: null, username: '', email: '', password: '', password2: '' })
     showModal.value = true
 }
 
-// Función para abrir el modal de confirmación de eliminación
 const openDeleteModal = (user) => {
     Object.assign(currentUser, user)
     showDeleteModal.value = true
 }
 
-// Función para abrir el modal de detalles
 const openDetailModal = (user) => {
     Object.assign(currentUser, user)
     showDetailModal.value = true
 }
 
-// Función para cerrar los modales
-const closeModal = () => { showModal.value = false }
-const closeDeleteModal = () => { showDeleteModal.value = false }
-const closeDetailModal = () => { showDetailModal.value = false }
+const closeModal = () => {
+    showModal.value = false
+    Object.assign(currentUser, { id: null, username: '', email: '', password: '', password2: '' })
+}
 
-// Montar lista inicial
-onMounted(fetchAdmins)
+const closeDeleteModal = () => {
+    showDeleteModal.value = false
+    Object.assign(currentUser, { id: null, username: '', email: '', password: '', password2: '' })
+}
+
+const closeDetailModal = () => {
+    showDetailModal.value = false
+    Object.assign(currentUser, { id: null, username: '', email: '', password: '', password2: '' })
+}
+
+// Inicialización
+onMounted(() => {
+    fetchAdmins(1)
+})
 </script>

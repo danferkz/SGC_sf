@@ -172,8 +172,8 @@ class AdminProfileView(BaseAuthenticatedView):
 
 # Vista para eliminar un administrador
 class AdminDestroyView(DestroyAPIView):
-    queryset = CustomUser.objects.filter(is_superuser=True)
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    queryset = CustomUser.objects.filter(is_superuser=True, is_staff=False)
+    permission_classes = [IsAuthenticated, IsAdminUser] 
     authentication_classes = [JWTAuthentication]
     
 
