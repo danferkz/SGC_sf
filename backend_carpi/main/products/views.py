@@ -5,6 +5,11 @@ from rest_framework.response import Response
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import NotFound
+from .models import DoorWindow, Furniture
+from .serializers import ProductDetailSerializer, FurnitureDetailSerializer
 from .models import DoorWindow, Furniture, BaseProduct
 from .serializers import ProductDetailSerializer, FurnitureDetailSerializer
 from .models import DoorWindow, Furniture
@@ -97,7 +102,7 @@ class ProductDetailView(RetrieveAPIView):
     def get_serializer_class(self):
         product_id = self.kwargs['product_id']
         
-        # Revisa primero si es un mueble
+        # Verifica primero si es un mueble
         furniture = Furniture.objects.filter(product_id=product_id).first()
         if furniture:
             return FurnitureDetailSerializer
@@ -107,8 +112,8 @@ class ProductDetailView(RetrieveAPIView):
         if doorwindow:
             return ProductDetailSerializer
         
-        # Si no se encuentra, usa el serializador por defecto
-        return ProductDetailSerializer
+        # Si no se encuentra, lanza un error
+        raise NotFound(detail="Producto no encontrado")
 
     def get_object(self):
         product_id = self.kwargs['product_id']

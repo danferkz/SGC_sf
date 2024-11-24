@@ -118,3 +118,13 @@ class OrderSerializerclient(serializers.ModelSerializer):
             "additional_cost": delivery.additional_cost,
             # Incluye otros campos de Delivery según sea necesario
         }
+        
+
+class OrderupdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [
+            'orders_id',# Detalles del empleado
+            'status',
+        ]
+        read_only_fields = ['orders_id', 'total_price']

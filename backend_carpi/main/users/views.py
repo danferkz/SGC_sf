@@ -175,6 +175,15 @@ class AdminDestroyView(DestroyAPIView):
     queryset = CustomUser.objects.filter(is_superuser=True)
     permission_classes = [IsAuthenticated, IsAdminUser]
     authentication_classes = [JWTAuthentication]
+    
+
+class AdminListClientView(ListAPIView):
+    serializer_class = ClientSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(is_client=True)
 
 # ============ VISTAS DE STAFF ============
 
