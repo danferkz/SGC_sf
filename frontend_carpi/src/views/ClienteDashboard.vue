@@ -5,7 +5,7 @@
     <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex-1">
       <div class="max-w-7xl mx-auto">
         <!-- Título principal -->
-        <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Usuarios</h3>
+        <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Clientes</h3>
 
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
           <!-- Tabla de clientes -->
