@@ -5,6 +5,14 @@ from .models import Delivery
 from .serializers import DeliverySerializer
 from products.models import DoorWindow, Furniture
 from django.shortcuts import get_object_or_404
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Delivery
+from .serializers import DeliverySerializer
+from rest_framework.exceptions import NotFound
+from users.views import BaseAuthenticatedView, IsAdminUser
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class DeliveryCreateView(generics.CreateAPIView):
     queryset = Delivery.objects.all()
@@ -59,3 +67,19 @@ class DeliveryCreateView(generics.CreateAPIView):
             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class DeliveryDetailView(BaseAuthenticatedView, generics.RetrieveAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliverySerializer
+    lookup_field = 'delivery_id'  # Usamos el UUID como campo de búsqueda
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            delivery = self.get_object()
+            serializer = self.get_serializer(delivery)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Delivery.DoesNotExist:
+            raise NotFound(detail="Delivery not found", code=404)
