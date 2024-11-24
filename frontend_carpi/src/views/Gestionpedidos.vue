@@ -140,82 +140,91 @@
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <p class="text-sm text-gray-600">Fecha de Entrega</p>
-                  <p class="font-medium">{{ formatearFecha(deliveryDetails?.delivery_date) }}</p>
+                  <p class="font-medium">{{ formatearFecha(orderDetails?.delivery_date) }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Opción de Entrega</p>
-                  <p class="font-medium">{{ deliveryDetails?.delivery_option ? 'Sí' : 'No' }}</p>
+                  <p class="font-medium">{{ orderDetails?.delivery_option ? 'Sí' : 'No' }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Costo Adicional</p>
-                  <p class="font-medium">${{ deliveryDetails?.additional_cost }}</p>
+                  <p class="font-medium">${{ orderDetails?.additional_cost }}</p>
                 </div>
-                <div v-if="deliveryDetails?.delivery_notes">
+                <div v-if="orderDetails?.delivery_notes">
                   <p class="text-sm text-gray-600">Notas de Entrega</p>
-                  <p class="font-medium">{{ deliveryDetails?.delivery_notes || 'Sin notas' }}</p>
+                  <p class="font-medium">{{ orderDetails?.delivery_notes || 'Sin notas' }}</p>
                 </div>
               </div>
-            
             </div>
 
             <!-- Detalles del Producto - Puerta/Ventana -->
-            <div v-if="deliveryDetails?.door_window_detail" class="mb-6 bg-blue-50 p-4 rounded-lg">
-              <h4 class="font-medium mb-3 text-blue-600">Detalles de {{ deliveryDetails.door_window_detail.product_type === 'door' ? 'Puerta' : 'Ventana' }}</h4>
+            <div v-if="orderDetails?.door_window_detail" class="mb-6 bg-blue-50 p-4 rounded-lg">
+              <h4 class="font-medium mb-3 text-blue-600">
+                Detalles de {{ orderDetails.door_window_detail.product_type === 'door' ? 'Puerta' : 'Ventana' }}
+              </h4>
               <div class="grid grid-cols-2 gap-4">
                 <div>
+                  <p class="text-sm text-gray-600">ID del Producto</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.product_id }}</p>
+                </div>
+                <div>
                   <p class="text-sm text-gray-600">Tipo de Madera</p>
-                  <p class="font-medium">{{ deliveryDetails.door_window_detail.wood_type }}</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.wood_type }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Precio de Costo</p>
-                  <p class="font-medium">${{ deliveryDetails.door_window_detail.cost_price }}</p>
+                  <p class="font-medium">${{ orderDetails.door_window_detail.cost_price }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Barnizado</p>
-                  <p class="font-medium">{{ deliveryDetails.door_window_detail.is_varnished ? 'Sí' : 'No' }}</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.is_varnished ? 'Sí' : 'No' }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Dimensiones</p>
-                  <p class="font-medium">{{ deliveryDetails.door_window_detail.length }}cm x {{ deliveryDetails.door_window_detail.width }}cm</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.length }}cm x {{ orderDetails.door_window_detail.width }}cm</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Uso Exterior</p>
-                  <p class="font-medium">{{ deliveryDetails.door_window_detail.is_exterior ? 'Sí' : 'No' }}</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.is_exterior ? 'Sí' : 'No' }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Número de Hojas</p>
-                  <p class="font-medium">{{ deliveryDetails.door_window_detail.number_of_sheets }}</p>
+                  <p class="font-medium">{{ orderDetails.door_window_detail.number_of_sheets }}</p>
                 </div>
               </div>
             </div>
 
             <!-- Detalles del Producto - Mueble -->
-            <div v-if="deliveryDetails?.furniture_detail" class="mb-6 bg-green-50 p-4 rounded-lg">
+            <div v-if="orderDetails?.furniture_detail" class="mb-6 bg-green-50 p-4 rounded-lg">
               <h4 class="font-medium mb-3 text-green-600">Detalles del Mueble</h4>
               <div class="grid grid-cols-2 gap-4">
                 <div>
+                  <p class="text-sm text-gray-600">ID del Producto</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.product_id }}</p>
+                </div>
+                <div>
                   <p class="text-sm text-gray-600">Nombre de la Pieza</p>
-                  <p class="font-medium">{{ deliveryDetails.furniture_detail.piece_name }}</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.piece_name }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Tipo de Madera</p>
-                  <p class="font-medium">{{ deliveryDetails.furniture_detail.wood_type }}</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.wood_type }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Precio de Costo</p>
-                  <p class="font-medium">${{ deliveryDetails.furniture_detail.cost_price }}</p>
+                  <p class="font-medium">${{ orderDetails.furniture_detail.cost_price }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Barnizado</p>
-                  <p class="font-medium">{{ deliveryDetails.furniture_detail.is_varnished ? 'Sí' : 'No' }}</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.is_varnished ? 'Sí' : 'No' }}</p>
                 </div>
                 <div>
                   <p class="text-sm text-gray-600">Peso</p>
-                  <p class="font-medium">{{ deliveryDetails.furniture_detail.weight }}kg</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.weight }}kg</p>
                 </div>
-                <div v-if="deliveryDetails.furniture_detail.is_part_of_set">
+                <div v-if="orderDetails.furniture_detail.is_part_of_set">
                   <p class="text-sm text-gray-600">Set</p>
-                  <p class="font-medium">{{ deliveryDetails.furniture_detail.set_name }}</p>
+                  <p class="font-medium">{{ orderDetails.furniture_detail.set_name }}</p>
                 </div>
               </div>
             </div>
@@ -250,22 +259,24 @@ import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SearchIcon, EyeIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon, XIcon } from 'lucide-vue-next'
 
-const pedidos = ref([])  // Almacenamos los pedidos
-const filtroEstado = ref('')  // Filtro de estado
-const busqueda = ref('')  // Filtro de búsqueda
-const paginaActual = ref(1)  // Página actual
-const nextPageUrl = ref(null)  // URL de la siguiente página
-const prevPageUrl = ref(null)  // URL de la página anterior
-const isOpen = ref(false)  // Estado del modal
-const selectedPedido = ref(null)  // Pedido seleccionado para ver detalles
-const loading = ref(false)  // Estado de carga para detalles de entrega
-const deliveryDetails = ref(null)  // Detalles de entrega
+const pedidos = ref([])
+const filtroEstado = ref('')
+const busqueda = ref('')
+const paginaActual = ref(1)
+const nextPageUrl = ref(null)
+const prevPageUrl = ref(null)
+const isOpen = ref(false)
+const selectedPedido = ref(null)
+const loading = ref(false)
+const orderDetails = ref(null)
 
 // Función para cargar pedidos desde la API
 const cargarPedidos = async (url = 'http://localhost:8000/api/orders/orders-list-admin/') => {
   try {
     const token = localStorage.getItem('token')
-    const response = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+    const response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
     pedidos.value = response.data.results
     nextPageUrl.value = response.data.next
     prevPageUrl.value = response.data.previous
@@ -310,6 +321,7 @@ const paginaAnterior = () => {
 }
 
 const formatearFecha = fecha => {
+  if (!fecha) return 'No disponible'
   const opciones = { year: 'numeric', month: 'long', day: 'numeric' }
   return new Date(fecha).toLocaleDateString('es-ES', opciones)
 }
@@ -318,47 +330,52 @@ const formatearFecha = fecha => {
 const verDetalles = async (pedido) => {
   selectedPedido.value = pedido
   isOpen.value = true
-  await fetchDeliveryDetails()
+  if (pedido.delivery_detail?.delivery_id) {
+    await fetchOrderDetails(pedido.delivery_detail.delivery_id)
+  } else {
+    orderDetails.value = null
+  }
 }
 
-const editarPedido = pedido => {
-  // Lógica para editar el pedido
-}
-
-const eliminarPedido = pedido => {
-  // Lógica para eliminar el pedido
-}
-
-// Función para cargar detalles de entrega
-const fetchDeliveryDetails = async () => {
-  if (!selectedPedido.value?.delivery_id) return
-  
+// Función para cargar detalles de la orden usando el delivery_id
+const fetchOrderDetails = async (deliveryId) => {
   loading.value = true
   try {
     const token = localStorage.getItem('token')
     const response = await axios.get(
-      `http://localhost:8000/api/deliveries/deliveries-detail/${selectedPedido.value.delivery_id}/`,
+      `http://localhost:8000/api/deliveries/deliveries-detail/${deliveryId}/`,
       {
         headers: { Authorization: `Bearer ${token}` }
       }
     )
-    deliveryDetails.value = response.data
+    orderDetails.value = response.data
   } catch (error) {
     console.error('Error al cargar los detalles de la entrega:', error)
+    orderDetails.value = null
   } finally {
     loading.value = false
   }
 }
 
+const editarPedido = pedido => {
+  // Implementar lógica para editar el pedido
+  console.log('Editar pedido:', pedido.orders_id)
+}
+
+const eliminarPedido = pedido => {
+  // Implementar lógica para eliminar el pedido
+  console.log('Eliminar pedido:', pedido.orders_id)
+}
+
 // Limpiar los detalles cuando se cierra el modal
 watch(isOpen, (newValue) => {
   if (!newValue) {
-    deliveryDetails.value = null
+    orderDetails.value = null
     selectedPedido.value = null
   }
 })
 
 onMounted(() => {
-  cargarPedidos()  // Cargar los pedidos cuando el componente se monte
+  cargarPedidos()
 })
 </script>
