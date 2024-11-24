@@ -6,10 +6,8 @@
       <div class="max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-3xl font-bold text-gray-900">Empleados</h1>
-          <button
-            @click="abrirModal('crearStaff')"
-            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
+          <button @click="abrirModal('crearStaff')"
+            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Crear Staff
           </button>
         </div>
@@ -61,33 +59,24 @@
           <!-- Nuevo Control de Paginación -->
           <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
             <div class="flex justify-center pb-4 space-x-2">
-              <button
-                @click="paginaAnterior"
-                :disabled="!previousPage"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
+              <button @click="paginaAnterior" :disabled="!previousPage"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
+                  <path fill-rule="evenodd"
                     d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
+                    clip-rule="evenodd" />
                 </svg>
               </button>
-              <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <button
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                 Página {{ currentPage }}
               </button>
-              <button
-                @click="siguientePagina"
-                :disabled="!nextPage"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
+              <button @click="siguientePagina" :disabled="!nextPage"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
+                  <path fill-rule="evenodd"
                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"
-                  />
+                    clip-rule="evenodd" />
                 </svg>
               </button>
             </div>
@@ -97,7 +86,8 @@
     </div>
 
     <!-- Modal Crear Staff -->
-    <div v-if="modalActivo === 'crearStaff'" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="modalActivo === 'crearStaff'"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-lg font-semibold mb-4">Crear Staff</h2>
         <form @submit.prevent="crearStaff">
@@ -115,6 +105,32 @@
             </button>
             <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
               Continuar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Crear Empleado -->
+    <div v-if="modalActivo === 'crearEmpleado'"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-lg font-semibold mb-4">Crear Empleado</h2>
+        <form @submit.prevent="crearEmpleado">
+          <div class="mb-4">
+            <label class="block text-gray-700">Fecha de Contratación</label>
+            <input v-model="nuevoEmpleado.hire_date" type="date" class="w-full border rounded-md px-4 py-2" required />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">Especialidad</label>
+            <input v-model="nuevoEmpleado.specialty" type="text" class="w-full border rounded-md px-4 py-2" required />
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button @click="cerrarModal" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
+              Cancelar
+            </button>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+              Crear Empleado
             </button>
           </div>
         </form>
@@ -174,7 +190,6 @@ export default {
             Authorization: `Bearer ${this.obtenerToken()}`,
           },
         });
-        // Guardar el user_id del nuevo staff
         this.nuevoEmpleado.user_id = response.data.id; // Ajusta esto según la respuesta de la API
         this.abrirModal('crearEmpleado'); // Abre el modal para crear el empleado
       } catch (error) {

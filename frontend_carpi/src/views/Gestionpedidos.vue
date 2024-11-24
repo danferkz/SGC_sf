@@ -76,32 +76,21 @@
               </table>
             </div>
 
-            <!-- Paginación -->
+            <!-- Nueva Paginación -->
             <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-              <div class="flex-1 flex justify-between sm:hidden">
-                <button @click="paginaAnterior" :disabled="paginaActual === 1" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                  Anterior
+              <div class="flex justify-center pb-4 space-x-2">
+                <button @click="previousPage" :disabled="!prevPageUrl"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                  <ChevronLeftIcon class="h-5 w-5" />
                 </button>
-                <button @click="paginaSiguiente" :disabled="paginaActual === totalPaginas" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                  Siguiente
+                <button
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                  Página {{ currentPage }}
                 </button>
-              </div>
-              <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                <p class="text-sm text-gray-700">
-                  Mostrando <span class="font-medium">{{ (paginaActual - 1) * pedidosPorPagina + 1 }}</span>
-                  a <span class="font-medium">{{ Math.min(paginaActual * pedidosPorPagina, pedidosFiltrados.length) }}</span>
-                  de <span class="font-medium">{{ pedidosFiltrados.length }}</span> resultados
-                </p>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <button @click="paginaAnterior" :disabled="paginaActual === 1" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <ChevronLeftIcon class="h-5 w-5" />
-                    <span class="sr-only">Anterior</span>
-                  </button>
-                  <button @click="paginaSiguiente" :disabled="paginaActual === totalPaginas" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                    <ChevronRightIcon class="h-5 w-5" />
-                    <span class="sr-only">Siguiente</span>
-                  </button>
-                </nav>
+                <button @click="nextPage" :disabled="!nextPageUrl"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                  <ChevronRightIcon class="h-5 w-5" />
+                </button>
               </div>
             </div>
           </div>
