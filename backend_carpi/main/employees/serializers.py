@@ -5,19 +5,18 @@ from .models import Employee
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user_data = serializers.SerializerMethodField()
-    user_id = serializers.IntegerField(write_only=True)
+    user_id = serializers.IntegerField(write_only=True, required=False)  # Hacerlo no requerido
 
     class Meta:
         model = Employee
         fields = [
             'employee_id',
             'user_id',
-            'user_data',  # Mostrará información detallada del usuario
+            'user_data',
             'hire_date',
             'specialty',
             'is_active'
         ]
-
     def get_user_data(self, obj):
         return {
             'id': obj.user.id,
