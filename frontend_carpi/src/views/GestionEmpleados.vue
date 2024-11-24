@@ -72,10 +72,16 @@
       <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-lg font-semibold mb-4">Crear Staff</h2>
         <form @submit.prevent="crearStaff">
-          <div class="mb-4">
+            <div class="mb-4">
             <label class="block text-gray-700">Username</label>
-            <input v-model="nuevoStaff.username" type="text" class="w-full border rounded-md px-4 py-2" required />
-          </div>
+            <input 
+              v-model="nuevoStaff.username" 
+              type="text" 
+              class="w-full border rounded-md px-4 py-2" 
+              @input="nuevoStaff.username = nuevoStaff.username.replace(/\s/g, '')"
+              required 
+            />
+            </div>
           <div class="mb-4">
             <label class="block text-gray-700">Email</label>
             <input v-model="nuevoStaff.email" type="email" class="w-full border rounded-md px-4 py-2" required />
