@@ -3,17 +3,17 @@
     <!-- Header -->
     <HeaderAdmin class="header-admin" />
     <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex-1">
-            <div class="max-w-7xl mx-auto">
-                <!-- Título principal -->
-                <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Usuarios</h3>
+      <div class="max-w-7xl mx-auto">
+        <!-- Título principal -->
+        <h3 class="text-3xl font-bold text-center mb-12">Panel de Administración de Usuarios</h3>
 
-                <!-- Botón para agregar usuario -->
-                <div class="flex justify-end mb-6">
-                    <button @click="abrirModalAgregar"
-                        class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none">
-                        Agregar Cliente
-                    </button>
-                </div>
+        <!-- Botón para agregar usuario -->
+        <div class="flex justify-end mb-6">
+          <button @click="abrirModalAgregar"
+                  class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none">
+            Agregar Cliente
+          </button>
+        </div>
 
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
           <!-- Tabla de clientes -->
@@ -39,18 +39,18 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
+                <tr v-for="cliente in clientes" :key="cliente.id">
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ cliente.nombre }}
+                    {{ cliente.username }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ cliente.email }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ cliente.telefono }}
+                    {{ cliente.phone }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ cliente.direccion }}
+                    {{ cliente.address }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
@@ -59,19 +59,13 @@
                     >
                       <PencilIcon class="h-5 w-5" />
                     </button>
-                    <button
-                      @click="eliminarCliente(cliente)"
-                      class="text-red-600 hover:text-red-900"
-                    >
-                      <TrashIcon class="h-5 w-5" />
-                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <!-- Nuevo Control de Paginación -->
+          <!-- Control de Paginación -->
           <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
             <div class="flex justify-center pb-4 space-x-2">
               <button
@@ -79,79 +73,95 @@
                 :disabled="!previousPage"
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                Anterior
               </button>
               <button
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Página {{ currentPage }}
+                Página {{ paginaActual }}
               </button>
               <button
-                @click="siguientePagina"
+                @click="paginaSiguiente"
                 :disabled="!nextPage"
                 class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                Siguiente
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal para agregar/editar cliente -->
+    <div v-if="mostrarModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-xl">
+        <h2 class="text-xl font-bold mb-4">{{ clienteEditando ? 'Editar Cliente' : 'Agregar Cliente' }}</h2>
+        <form @submit.prevent="guardarCliente">
+          <div class="space-y-4">
+            <input v-model="clienteForm.nombre" placeholder="Nombre" class="w-full p-2 border rounded">
+            <input v-model="clienteForm.email" placeholder="Email" class="w-full p-2 border rounded">
+            <input v-model="clienteForm.telefono" placeholder="Teléfono" class="w-full p-2 border rounded">
+            <input v-model="clienteForm.direccion" placeholder="Dirección" class="w-full p-2 border rounded">
+          </div>
+          <div class="flex justify-end space-x-2 mt-4">
+            <button type="button" @click="cerrarModal" class="px-4 py-2 border rounded">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
-
-
 <script setup>
 import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
-import { ref, computed } from 'vue'
-import { SearchIcon, PlusIcon, PencilIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next'
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+import { PencilIcon, TrashIcon } from 'lucide-vue-next'
 
-// Datos de ejemplo (reemplazar con datos reales de la API)
-const clientes = ref([
-  { id: 1, nombre: 'Juan Pérez', email: 'juan@example.com', telefono: '123456789', direccion: 'Calle 123, Ciudad' },
-  { id: 2, nombre: 'María García', email: 'maria@example.com', telefono: '987654321', direccion: 'Avenida 456, Ciudad' },
-  { id: 3, nombre: 'Carlos López', email: 'carlos@example.com', telefono: '456789123', direccion: 'Plaza 789, Ciudad' },
-  // ... más clientes
-])
-
-const busqueda = ref('')
+// Estado de los clientes y la paginación
+const clientes = ref([])
 const paginaActual = ref(1)
-const clientesPorPagina = 10
+const totalPaginas = ref(0)
+const nextPage = ref(null)
+const previousPage = ref(null)
 
-const clientesFiltrados = computed(() => {
-  return clientes.value
-    .filter(cliente =>
-      cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.email.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.telefono.includes(busqueda.value)
-    )
+// Función para obtener los clientes de la API
+const obtenerClientes = async (pagina = 1) => {
+  const token = localStorage.getItem('token') // Obtener el token del localStorage
+  try {
+    const response = await axios.get(`http://127.0.0.1:8000/api/users/clients/?page=${pagina}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    clientes.value = response.data.results
+    totalPaginas.value = Math.ceil(response.data.count / 10) // Suponiendo 10 clientes por página
+    nextPage.value = response.data.next
+    previousPage.value = response.data.previous
+  } catch (error) {
+    console.error('Error al obtener los clientes:', error)
+  }
+}
+
+// Llamar a la función al montar el componente
+onMounted(() => {
+  obtenerClientes(paginaActual.value)
 })
 
-const totalPaginas = computed(() => Math.ceil(clientesFiltrados.value.length / clientesPorPagina))
-
+// Funciones de paginación
 const paginaAnterior = () => {
-  if (paginaActual.value > 1) {
+  if (previousPage.value) {
     paginaActual.value--
+    obtenerClientes(paginaActual.value)
   }
 }
 
 const paginaSiguiente = () => {
-  if (paginaActual.value < totalPaginas.value) {
+  if (nextPage.value) {
     paginaActual.value++
+    obtenerClientes(paginaActual.value)
   }
 }
 
@@ -182,7 +192,7 @@ const editarCliente = (cliente) => {
 }
 
 const eliminarCliente = (cliente) => {
-  if (confirm(`¿Estás seguro de que quieres eliminar a ${cliente.nombre}?`)) {
+  if (confirm(`¿Estás seguro de que quieres eliminar a ${cliente.username}?`)) {
     clientes.value = clientes.value.filter(c => c.id !== cliente.id)
   }
 }
@@ -211,4 +221,3 @@ const guardarCliente = () => {
   cerrarModal()
 }
 </script>
-
