@@ -26,6 +26,7 @@ import ClientePerfil from '@/views/ClientePerfil.vue';
 import SobreNosotros from '@/views/SobreNosotros.vue';
 import Contacto from '@/views/Contacto.vue';
 import Carpinteria from '@/views/Carpinteria.vue';
+import Trabajos from '@/views/Trabajos.vue';
 
 
 const router = createRouter({
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/carpinteria',
       name: 'Carpinteria',
       component: Carpinteria
+    },
+    {
+      path: '/trabajos',
+      name: 'Trabajos',
+      component: Trabajos
     },
     {
       path: '/producto',
