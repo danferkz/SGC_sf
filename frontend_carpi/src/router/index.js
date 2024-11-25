@@ -23,6 +23,9 @@ import GestionEmpleados from '@/views/GestionEmpleados.vue';
 import AdminDashboard from '../views/DashboardAdminn.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
 import ClientePerfil from '@/views/ClientePerfil.vue';
+import SobreNosotros from '@/views/SobreNosotros.vue';
+import Contacto from '@/views/Contacto.vue';
+import Carpinteria from '@/views/Carpinteria.vue';
 
 
 const router = createRouter({
@@ -62,6 +65,21 @@ const router = createRouter({
       path: '/interno',
       name: 'Interno',
       component: InternView
+    },
+    {
+      path: '/sobrenosotros',
+      name: 'Sobre Nosotros',
+      component: SobreNosotros
+    },
+    {
+      path: '/contacto',
+      name: 'Contacto',
+      component: Contacto
+    },
+    {
+      path: '/carpinteria',
+      name: 'Carpinteria',
+      component: Carpinteria
     },
     {
       path: '/producto',
