@@ -1,4 +1,6 @@
 <template>
+  
+  <HeaderCompo/>
     <div class="construccion">
       <header class="header">
         <h1>Maderera el bosque</h1>
@@ -48,14 +50,16 @@
           <a href="#" class="boton-cta">Solicitar Presupuesto</a>
         </section>
       </main>
-      <footer class="footer">
-        <p>&copy; 2023 Maderera el bosque. Todos los derechos reservados.</p>
-      </footer>
+      
+    <!-- Footer -->
+    <Footer class="footer" />
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
+  import HeaderCompo from '@/components/HeaderCompo.vue';  
+import Footer from "@/components/FooterCompo.vue";
   
   const serviciosConstruccion = ref([
     {
@@ -138,11 +142,7 @@
     background-color: #FFF3E0;
   }
   
-  .header {
-    background-color: #FF9800;
-    padding: 2rem;
-    text-align: center;
-  }
+  
   
   h1 {
     color: #FFF3E0;
@@ -288,13 +288,7 @@
     background-color: #E65100;
   }
   
-  .footer {
-    background-color: #FF9800;
-    color: #FFF3E0;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-  }
+  
   
   @media (max-width: 768px) {
     .proceso-timeline::before {

@@ -1,129 +1,136 @@
 <template>
-    <div class="diseno">
-      <header class="header">
-        <h1>Maderera el bosque</h1>
-      </header>
-      <main class="content">
-        <h2>Nuestro Proceso de Diseño</h2>
-        
-        <section class="proceso-diseno">
-          <div v-for="(paso, index) in pasosProceso" :key="index" class="paso-diseno">
-            <div class="paso-numero">{{ index + 1 }}</div>
-            <div class="paso-contenido">
-              <h3>{{ paso.titulo }}</h3>
-              <p>{{ paso.descripcion }}</p>
+  <div class="diseno">
+    <!-- COMPONENTE HEADER -->
+    <Header />
+
+    <main class="content">
+      <h2>Nuestro Proceso de Diseño</h2>
+      
+      <section class="proceso-diseno">
+        <div v-for="(paso, index) in pasosProceso" :key="index" class="paso-diseno">
+          <div class="paso-numero">{{ index + 1 }}</div>
+          <div class="paso-contenido">
+            <h3>{{ paso.titulo }}</h3>
+            <p>{{ paso.descripcion }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="servicios-diseno">
+        <h3>Servicios de Diseño Personalizado</h3>
+        <div class="servicios-grid">
+          <div v-for="servicio in serviciosDiseno" :key="servicio.id" class="servicio-card">
+            <img :src="servicio.imagen" :alt="servicio.titulo" class="servicio-imagen">
+            <h4>{{ servicio.titulo }}</h4>
+            <p>{{ servicio.descripcion }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="ejemplos-diseno">
+        <h3>Ejemplos de Nuestros Diseños</h3>
+        <div class="ejemplos-slider">
+          <div v-for="ejemplo in ejemplosDiseno" :key="ejemplo.id" class="ejemplo-slide">
+            <img :src="ejemplo.imagen" :alt="ejemplo.titulo" class="ejemplo-imagen">
+            <div class="ejemplo-info">
+              <h4>{{ ejemplo.titulo }}</h4>
+              <p>{{ ejemplo.descripcion }}</p>
             </div>
           </div>
-        </section>
-  
-        <section class="servicios-diseno">
-          <h3>Servicios de Diseño Personalizado</h3>
-          <div class="servicios-grid">
-            <div v-for="servicio in serviciosDiseno" :key="servicio.id" class="servicio-card">
-              <img :src="servicio.imagen" :alt="servicio.titulo" class="servicio-imagen">
-              <h4>{{ servicio.titulo }}</h4>
-              <p>{{ servicio.descripcion }}</p>
-            </div>
-          </div>
-        </section>
-  
-        <section class="ejemplos-diseno">
-          <h3>Ejemplos de Nuestros Diseños</h3>
-          <div class="ejemplos-slider">
-            <div v-for="ejemplo in ejemplosDiseno" :key="ejemplo.id" class="ejemplo-slide">
-              <img :src="ejemplo.imagen" :alt="ejemplo.titulo" class="ejemplo-imagen">
-              <div class="ejemplo-info">
-                <h4>{{ ejemplo.titulo }}</h4>
-                <p>{{ ejemplo.descripcion }}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-  
-        <section class="cta-diseno">
-          <h3>¿Listo para dar vida a tu idea?</h3>
-          <p>Nuestro equipo de diseñadores está listo para ayudarte a crear el mueble perfecto para tu espacio.</p>
-          <a href="#" class="boton-cta">Solicitar Consulta de Diseño</a>
-        </section>
-      </main>
-      <footer class="footer">
-        <p>&copy; 2023 Maderera el bosque. Todos los derechos reservados.</p>
-      </footer>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const pasosProceso = ref([
-    {
-      titulo: "Consulta Inicial",
-      descripcion: "Nos reunimos contigo para entender tus necesidades, gustos y el espacio donde se ubicará el mueble."
-    },
-    {
-      titulo: "Conceptualización",
-      descripcion: "Nuestros diseñadores crean bocetos y conceptos basados en tus requerimientos y nuestras sugerencias."
-    },
-    {
-      titulo: "Diseño Detallado",
-      descripcion: "Desarrollamos diseños 3D detallados y planos técnicos para tu aprobación."
-    },
-    {
-      titulo: "Selección de Materiales",
-      descripcion: "Te ayudamos a elegir las mejores maderas y acabados para tu proyecto."
-    },
-    {
-      titulo: "Fabricación",
-      descripcion: "Nuestros artesanos expertos fabrican tu mueble con precisión y cuidado."
-    },
-    {
-      titulo: "Entrega e Instalación",
-      descripcion: "Entregamos e instalamos tu mueble, asegurándonos de que todo esté perfecto."
-    }
-  ]);
-  
-  const serviciosDiseno = ref([
-    {
-      id: 1,
-      titulo: "Diseño de Muebles a Medida",
-      descripcion: "Creamos muebles únicos que se ajustan perfectamente a tu espacio y estilo de vida.",
-      imagen: "/placeholder.svg?height=200&width=300"
-    },
-    {
-      id: 2,
-      titulo: "Renovación de Espacios",
-      descripcion: "Transformamos tus espacios con soluciones de carpintería innovadoras y funcionales.",
-      imagen: "/placeholder.svg?height=200&width=300"
-    },
-    {
-      id: 3,
-      titulo: "Diseño de Interiores en Madera",
-      descripcion: "Diseñamos interiores completos utilizando la calidez y belleza de la madera.",
-      imagen: "/placeholder.svg?height=200&width=300"
-    }
-  ]);
-  
-  const ejemplosDiseno = ref([
-    {
-      id: 1,
-      titulo: "Cocina Moderna",
-      descripcion: "Cocina integral con isla central y acabados en roble.",
-      imagen: "/placeholder.svg?height=400&width=600"
-    },
-    {
-      id: 2,
-      titulo: "Biblioteca Clásica",
-      descripcion: "Biblioteca de pared completa con escalera móvil.",
-      imagen: "/placeholder.svg?height=400&width=600"
-    },
-    {
-      id: 3,
-      titulo: "Oficina en Casa",
-      descripcion: "Espacio de trabajo ergonómico con almacenamiento integrado.",
-      imagen: "/placeholder.svg?height=400&width=600"
-    }
-  ]);
-  </script>
+        </div>
+      </section>
+
+      <section class="cta-diseno">
+        <h3>¿Listo para dar vida a tu idea?</h3>
+        <p>Nuestro equipo de diseñadores está listo para ayudarte a crear el mueble perfecto para tu espacio.</p>
+        <a href="#" class="boton-cta">Solicitar Consulta de Diseño</a>
+      </section>
+    </main>
+    
+    <!-- COMPONENTE FOOTER -->
+    <Footer />
+  </div>
+</template>
+
+<script setup>
+import Header from "@/components/HeaderCompo.vue";
+import Footer from "@/components/FooterCompo.vue";
+import { ref } from 'vue';
+
+const pasosProceso = ref([
+  {
+    titulo: "Consulta Inicial",
+    descripcion: "Nos reunimos contigo para entender tus necesidades, gustos y el espacio donde se ubicará el mueble."
+  },
+  {
+    titulo: "Conceptualización",
+    descripcion: "Nuestros diseñadores crean bocetos y conceptos basados en tus requerimientos y nuestras sugerencias."
+  },
+  {
+    titulo: "Diseño Detallado",
+    descripcion: "Desarrollamos diseños 3D detallados y planos técnicos para tu aprobación."
+  },
+  {
+    titulo: "Selección de Materiales",
+    descripcion: "Te ayudamos a elegir las mejores maderas y acabados para tu proyecto."
+  },
+  {
+    titulo: "Fabricación",
+    descripcion: "Nuestros artesanos expertos fabrican tu mueble con precisión y cuidado."
+  },
+  {
+    titulo: "Entrega e Instalación",
+    descripcion: "Entregamos e instalamos tu mueble, asegurándonos de que todo esté perfecto."
+  }
+]);
+
+const serviciosDiseno = ref([
+  {
+    id: 1,
+    titulo: "Diseño de Muebles a Medida",
+    descripcion: "Creamos muebles únicos que se ajustan perfectamente a tu espacio y estilo de vida.",
+    imagen: "/placeholder.svg?height=200&width=300"
+  },
+  {
+    id: 2,
+    titulo: "Renovación de Espacios",
+    descripcion: "Transformamos tus espacios con soluciones de carpintería innovadoras y funcionales.",
+    imagen: "/placeholder.svg?height=200&width=300"
+  },
+  {
+    id: 3,
+    titulo: "Diseño de Interiores en Madera",
+    descripcion: "Diseñamos interiores completos utilizando la calidez y belleza de la madera.",
+    imagen: "/placeholder.svg?height=200&width=300"
+  }
+]);
+
+const ejemplosDiseno = ref([
+  {
+    id: 1,
+    titulo: "Cocina Moderna",
+    descripcion: "Cocina integral con isla central y acabados en roble.",
+    imagen: "/placeholder.svg?height=400&width=600"
+  },
+  {
+    id: 2,
+    titulo: "Biblioteca Clásica",
+    descripcion: "Biblioteca de pared completa con escalera móvil.",
+    imagen: "/placeholder.svg?height=400&width=600"
+  },
+  {
+    id: 3,
+    titulo: "Oficina en Casa",
+    descripcion: "Espacio de trabajo ergonómico con almacenamiento integrado.",
+    imagen: "/placeholder.svg?height=400&width=600"
+  }
+]);
+</script>
+
+<style scoped>
+/* El estilo no cambia */
+</style>
+
   
   <style scoped>
   .diseno {
