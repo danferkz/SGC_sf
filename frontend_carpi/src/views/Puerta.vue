@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <!-- Componente Header añadido aquí -->
     <Header />
-    
+
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
@@ -144,9 +144,7 @@
             <p><strong>Largo:</strong> {{ formData.length }} cm</p>
             <p><strong>Ancho:</strong> {{ formData.width }} cm</p>
             <p><strong>Exterior:</strong> {{ formData.exterior }}</p>
-
-            <p><strong>Número de Hojas:</strong > {{ formData.number_of_sheets }}</p>
-
+            <p><strong>Número de Hojas:</strong> {{ formData.number_of_sheets }}</p>
             <p><strong>Precio Estimado:</strong> S/{{ price }}</p>
           </div>
           <div class="mt-4 flex justify-center space-x-4">
@@ -159,7 +157,36 @@
           </div>
         </div>
       </div>
+      <section id="productos" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Producto 1: Puertas -->
+            <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Puertas</h4>
+            
+            </router-link>
+
+            <!-- Producto 2: Ventanas -->
+            <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
+              
+            </router-link>
+
+            <!-- Producto 3: Muebles -->
+            <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Muebles</h4>
+              
+            </router-link>
+          </div>
+        </div>
+      </section>
     </div>
+    <!-- Footer -->
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -168,15 +195,18 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
 
+import Footer from "@/components/FooterCompo.vue";
 import { useRouter } from 'vue-router';
-const router = useRouter();
+
 
 
 export default {
   components: {
     Header,
+    Footer,
   },
   setup() {
+    const router = useRouter();
     const formData = reactive({
       woodType: '',
       varnished: '', // 'Si' o 'No'
@@ -245,50 +275,49 @@ export default {
 
     const createProduct = async () => {
       try {
-        const token = getToken();
-        if (!token) {
-          alert('No se encontró un token de autenticación.');
-          return;
-        }
+      const token = getToken();
+      if (!token) {
+        alert('No se encontró un token de autenticación.');
+        return;
+      }
 
-        if (!price.value || price.value <= 0) {
-          alert('El precio debe ser mayor que cero y debe estar definido.');
-          return;
-        }
+      if (!price.value || price.value <= 0) {
+        alert('El precio debe ser mayor que cero y debe estar definido.');
+        return;
+      }
 
+      const payload = {
+        wood_type: formData.woodType,
+        is_varnished: formData.varnished === 'Si',
+        length: parseFloat(formData.length),
+        width: parseFloat(formData.width),
+        is_exterior: formData.exterior === 'Si',
+        number_of_sheets: parseInt(formData.number_of_sheets),
+        cost_price: parseFloat(price.value),
+      };
 
-        const payload = {
-          wood_type: formData.woodType,
-          is_varnished: formData.varnished === 'Si',
-          length: parseFloat(formData.length),
-          width: parseFloat(formData.width),
-          is_exterior: formData.exterior === 'Si',
-          number_of_sheets: parseInt(formData.number_of_sheets),
-          cost_price: parseFloat(price.value),
-        };
+      const config = {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+      };
 
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
+      const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
 
-        const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
-        
-        if (response.status === 201) {
-          alert('Producto creado exitosamente');
-          showValidatedWindow.value = false;
-
-          window.location.href = '/delivery';
-
-        } else {
-          alert('Hubo un error al crear el producto.');
-        }
-      } catch (error) {
-        console.error('Error al crear el producto:', error);
+      if (response.status === 201) {
+        console.log('Respuesta del servidor:', response.data.product_id);
+        localStorage.setItem('product_id', response.data.product_id); // Changed to door_product_id
+        alert('Producto creado exitosamente');
+        showValidatedWindow.value = false;
+        router.push('/delivery');
+      } else {
         alert('Hubo un error al crear el producto.');
       }
-    };
+      } catch (error) {
+      console.error('Error al crear el producto:', error);
+      alert('Hubo un error al crear el producto.');
+      }
+        };
 
 
     const handleCalculatePrice = async () => {
@@ -337,10 +366,15 @@ export default {
       handleSubmit,
 
     };
+    
   },
 };
 </script>
 
 <style scoped>
-/* Estilos específicos si los necesitas */
+.footer {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+}
 </style>

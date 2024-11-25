@@ -172,9 +172,32 @@ class AdminProfileView(BaseAuthenticatedView):
 
 # Vista para eliminar un administrador
 class AdminDestroyView(DestroyAPIView):
-    queryset = CustomUser.objects.filter(is_superuser=True)
+    queryset = CustomUser.objects.filter(is_superuser=True, is_staff=False)
+    permission_classes = [IsAuthenticated, IsAdminUser] 
+    authentication_classes = [JWTAuthentication]
+    
+
+class AdminListClientView(ListAPIView):
+    serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(is_client=True)
+    
+    
+
+class CheckAdminView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        """
+        Verificar si el usuario autenticado es administrador
+        """
+        if request.user.is_staff:
+            return Response({"is_admin": True}, status=200)
+        return Response({"is_admin": False}, status=200)
 
 # ============ VISTAS DE STAFF ============
 

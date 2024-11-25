@@ -5,7 +5,7 @@
     <Header />
 
 
-    
+
     <!-- Hero Section -->
     <section>
       <div class="hero">
@@ -143,8 +143,8 @@
       </div>
     </section>
 
-    <!-- Contacto Section -->
-    <section id="contacto" class="py-16 px-6 bg-white">
+    <!-- Contacto redireccion de registro -->
+    <section v-if="!isAuthenticated" id="contacto" class="py-16 px-6 bg-white">
       <div class="container mx-auto max-w-2xl">
         <div class="bg-amber-50 p-12 rounded-lg shadow-md text-center">
           <div
@@ -168,6 +168,17 @@
 import Header from '@/components/HeaderCompo.vue'
 import Footer from '@/components/FooterCompo.vue'
 
+import { computed, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+
+// Accede al store de Vuex
+const store = useStore();
+const router = useRouter();
+
+// Computed para verificar si el usuario está autenticado
+const isAuthenticated = computed(() => store.getters['sessions/isAuthenticated']);
 
 function scrollToContacto() {
   const contactoSection = document.getElementById('contacto');

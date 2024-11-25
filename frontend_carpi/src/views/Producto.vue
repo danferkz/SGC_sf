@@ -43,9 +43,8 @@
         </div>
       </div>
     </section>
-
     <!-- Footer -->
-    <Footer />
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -60,7 +59,8 @@ import Footer from '@/components/FooterCompo.vue'
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e2e8f0; /* Fallback color */
+  background-color: #e2e8f0;
+  /* Fallback color */
   border-radius: 0.5rem;
   overflow: hidden;
 }
@@ -71,4 +71,9 @@ import Footer from '@/components/FooterCompo.vue'
   border-radius: 0.5rem;
 }
 
+.footer {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+}
 </style>

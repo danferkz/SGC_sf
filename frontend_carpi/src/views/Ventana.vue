@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <!-- Componente Header añadido aquí -->
     <Header />
-    
+
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Ventana Personalizada</h2>
 
@@ -18,6 +18,7 @@
             <option value="Cedro">Cedro - S/. 200</option>
             <option value="Caoba">Caoba - S/. 180</option>
           </select>
+          <p v-if="errors.woodType" class="text-red-500 text-xs italic">{{ errors.woodType }}</p>
         </div>
 
         <!-- Barnizado -->
@@ -26,29 +27,31 @@
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
               <input id="varnished-yes" type="radio" v-model="formData.varnished" value="Si"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
               <input id="varnished-no" type="radio" v-model="formData.varnished" value="No"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="varnished-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
+          <p v-if="errors.varnished" class="text-red-500 text-xs italic">{{ errors.varnished }}</p>
         </div>
 
         <!-- Dimensiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
-            <input type="number" id="length" v-model="formData.length" required min="60" max="300"
-
+            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            <p v-if="errors.length" class="text-red-500 text-xs italic">{{ errors.length }}</p>
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="60" max="150"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            <p v-if="errors.width" class="text-red-500 text-xs italic">{{ errors.width }}</p>
           </div>
         </div>
 
@@ -58,15 +61,16 @@
           <div class="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10">
             <div class="flex items-center">
               <input id="exterior-yes" type="radio" v-model="formData.exterior" value="Si"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="exterior-yes" class="ml-3 block text-sm font-medium text-gray-700">Si</label>
             </div>
             <div class="flex items-center">
               <input id="exterior-no" type="radio" v-model="formData.exterior" value="No"
-                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300">
+                class="focus:ring-amber-500 h-4 w-4 text-amber-600 border-gray-300" required>
               <label for="exterior-no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
             </div>
           </div>
+          <p v-if="errors.exterior" class="text-red-500 text-xs italic">{{ errors.exterior }}</p>
         </div>
 
         <!-- Número de hojas -->
@@ -75,6 +79,7 @@
             <label for="number_of_sheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
               class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            <p v-if="errors.number_of_sheets" class="text-red-500 text-xs italic">{{ errors.number_of_sheets }}</p>
           </div>
         </div>
 
@@ -87,10 +92,10 @@
 
         <!-- Botones: Validar Datos y Calcular Precio -->
         <div class="flex justify-between items-center mt-6">
-          <button type="button" @click="showValidatedWindow = true"
-  class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-  Validar Datos
-</button>
+          <button type="button" @click="handleSubmit"
+            class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+            Validar Datos
+          </button>
           <div class="flex items-center space-x-2">
             <button type="button" @click="handleCalculatePrice"
               class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
@@ -128,7 +133,36 @@
           </div>
         </div>
       </div>
+      <section id="productos" class="py-16 px-6 bg-white">
+        <div class="container mx-auto">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Producto 1: Puertas -->
+            <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Puertas</h4>
+            
+            </router-link>
+
+            <!-- Producto 2: Ventanas -->
+            <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
+              
+            </router-link>
+
+            <!-- Producto 3: Muebles -->
+            <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
+              
+              <h4 class="text-xl font-semibold mb-2">Muebles</h4>
+              
+            </router-link>
+          </div>
+        </div>
+      </section>
     </div>
+    <!-- Footer -->
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -136,12 +170,17 @@
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
+import Footer from "@/components/FooterCompo.vue";
+import { useRouter } from 'vue-router';
+
 
 export default {
   components: {
     Header,
+    Footer,
   },
   setup() {
+    const router = useRouter();
     const formData = reactive({
       woodType: '',
       varnished: '', // 'Si' o 'No'
@@ -152,63 +191,106 @@ export default {
       comments: '',
     });
 
+    const errors = reactive({
+      woodType: '',
+      varnished: '',
+      length: '',
+      width: '',
+      exterior: '',
+      number_of_sheets: '',
+    });
+
     const showValidatedWindow = ref(false);
-    const showOrderWindow = ref(false);
     const price = ref(0);
 
-    // Obtener el token desde el localStorage
+    const validateForm = () => {
+      let isValid = true;
+      // Reset errors
+      Object.keys(errors).forEach(key => errors[key] = '');
+
+      if (!formData.woodType) {
+        errors.woodType = 'El tipo de madera es obligatorio.';
+        isValid = false;
+      }
+      if (!formData.varnished) {
+        errors.varnished = 'Debes seleccionar si está barnizado.';
+        isValid = false;
+      }
+      if (!formData.length || formData.length < 100 || formData.length > 300) {
+        errors.length = 'El largo debe estar entre 100 y 300 cm.';
+        isValid = false;
+      }
+      if (!formData.width || formData.width < 60 || formData.width > 150) {
+        errors.width = 'El ancho debe estar entre 60 y 150 cm.';
+        isValid = false;
+      }
+      if (!formData.exterior) {
+        errors.exterior = 'Debes seleccionar si es exterior.';
+        isValid = false;
+      }
+      if (!formData.number_of_sheets || formData.number_of_sheets < 1 || formData.number_of_sheets > 5) {
+        errors.number_of_sheets = 'El número de hojas debe estar entre 1 y 5.';
+        isValid = false;
+      }
+
+      return isValid;
+    };
+
+    const handleSubmit = () => {
+      if (validateForm()) {
+        showValidatedWindow.value = true;
+      }
+    };
+
     const getToken = () => {
       return localStorage.getItem('token');
     };
 
-    // Crear el producto a través de la API
     const createProduct = async () => {
       try {
-        const token = getToken();
-        if (!token) {
-          alert('No se encontró un token de autenticación.');
-          return;
-        }
+      const token = getToken();
+      if (!token) {
+        alert('No se encontró un token de autenticación.');
+        return;
+      }
+      if (!price.value || price.value <= 0) {
+        alert('El precio debe ser mayor que cero y debe estar definido.');
+        return;
+      }
 
+      const payload = {
+        wood_type: formData.woodType,
+        is_varnished: formData.varnished === 'Si',
+        length: parseFloat(formData.length),
+        width: parseFloat(formData.width),
+        is_exterior: formData.exterior === 'Si',
+        number_of_sheets: parseInt(formData.number_of_sheets),
+        cost_price: parseFloat(price.value),
+      };
+      
+      const config = {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+      };
 
-        // Validar que el precio no sea cero o no esté definido
-        if (!price.value || price.value <= 0) {
-          alert('El precio debe ser mayor que cero y debe estar definido.');
-          return;
-        }
+      const response = await axios.post('http://localhost:8000/api/products/product-window-create/', payload, config);
 
-
-        const payload = {
-          wood_type: formData.woodType,
-          is_varnished: formData.varnished === 'Si',
-          length: parseFloat(formData.length),
-          width: parseFloat(formData.width),
-          is_exterior: formData.exterior === 'Si',
-          number_of_sheets: parseInt(formData.number_of_sheets),
-          cost_price: parseFloat(price.value),
-        };
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-
-        const response = await axios.post('http://localhost:8000/api/products/product-window-create/', payload, config);
-        
-        if (response.status === 201) {
-          alert('Producto creado exitosamente');
-          showValidatedWindow.value = false;
-        } else {
-          alert('Hubo un error al crear el producto.');
-        }
-      } catch (error) {
-        console.error('Error al crear el producto:', error);
+      if (response.status === 201) {
+        console.log('Respuesta del servidor:', response.data.product_id);
+        localStorage.setItem('product_id', response.data.product_id); // Changed to door_product_id
+        alert('Producto creado exitosamente');
+        showValidatedWindow.value = false;
+        router.push('/delivery');
+      } else {
         alert('Hubo un error al crear el producto.');
       }
-    };
+      } catch (error) {
+      console.error('Error al crear el producto:', error);
+      alert('Hubo un error al crear el producto.');
+      }
+        };
 
-    // Calcular el precio a través de la API
     const handleCalculatePrice = async () => {
       try {
         const token = getToken();
@@ -247,16 +329,22 @@ export default {
 
     return {
       formData,
+      errors,
       showValidatedWindow,
-      showOrderWindow,
       price,
       handleCalculatePrice,
       createProduct,
+      handleSubmit,
     };
+    
   },
 };
 </script>
 
 <style scoped>
-/* Estilos específicos si los necesitas */
+.footer {
+  position: relative;
+  width: 100%;
+  margin-top: auto;
+}
 </style>
