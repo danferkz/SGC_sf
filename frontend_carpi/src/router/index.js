@@ -27,6 +27,10 @@ import SobreNosotros from '@/views/SobreNosotros.vue';
 import Contacto from '@/views/Contacto.vue';
 import Carpinteria from '@/views/Carpinteria.vue';
 import Trabajos from '@/views/Trabajos.vue';
+import Prensa from '@/views/Prensa.vue';
+import Diseno from '@/views/Diseno.vue';
+import Construccion from '@/views/Construccion.vue';
+import Decoracion from '@/views/Decoracion.vue';
 
 
 const router = createRouter({
@@ -91,6 +95,26 @@ const router = createRouter({
       path: '/producto',
       name: 'Producto',
       component: Producto
+    },
+    {
+      path: '/prensa',
+      name: 'Prensa',
+      component: Prensa
+    },
+    {
+      path: '/diseno',
+      name: 'Diseno',
+      component: Diseno
+    },
+    {
+      path: '/construccion',
+      name: 'Construccion',
+      component: Construccion
+    },
+    {
+      path: '/decoracion',
+      name: 'Decoracion',
+      component: Decoracion
     },
     {
       path: '/homeadmin',
