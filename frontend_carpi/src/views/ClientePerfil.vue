@@ -1,4 +1,5 @@
 <template>
+
   <div class="min-h-screen bg-gray-100 text-gray-800">
     <!-- Header General -->
     <Header />
@@ -558,3 +559,4 @@ onMounted(async () => {
   background-color: rgba(0, 0, 0, 0.5);
 }
 </style>
+

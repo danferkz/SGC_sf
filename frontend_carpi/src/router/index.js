@@ -19,6 +19,15 @@ import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
 import GestionEmpleados from '@/views/GestionEmpleados.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
 import ClientePerfil from '@/views/ClientePerfil.vue';
+import SobreNosotros from '@/views/SobreNosotros.vue';
+import Contacto from '@/views/Contacto.vue';
+import Carpinteria from '@/views/Carpinteria.vue';
+import Trabajos from '@/views/Trabajos.vue';
+import Prensa from '@/views/Prensa.vue';
+import Diseno from '@/views/Diseno.vue';
+import Construccion from '@/views/Construccion.vue';
+import Decoracion from '@/views/Decoracion.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,9 +53,65 @@ const router = createRouter({
       component: RegistrationView
     },
     {
+
+      path: '/vista',
+      name: 'Vista',
+      component: Vista
+    },
+    {
+      path: '/empleado',
+      name: 'Empleado',
+      component: EmployeeView
+    },
+    {
+      path: '/interno',
+      name: 'Interno',
+      component: InternView
+    },
+    {
+      path: '/sobrenosotros',
+      name: 'Sobre Nosotros',
+      component: SobreNosotros
+    },
+    {
+      path: '/contacto',
+      name: 'Contacto',
+      component: Contacto
+    },
+    {
+      path: '/carpinteria',
+      name: 'Carpinteria',
+      component: Carpinteria
+    },
+    {
+      path: '/trabajos',
+      name: 'Trabajos',
+      component: Trabajos
+    },
+    {
       path: '/producto',
       name: 'Producto',
       component: Producto
+    },
+    {
+      path: '/prensa',
+      name: 'Prensa',
+      component: Prensa
+    },
+    {
+      path: '/diseno',
+      name: 'Diseno',
+      component: Diseno
+    },
+    {
+      path: '/construccion',
+      name: 'Construccion',
+      component: Construccion
+    },
+    {
+      path: '/decoracion',
+      name: 'Decoracion',
+      component: Decoracion
     },
     {
       path: '/homeadmin',
