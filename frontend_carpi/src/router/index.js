@@ -5,8 +5,6 @@ import ClientView from '../views/ClientView.vue';
 import AdminView from '../views/LoginAdminView.vue';
 import LoginClient from '../views/LoginCliente.vue';
 import RegistrationView from '../views/RegistrationView.vue';
-import Vista from '../views/VistaView.vue';
-import InternView from '../views/InternView.vue';
 import HomeAdminView from '../views/HomeAdminView.vue';
 import Producto from '../views/Producto.vue';
 import Mueble from '../views/Mueble.vue';
@@ -19,7 +17,6 @@ import ClienteDashboard from '../views/ClienteDashboard.vue';
 import Gestionpedidos from '@/views/Gestionpedidos.vue';
 import Gestionpresupuesto from '@/views/Gestionpresupuesto.vue';
 import GestionEmpleados from '@/views/GestionEmpleados.vue';
-import AdminDashboard from '../views/DashboardAdminn.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
 import ClientePerfil from '@/views/ClientePerfil.vue';
 
@@ -45,16 +42,6 @@ const router = createRouter({
       path: '/registro',
       name: 'Registro',
       component: RegistrationView
-    },
-    {
-      path: '/vista',
-      name: 'Vista',
-      component: Vista
-    },
-    {
-      path: '/interno',
-      name: 'Interno',
-      component: InternView
     },
     {
       path: '/producto',
@@ -185,30 +172,6 @@ const router = createRouter({
       path: '/gestionempleados',
       name: 'GestionEmpleados',
       component: GestionEmpleados,
-      beforeEnter: async (to, from, next) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          try {
-            const response = await axios.get('http://127.0.0.1:8000/api/users/admins/check-admin/', {
-              headers: { Authorization: `Bearer ${token}` }
-            });
-            if (response.data.is_admin) {
-              next();  // Permite el acceso a la ruta
-            } else {
-              next({ name: 'Error404' });  // Redirige si no es admin
-            }
-          } catch (error) {
-            next({ name: 'Login' });  // Redirige si el token no es válido
-          }
-        } else {
-          next({ name: 'Login' });  // Redirige si no hay token
-        }
-      }
-    },
-    {
-      path: '/admindashboard',
-      name: 'AdminDashboard',
-      component: AdminDashboard,
       beforeEnter: async (to, from, next) => {
         const token = localStorage.getItem('token');
         if (token) {
