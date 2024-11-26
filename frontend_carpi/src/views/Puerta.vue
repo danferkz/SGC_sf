@@ -11,7 +11,7 @@
         <div>
           <label for="woodType" class="block text-sm font-medium text-gray-700">Tipo de Madera</label>
           <select id="woodType" v-model="formData.woodType" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md  p-1.5">
             <option value="">Selecciona un tipo de madera</option>
             <option value="Pino">Pino - S/. 100</option>
             <option value="Roble">Roble - S/. 150</option>
@@ -43,13 +43,13 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
-            <input type="number" id="length" v-model="formData.length" required min="100" max="300"
+            <input type="number" id="length" v-model="formData.length" required min="0" max="300"
             class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
             <p v-if="errors.length" class="text-red-500 text-xs italic">{{ errors.length }}</p>
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
-            <input type="number" id="width" v-model="formData.width" required min="60" max="150"
+            <input type="number" id="width" v-model="formData.width" required min="0" max="150"
             class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
             <p v-if="errors.width" class="text-red-500 text-xs italic">{{ errors.width }}</p>
           </div>

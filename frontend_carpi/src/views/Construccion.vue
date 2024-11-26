@@ -1,60 +1,63 @@
 <template>
-  
-  <HeaderCompo/>
-    <div class="construccion">
-      <header class="header">
-        <h1>Maderera el bosque</h1>
-      </header>
-      <main class="content">
-        <h2>Servicios de Construcción en Madera</h2>
-        
-        <section class="servicios-construccion">
-          <div v-for="servicio in serviciosConstruccion" :key="servicio.id" class="servicio-card">
-            <img :src="servicio.imagen" :alt="servicio.titulo" class="servicio-imagen">
-            <div class="servicio-info">
-              <h3>{{ servicio.titulo }}</h3>
-              <p>{{ servicio.descripcion }}</p>
+  <HeaderCompo />
+  <div class="construccion">
+    <header class="header">
+    </header>
+    <main class="content">
+      <!-- SERVICIOS DE CONSTRUCCIÓN -->
+      <h2 class="subtitulo">Servicios de Construcción en Madera</h2>
+      <section class="servicios-construccion">
+        <div v-for="servicio in serviciosConstruccion" :key="servicio.id" class="servicio-card">
+          <img :src="servicio.imagen" :alt="servicio.titulo" class="servicio-imagen">
+          <div class="servicio-info">
+            <h3>{{ servicio.titulo }}</h3>
+            <p>{{ servicio.descripcion }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROYECTOS DESTACADOS -->
+      <h2 class="subtitulo">Proyectos Destacados</h2>
+      <section class="proyectos-destacados">
+        <div class="proyectos-grid">
+          <div v-for="proyecto in proyectosDestacados" :key="proyecto.id" class="proyecto-card">
+            <img :src="proyecto.imagen" :alt="proyecto.titulo" class="proyecto-imagen">
+            <div class="proyecto-info">
+              <h4>{{ proyecto.titulo }}</h4>
+              <p>{{ proyecto.descripcion }}</p>
             </div>
           </div>
-        </section>
-  
-        <section class="proyectos-destacados">
-          <h3>Proyectos Destacados</h3>
-          <div class="proyectos-grid">
-            <div v-for="proyecto in proyectosDestacados" :key="proyecto.id" class="proyecto-card">
-              <img :src="proyecto.imagen" :alt="proyecto.titulo" class="proyecto-imagen">
-              <div class="proyecto-info">
-                <h4>{{ proyecto.titulo }}</h4>
-                <p>{{ proyecto.descripcion }}</p>
-              </div>
+        </div>
+      </section>
+
+      <!-- PROCESO DE CONSTRUCCIÓN -->
+      <section class="proceso-construccion">
+        <h3>Nuestro Proceso de Construcción</h3>
+        <div class="proceso-timeline">
+          <div v-for="(paso, index) in procesoConstruccion" :key="index" class="paso-construccion">
+            <div class="paso-numero">{{ index + 1 }}</div>
+            <div class="paso-contenido">
+              <h4>{{ paso.titulo }}</h4>
+              <p>{{ paso.descripcion }}</p>
             </div>
           </div>
-        </section>
-  
-        <section class="proceso-construccion">
-          <h3>Nuestro Proceso de Construcción</h3>
-          <div class="proceso-timeline">
-            <div v-for="(paso, index) in procesoConstruccion" :key="index" class="paso-construccion">
-              <div class="paso-numero">{{ index + 1 }}</div>
-              <div class="paso-contenido">
-                <h4>{{ paso.titulo }}</h4>
-                <p>{{ paso.descripcion }}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-  
-        <section class="cta-construccion">
-          <h3>¿Listo para comenzar tu proyecto?</h3>
-          <p>Nuestro equipo de expertos está listo para ayudarte a hacer realidad tu visión en madera.</p>
-          <a href="#" class="boton-cta">Solicitar Presupuesto</a>
-        </section>
-      </main>
-      
+        </div>
+      </section>
+
+      <!-- LLAMADO A LA ACCIÓN -->
+      <section class="cta-construccion">
+        <h3>¿Listo para comenzar tu proyecto?</h3>
+        <p>Nuestro equipo de expertos está listo para ayudarte a hacer realidad tu visión en madera.</p>
+        <a href="#" class="boton-cta">Solicitar Presupuesto</a>
+      </section>
+    </main>
+
     <!-- Footer -->
     <Footer class="footer" />
-    </div>
-  </template>
+  </div>
+</template>
+
+
   
   <script setup>
   import { ref } from 'vue';
@@ -115,7 +118,7 @@ import ventanaconst from '@/assets/Ventanacostr.jpeg';
     },
     {
       titulo: "Diseño y Aprobación",
-      descripcion: "Nuestro equipo de diseño crea planos detallados y visualizaciones 3D para tu aprobación."
+      descripcion: "Nuestro equipo de diseño crea planos detallados para tu aprobación."
     },
     {
       titulo: "Selección de Materiales",
@@ -164,7 +167,7 @@ import ventanaconst from '@/assets/Ventanacostr.jpeg';
   h2, h3 {
     color: #E65100;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   
   .servicios-construccion {
@@ -230,6 +233,56 @@ import ventanaconst from '@/assets/Ventanacostr.jpeg';
     margin: 0 auto;
     padding: 2rem 0;
   }
+
+  /* TÍTULO PRINCIPAL */
+.header h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 1rem 0;
+  color: #3c3c3c;
+}
+
+/* SUBTÍTULOS DESTACADOS */
+.subtitulo {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  color: #2e2e2e;
+}
+
+/* SECCIONES GENERALES */
+.servicios-construccion, .proyectos-destacados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem auto;
+  padding: 0 2rem;
+}
+
+.servicio-card, .proyecto-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.servicio-imagen, .proyecto-imagen {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.servicio-info, .proyecto-info {
+  padding: 1rem;
+}
+
+h3, h4 {
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+
   
   .proceso-timeline::before {
     content: '';

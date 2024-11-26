@@ -60,7 +60,7 @@
   import tv from '@/assets/tv.jpeg';
   import Mueblecost from '@/assets/Mueblecost.jpeg';  
   
-  const categorias = ['Todos', 'Muebles', 'Restauración', 'Estructural', 'Decoración'];
+  const categorias = ['Todos', 'Muebles'];
   const categoriaActual = ref('Todos');
   
   const trabajos = ref([
