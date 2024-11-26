@@ -3,17 +3,13 @@
         <footer class="footer bg-base-300 text-base-content p-10">
             <nav>
                 <h6 class="footer-title">Servicios</h6>
-                <a class="link link-hover">Carpintería</a>
-                <a class="link link-hover">Diseño</a>
                 <a class="link link-hover">Construcción</a>
-                <a class="link link-hover">Decoración</a>
             </nav>
             <nav>
                 <h6 class="footer-title">Compañía</h6>
                 <a class="link link-hover">Sobre nosotros</a>
                 <a class="link link-hover">Contacto</a>
                 <a class="link link-hover">Trabajos</a>
-                <a class="link link-hover">Prensa</a>
             </nav>
             <nav>
                 <h6 class="footer-title">Redes Sociales</h6>

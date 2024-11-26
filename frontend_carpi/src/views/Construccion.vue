@@ -60,46 +60,51 @@
   import { ref } from 'vue';
   import HeaderCompo from '@/components/HeaderCompo.vue';  
 import Footer from "@/components/FooterCompo.vue";
-  
+import iglesia from '@/assets/Muebledeinglesia.jpg';
+import cost from '@/assets/Mueblecost.jpeg';
+import puertasegura from '@/assets/puertasegura.jpeg';
+import puertaconst from '@/assets/PuertasConstr.jpg';
+import catedral from '@/assets/Ventanacatedral.jpeg';
+import ventanaconst from '@/assets/Ventanacostr.jpeg';  
   const serviciosConstruccion = ref([
     {
       id: 1,
-      titulo: "Estructuras de Madera",
-      descripcion: "Diseñamos y construimos estructuras de madera duraderas y estéticamente atractivas para diversos proyectos.",
-      imagen: "/placeholder.svg?height=300&width=400"
+      titulo: "Construcción de Ventanas",
+      descripcion: "Diseñamos y construimos ventanas de madera, ofreciendo una amplia variedad de estilos y acabados para complementar cualquier espacio.",
+      imagen: cost
     },
     {
       id: 2,
-      titulo: "Acabados en Madera",
-      descripcion: "Ofrecemos una amplia gama de acabados en madera para interiores y exteriores, desde pisos hasta revestimientos.",
-      imagen: "/placeholder.svg?height=300&width=400"
+      titulo: "Construcción de Muebles",
+      descripcion: "Creamos muebles a medida con madera de alta calidad, combinando funcionalidad y diseño para adaptarse a las necesidades de cada cliente.",
+      imagen: puertaconst
     },
     {
       id: 3,
-      titulo: "Restauración de Edificios",
-      descripcion: "Restauramos y renovamos estructuras de madera históricas, preservando su belleza y valor patrimonial.",
-      imagen: "/placeholder.svg?height=300&width=400"
+      titulo: "Construcción de Puertas",
+      descripcion: "Fabricamos puertas personalizadas con materiales de alta calidad, diseñadas para adaptarse a cualquier estilo arquitectónico y brindar seguridad.",
+      imagen: ventanaconst
     }
   ]);
   
   const proyectosDestacados = ref([
     {
       id: 1,
-      titulo: "Casa de Campo Sustentable",
-      descripcion: "Construcción de una casa de campo completamente en madera, utilizando técnicas sostenibles y materiales locales.",
-      imagen: "/placeholder.svg?height=400&width=600"
+      titulo: "Muebles de Madera para Iglesias",
+      descripcion: "Diseñamos y fabricamos muebles de madera exclusivos para iglesias, combinando tradición, resistencia y estética para ambientes sagrados.",
+      imagen: catedral
     },
     {
       id: 2,
-      titulo: "Restauración de Iglesia Colonial",
-      descripcion: "Restauración completa de la estructura y elementos decorativos de madera de una iglesia colonial del siglo XVIII.",
-      imagen: "/placeholder.svg?height=400&width=600"
+      titulo: "Ventanas para Catedrales",
+      descripcion: "Creación de ventanas de madera para catedrales y espacios religiosos, con diseños artísticos y materiales que resisten el paso del tiempo.",
+      imagen: iglesia
     },
     {
       id: 3,
-      titulo: "Centro Comercial Eco-friendly",
-      descripcion: "Diseño y construcción de un innovador centro comercial con estructura principal y acabados en madera certificada.",
-      imagen: "/placeholder.svg?height=400&width=600"
+      titulo: "Puertas Más Seguras de Perú",
+      descripcion: "Ofrecemos puertas de seguridad premium, fabricadas con madera de alta calidad y sistemas de seguridad avanzados para protección total.",
+      imagen: puertasegura 
     }
   ]);
   

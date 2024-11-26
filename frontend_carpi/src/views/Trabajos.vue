@@ -55,71 +55,55 @@
   import { ref, computed } from 'vue';
   import Header from "@/components/HeaderCompo.vue";
   import Footer from "@/components/FooterCompo.vue";
+  import Ventanadoble from '@/assets/Ventanadoble.jpeg';
+  import puertaconst from '@/assets/PuertasConstr.jpg';
+  import tv from '@/assets/tv.jpeg';
+  import Mueblecost from '@/assets/Mueblecost.jpeg';  
   
   const categorias = ['Todos', 'Muebles', 'Restauración', 'Estructural', 'Decoración'];
   const categoriaActual = ref('Todos');
   
   const trabajos = ref([
-    {
-      id: 1,
-      titulo: 'Cocina Integral Moderna',
-      descripcionCorta: 'Diseño y fabricación de cocina integral con isla central.',
-      descripcionLarga: 'Proyecto completo de cocina integral con diseño moderno. Incluye gabinetes de madera de roble, isla central con tope de granito, y electrodomésticos integrados.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Familia Rodríguez',
-      fecha: 'Marzo 2023',
-      categoria: 'Muebles'
-    },
-    {
-      id: 2,
-      titulo: 'Restauración de Cómoda Antigua',
-      descripcionCorta: 'Restauración de cómoda de caoba del siglo XIX.',
-      descripcionLarga: 'Restauración completa de una cómoda de caoba del siglo XIX. Se repararon daños estructurales, se restauró el acabado original y se reemplazaron los herrajes manteniendo el estilo de la época.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Museo de Antigüedades',
-      fecha: 'Abril 2023',
-      categoria: 'Restauración'
-    },
-    {
-      id: 3,
-      titulo: 'Pérgola para Jardín',
-      descripcionCorta: 'Diseño y construcción de pérgola de madera para jardín.',
-      descripcionLarga: 'Pérgola de madera de cedro tratada para exteriores. Diseño personalizado para integrar iluminación LED y soporte para plantas trepadoras.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Residencia Flores',
-      fecha: 'Mayo 2023',
-      categoria: 'Estructural'
-    },
-    {
-      id: 4,
-      titulo: 'Estantería Flotante',
-      descripcionCorta: 'Fabricación e instalación de estantería flotante para sala de estar.',
-      descripcionLarga: 'Conjunto de estanterías flotantes fabricadas en madera de pino con acabado natural. Diseño minimalista que combina funcionalidad y estética moderna.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Oficina CreativeMind',
-      fecha: 'Junio 2023',
-      categoria: 'Decoración'
-    },
-    {
-      id: 5,
-      titulo: 'Mesa de Comedor Extensible',
-      descripcionCorta: 'Diseño y fabricación de mesa de comedor extensible en nogal.',
-      descripcionLarga: 'Mesa de comedor extensible fabricada en madera de nogal. Diseño elegante con capacidad para 6-10 personas. Incluye mecanismo de extensión suave y acabado resistente a manchas.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Familia Martínez',
-      fecha: 'Julio 2023',
-      categoria: 'Muebles'
-    },
-    {
-      id: 6,
-      titulo: 'Restauración de Puerta Colonial',
-      descripcionCorta: 'Restauración de puerta colonial de doble hoja.',
-      descripcionLarga: 'Restauración completa de una puerta colonial de doble hoja. Se repararon daños por insectos, se restauraron tallas originales y se aplicó un tratamiento protector contra la intemperie.',
-      imagen: '/placeholder.svg?height=300&width=400',
-      cliente: 'Casa Histórica Central',
-      fecha: 'Agosto 2023',
-      categoria: 'Restauración'
-    }
+  {
+  id: 1,
+  titulo: 'Puerta de Madera Personalizada',
+  descripcionCorta: 'Diseño y fabricación de puerta de madera a medida con acabados personalizados.',
+  descripcionLarga: 'Puerta de madera maciza de roble, con diseño exclusivo y acabados personalizados según las preferencias del cliente. Ideal para entradas principales o interiores. Incluye herrajes de alta calidad y acabado en barniz mate.',
+  imagen: puertaconst, // Asegúrate de que la imagen esté en la carpeta assets
+  cliente: 'Familia Sánchez',
+  fecha: 'Julio 2023',
+  categoria: 'Puertas'
+},
+{
+  id: 2,
+  titulo: 'Ventanas de Madera con Doble Cristal',
+  descripcionCorta: 'Fabricación e instalación de ventanas de madera con doble cristal para mayor aislamiento.',
+  descripcionLarga: 'Ventanas de madera de pino con doble cristal para mejorar la eficiencia energética. El diseño combina estética y funcionalidad, ofreciendo una excelente resistencia a las inclemencias del tiempo y un aislamiento acústico superior.',
+  imagen: Ventanadoble, // Asegúrate de que la imagen esté en la carpeta assets
+  cliente: 'Residencial Altavista',
+  fecha: 'Agosto 2023',
+  categoria: 'Ventanas'
+},
+{
+  id: 3,
+  titulo: 'Mueble de TV en Madera Maciza',
+  descripcionCorta: 'Mueble de TV personalizado en madera maciza con compartimentos para almacenamiento.',
+  descripcionLarga: 'Mueble de TV hecho a medida en madera de roble, con acabados en barniz natural. Incluye compartimentos de almacenamiento y espacio para dispositivos electrónicos. Diseño minimalista y moderno que se adapta a cualquier estilo de sala de estar.',
+  imagen: tv, // Asegúrate de que la imagen esté en la carpeta assets
+  cliente: 'Oficina XYZ',
+  fecha: 'Septiembre 2023',
+  categoria: 'Muebles'
+},
+{
+  id: 4,
+  titulo: 'Mueble de Almacenamiento para Oficina',
+  descripcionCorta: 'Diseño y fabricación de mueble de almacenamiento para oficina con acabados en madera de pino.',
+  descripcionLarga: 'Mueble de almacenamiento multifuncional para oficina, hecho en madera de pino con acabados en aceite natural. Con estantes ajustables y espacio suficiente para archivadores y materiales de oficina. Perfecto para mantener un ambiente ordenado y profesional.',
+  imagen: Mueblecost, // Asegúrate de que la imagen esté en la carpeta assets
+  cliente: 'Creative Solutions',
+  fecha: 'Octubre 2023',
+  categoria: 'Muebles'
+}
   ]);
   
   const trabajosFiltrados = computed(() => {
