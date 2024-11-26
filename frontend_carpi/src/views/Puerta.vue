@@ -11,7 +11,7 @@
         <div>
           <label for="woodType" class="block text-sm font-medium text-gray-700">Tipo de Madera</label>
           <select id="woodType" v-model="formData.woodType" required
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm rounded-md">
             <option value="">Selecciona un tipo de madera</option>
             <option value="Pino">Pino - S/. 100</option>
             <option value="Roble">Roble - S/. 150</option>
@@ -44,13 +44,13 @@
           <div>
             <label for="length" class="block text-sm font-medium text-gray-700">Largo (cm)</label>
             <input type="number" id="length" v-model="formData.length" required min="100" max="300"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
             <p v-if="errors.length" class="text-red-500 text-xs italic">{{ errors.length }}</p>
           </div>
           <div>
             <label for="width" class="block text-sm font-medium text-gray-700">Ancho (cm)</label>
             <input type="number" id="width" v-model="formData.width" required min="60" max="150"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
             <p v-if="errors.width" class="text-red-500 text-xs italic">{{ errors.width }}</p>
           </div>
         </div>
@@ -78,7 +78,7 @@
           <div>
             <label for="number_of_sheets" class="block text-sm font-medium text-gray-700">Número de Hojas</label>
             <input type="number" id="number_of_sheets" v-model="formData.number_of_sheets" required min="1" max="5"
-              class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12">
+            class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
             <p v-if="errors.number_of_sheets" class="text-red-500 text-xs italic">{{ errors.number_of_sheets }}</p>
           </div>
         </div>
@@ -87,25 +87,16 @@
         <div>
           <label for="comments" class="block text-sm font-medium text-gray-700">Comentarios Adicionales</label>
           <textarea id="comments" v-model="formData.comments" rows="3"
-            class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none"></textarea>
+          class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none p-1.5"></textarea>
         </div>
 
         <!-- Botones: Validar Datos y Calcular Precio -->
-        <div class="flex justify-between items-center mt-6">
+        <div class="flex justify-center items-center mt-6">
           <button type="button" @click="handleSubmit"
             class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
             Validar Datos
           </button>
           <div class="flex items-center space-x-2">
-            <button type="button" @click="handleCalculatePrice"
-              class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-              Calcular Precio
-            </button>
-            <div class="flex items-center">
-              <span class="mr-1">S/</span>
-              <input type="number" v-model="price" placeholder="Precio en soles" readonly
-                class="w-32 focus:ring-amber-500 focus:border-amber-500 block shadow-sm sm:text-sm border-gray-300 rounded-md h-12">
-            </div>
           </div>
         </div>
       </form>
@@ -167,12 +158,11 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 import Header from "@/components/HeaderCompo.vue";
 import Footer from "@/components/FooterCompo.vue";
 import { useRouter } from 'vue-router';
-
 
 export default {
   components: {
@@ -181,12 +171,21 @@ export default {
   },
   setup() {
     const router = useRouter();
+    
+    // Verificar si el token está presente
+    onMounted(() => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/registro'); // Redirige si no hay token
+      }
+    });
+
     const formData = reactive({
       woodType: '',
-      varnished: '', // 'Si' o 'No'
+      varnished: '',
       length: '',
       width: '',
-      exterior: '', // 'Si' o 'No'
+      exterior: '',
       number_of_sheets: '',
       comments: '',
     });
@@ -205,9 +204,8 @@ export default {
 
     const validateForm = () => {
       let isValid = true;
-      // Reset errors
       Object.keys(errors).forEach(key => errors[key] = '');
-
+      
       if (!formData.woodType) {
         errors.woodType = 'El tipo de madera es obligatorio.';
         isValid = false;
@@ -236,65 +234,68 @@ export default {
       return isValid;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       if (validateForm()) {
-        showValidatedWindow.value = true;
+        try {
+          // Calcular el precio antes de mostrar la ventana modal
+          await handleCalculatePrice();
+          showValidatedWindow.value = true;
+        } catch (error) {
+          console.error('Error al calcular el precio:', error);
+          alert('Hubo un error al calcular el precio. Por favor, verifica los datos.');
+        }
       }
-    };
-
-    const getToken = () => {
-      return localStorage.getItem('token');
     };
 
     const createProduct = async () => {
       try {
-      const token = getToken();
-      if (!token) {
-        alert('No se encontró un token de autenticación.');
-        return;
-      }
+        const token = localStorage.getItem('token');
+        if (!token) {
+          alert('No se encontró un token de autenticación.');
+          return;
+        }
 
-      if (!price.value || price.value <= 0) {
-        alert('El precio debe ser mayor que cero y debe estar definido.');
-        return;
-      }
+        if (!price.value || price.value <= 0) {
+          alert('El precio debe ser mayor que cero y debe estar definido.');
+          return;
+        }
 
-      const payload = {
-        wood_type: formData.woodType,
-        is_varnished: formData.varnished === 'Si',
-        length: parseFloat(formData.length),
-        width: parseFloat(formData.width),
-        is_exterior: formData.exterior === 'Si',
-        number_of_sheets: parseInt(formData.number_of_sheets),
-        cost_price: parseFloat(price.value),
-      };
+        const payload = {
+          wood_type: formData.woodType,
+          is_varnished: formData.varnished === 'Si',
+          length: parseFloat(formData.length),
+          width: parseFloat(formData.width),
+          is_exterior: formData.exterior === 'Si',
+          number_of_sheets: parseInt(formData.number_of_sheets),
+          cost_price: parseFloat(price.value),
+        };
 
-      const config = {
-        headers: {
-        Authorization: `Bearer ${token}`,
-        },
-      };
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-      const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
+        const response = await axios.post('http://localhost:8000/api/products/product-door-create/', payload, config);
 
-      if (response.status === 201) {
-        console.log('Respuesta del servidor:', response.data.product_id);
-        localStorage.setItem('product_id', response.data.product_id); // Changed to door_product_id
-        alert('Producto creado exitosamente');
-        showValidatedWindow.value = false;
-        router.push('/delivery');
-      } else {
+        if (response.status === 201) {
+          console.log('Respuesta del servidor:', response.data.product_id);
+          localStorage.setItem('product_id', response.data.product_id);
+          alert('Producto creado exitosamente');
+          showValidatedWindow.value = false;
+          router.push('/delivery');
+        } else {
+          alert('Hubo un error al crear el producto.');
+        }
+      } catch (error) {
+        console.error('Error al crear el producto:', error);
         alert('Hubo un error al crear el producto.');
       }
-      } catch (error) {
-      console.error('Error al crear el producto:', error);
-      alert('Hubo un error al crear el producto.');
-      }
-        };
+    };
 
     const handleCalculatePrice = async () => {
       try {
-        const token = getToken();
+        const token = localStorage.getItem('token');
         if (!token) {
           alert('No se encontró un token de autenticación. Por favor, inicia sesión.');
           return;
@@ -324,7 +325,7 @@ export default {
         price.value = response.data.cost_price.toFixed(2);
       } catch (error) {
         console.error('Error al calcular el precio:', error);
-        alert('Hubo un error al calcular el precio. Por favor, verifica los datos.');
+        throw error; // Re-lanzar el error para manejarlo en handleSubmit
       }
     };
 
@@ -337,11 +338,9 @@ export default {
       createProduct,
       handleSubmit,
     };
-    
   },
 };
 </script>
-
 <style scoped>
 .footer {
   position: relative;
