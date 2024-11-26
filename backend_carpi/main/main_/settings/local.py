@@ -8,13 +8,15 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'carpi',
+        'USER': 'root',
+        'PASSWORD': '14CEB00F',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
+
 }
-<<<<<<< HEAD
-'''
-=======
 
 
 '''
@@ -54,7 +56,6 @@ DATABASES = {
 
 
 
->>>>>>> dcc7d2ffe5cc2e644530933461553bda1a3357f5
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -77,14 +78,10 @@ DATABASES = {
     }
 
 }
-<<<<<<< HEAD
-'''
-=======
 
 '''
 
 AUTH_USER_MODEL = 'users.CustomUser'
->>>>>>> dcc7d2ffe5cc2e644530933461553bda1a3357f5
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'

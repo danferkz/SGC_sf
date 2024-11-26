@@ -1,59 +1,67 @@
 <template>
-    <div class="bg-[#FFFBEB] min-h-screen flex items-center justify-center">
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center lg:text-left lg:w-1/2">
-                <h1 class="text-5xl font-bold text-[#000000]">Registro</h1>
-            </div>
-            <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
-                <form @submit.prevent="handleRegistration" class="card-body">
-                    <div class="form-control">
-                        <label for="username" class="label">
-                            <span class="label-text text-[#000000]">Nombre de usuario</span>
-                        </label>
-                        <input id="username" v-model="username" type="text" placeholder="Nombre de usuario"
-                            class="input input-bordered" required />
-                    </div>
-                    <div class="form-control">
-                        <label for="email" class="label">
-                            <span class="label-text text-[#000000]">Correo electrónico</span>
-                        </label>
-                        <input id="email" v-model="email" type="email" placeholder="Correo electrónico"
-                            class="input input-bordered" required />
-                    </div>
-                    <div class="form-control">
-                        <label for="password" class="label">
-                            <span class="label-text text-[#000000]">Contraseña</span>
-                        </label>
-                        <input id="password" v-model="password" type="password" placeholder="Contraseña"
-                            class="input input-bordered" required />
-                    </div>
-                    <div class="form-control">
-                        <label for="confirm-password" class="label">
-                            <span class="label-text text-[#000000]">Confirmar contraseña</span>
-                        </label>
-                        <input id="confirm-password" v-model="confirmPassword" type="password"
-                            placeholder="Confirmar contraseña" class="input input-bordered" required />
-                    </div>
-                    <!-- Checkbox de Términos y Condiciones -->
-                    <div class="form-control">
-                        <label class="cursor-pointer flex items-center space-x-2">
-                            <input type="checkbox" v-model="termsAccepted" class="checkbox checkbox-bordered" required />
-                            <span class="label-text text-[#000000]">Acepto los <RouterLink to="/terms" class="text-[#D97706]">Términos y Condiciones</RouterLink></span>
-                        </label>
-                    </div>
-                    <div class="form-control mt-6">
-                        <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white" :disabled="!termsAccepted">
-                            Registrarse
-                        </button>
-                    </div>
-                    <div v-if="errorMessage" class="error-message text-red-500 mt-2">
-                        {{ errorMessage }}
-                    </div>
-                    <div class="text-center mt-4">
-                        <span class="text-[#000000]">¿Ya tienes una cuenta?</span>
-                        <RouterLink to="/login" class="text-[#D97706]">Iniciar sesión</RouterLink>
-                    </div>
-                </form>
+    <div class="min-h-screen bg-gray-100 text-gray-800">
+        <!-- Header General -->
+        <HeaderCompo />
+        <div class="bg-[#FFFBEB] min-h-screen flex items-center justify-center">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <div class="text-center lg:text-left lg:w-1/2">
+                    <h1 class="text-5xl font-bold text-[#000000]">Registro</h1>
+                </div>
+                <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
+                    <form @submit.prevent="handleRegistration" class="card-body">
+                        <div class="form-control">
+                            <label for="username" class="label">
+                                <span class="label-text text-[#000000]">Nombre de usuario</span>
+                            </label>
+                            <input id="username" v-model="username" type="text" placeholder="Nombre de usuario"
+                                class="input input-bordered" required 
+                                @input="username = username.replace(/\s/g, '')"
+                                pattern="^\S*$" title="El nombre de usuario no debe contener espacios" />
+                        </div>
+                        <div class="form-control">
+                            <label for="email" class="label">
+                                <span class="label-text text-[#000000]">Correo electrónico</span>
+                            </label>
+                            <input id="email" v-model="email" type="email" placeholder="Correo electrónico"
+                                class="input input-bordered" required 
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                title="Por favor ingrese un correo electrónico válido" />
+                        </div>
+                        <div class="form-control">
+                            <label for="password" class="label">
+                                <span class="label-text text-[#000000]">Contraseña</span>
+                            </label>
+                            <input id="password" v-model="password" type="password" placeholder="Contraseña"
+                                class="input input-bordered" required />
+                        </div>
+                        <div class="form-control">
+                            <label for="confirm-password" class="label">
+                                <span class="label-text text-[#000000]">Confirmar contraseña</span>
+                            </label>
+                            <input id="confirm-password" v-model="confirmPassword" type="password"
+                                placeholder="Confirmar contraseña" class="input input-bordered" required />
+                        </div>
+                        <!-- Checkbox de Términos y Condiciones -->
+                        <div class="form-control">
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="checkbox" v-model="termsAccepted" class="checkbox checkbox-bordered" required />
+                                <span class="label-text text-[#000000]">Acepto los <RouterLink to="/terms" class="text-[#D97706]">Términos y Condiciones</RouterLink></span>
+                            </label>
+                        </div>
+                        <div class="form-control mt-6">
+                            <button type="submit" class="btn bg-[#D97706] hover:bg-[#B45309] text-white" :disabled="!termsAccepted">
+                                Registrarse
+                            </button>
+                        </div>
+                        <div v-if="errorMessage" class="error-message text-red-500 mt-2">
+                            {{ errorMessage }}
+                        </div>
+                        <div class="text-center mt-4">
+                            <span class="text-[#000000]">¿Ya tienes una cuenta?</span>
+                            <RouterLink to="/login" class="text-[#D97706]">Iniciar sesión</RouterLink>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -63,8 +71,12 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios'; // Importa Axios aquí
+import HeaderCompo from '@/components/HeaderCompo.vue'; // Asegúrate de que la ruta sea correcta
 
 export default {
+    components: {
+        HeaderCompo, // Registra el componente HeaderCompo
+    },
     setup() {
         const router = useRouter();
 
@@ -98,7 +110,7 @@ export default {
                 const response = await axios.post('http://localhost:8000/api/users/clients/create/', formData);
 
                 // Manejar la respuesta en caso de éxito
-                console.log('User registered:', response.data);
+                console.log('User  registered:', response.data);
 
                 // Redirigir a la vista de login
                 router.push('/login');

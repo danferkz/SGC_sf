@@ -8,7 +8,7 @@ class Delivery(models.Model):
     door_window = models.OneToOneField(DoorWindow, null=True, blank=True, on_delete=models.CASCADE, related_name='delivery')
     furniture = models.OneToOneField(Furniture, null=True, blank=True, on_delete=models.CASCADE, related_name='delivery')
     
-    delivery_date = models.DateField(verbose_name='Fecha de Entrega')
+    delivery_date = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
     delivery_notes = models.TextField(blank=True, verbose_name='Notas de Entrega')
     signature_received = models.BooleanField(default=False, verbose_name='Firma Recibida')
     delivery_option = models.BooleanField(default=False, verbose_name='Opción de Entrega')

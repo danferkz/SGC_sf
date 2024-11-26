@@ -6,7 +6,7 @@ from users.models import CustomUser
 from employees.models import Employee
 
 class OrderSerializer(serializers.ModelSerializer):
-    client_detail = serializers.SerializerMethodField()  # Cambiado de user_detail a client_detail
+    client_detail = serializers.SerializerMethodField()
     employee_detail = serializers.SerializerMethodField()
     delivery_detail = serializers.SerializerMethodField()
 
@@ -14,23 +14,21 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'orders_id',
-            'client',               # Campo de cliente en lugar de user
-            'client_detail',        # Detalles del cliente
+            'client',               
+            'client_detail',        
             'delivery',
-            'delivery_detail',      # Detalles de la entrega
+            'delivery_detail',     
             'employee',
-            'employee_detail',      # Detalles del empleado
+            'employee_detail',     
             'status',
             'promised_date',
-            'total_price'
+            'total_price',
+            'created_at',  # Añadido el campo created_at
         ]
-        read_only_fields = ['orders_id', 'total_price']
+        read_only_fields = ['orders_id', 'total_price', 'created_at']  # Este campo es solo lectura
 
     def get_client_detail(self, obj):
-        """
-        Obtiene los detalles del cliente (CustomUser) que realiza la orden.
-        """
-        client = obj.client  # Aquí usamos client, no user
+        client = obj.client
         return {
             "id": client.id,
             "username": client.username,
@@ -38,24 +36,28 @@ class OrderSerializer(serializers.ModelSerializer):
         }
 
     def get_employee_detail(self, obj):
-        """
-        Obtiene los detalles del empleado asignado a la orden.
-        """
         employee = obj.employee
-        return {
-            "employee_id": employee.employee_id,
-            "specialty": employee.specialty,
-        }
+        if employee is not None:
+            return {
+                "employee_id": employee.employee_id,
+                "specialty": employee.specialty,
+            }
+        return None
 
     def get_delivery_detail(self, obj):
-        """
-        Obtiene los detalles de la entrega asociada a la orden.
-        """
         delivery = obj.delivery
         return {
             "delivery_id": delivery.delivery_id,
             "delivery_option": delivery.delivery_option,
             "delivery_date": delivery.delivery_date,
             "additional_cost": delivery.additional_cost,
-            # Incluye otros campos de Delivery según sea necesario
         }
+
+class OrderupdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [
+            'orders_id',# Detalles del empleado
+            'status',
+        ]
+        read_only_fields = ['orders_id', 'total_price']

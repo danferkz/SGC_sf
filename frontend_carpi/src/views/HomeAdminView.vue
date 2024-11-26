@@ -27,7 +27,7 @@
             <p>Gestiona tus pedidos</p>
           </router-link>
           <!-- Gestión de Administradores -->
-          <router-link to="/admindashboard"
+          <router-link to="/gestionadmin"
             class="card">
             <div class="image-container" style="background-color: #FFFBEB;">
               <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />
@@ -43,6 +43,15 @@
             </div>
             <h4 class="text-xl font-semibold mb-2">PRESUPUESTOS</h4>
             <p>Gestiona los presupuestos</p>
+          </router-link>
+          <!-- Gestión de Empleados -->
+          <router-link to="/gestionempleados"
+            class="card">
+            <div class="image-container" style="background-color: #FFFBEB;">
+              <img src="../assets/gestionempleados_icon.png" alt="Presupuestos" class="dashboard-image" />
+            </div>
+            <h4 class="text-xl font-semibold mb-2">EMPLEADOS</h4>
+            <p>Gestiona los empleados</p>
           </router-link>
         </div>
       </div>
@@ -67,13 +76,7 @@ import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   height: 100vh; /* Asegura que el header ocupe toda la altura */
 }
-/* Sección del dashboard */
-#dashboard {
-  padding: 20px;
-  background-color: #FFFFFF;
-  flex: 1;
-  margin-left: 120px; /* Se agrega separación de 120px entre el header y el contenido */
-}
+
 /* Contenedor de imagen */
 .image-container {
   width: 100%;
@@ -93,9 +96,7 @@ import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
   border-radius: 0.5rem;
 }
 /* Alineación del contenido */
-.container {
-  padding: 20px;
-}
+
 /* Estilos de las tarjetas */
 .card {
   background-color: #FFFBEB;

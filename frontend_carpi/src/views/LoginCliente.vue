@@ -1,7 +1,10 @@
 <template>
-    <div class="hero bg-[#FFFBEB] min-h-screen">
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center lg:text-left lg:w-1/2">
+    <div class="min-h-screen bg-gray-100 text-gray-800">
+        <!-- Header General -->
+        <HeaderCompo />
+        <div class="bg-[#FFFBEB] min-h-screen flex items-center justify-center">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <div class="text-center lg:text-left lg:w-1/2">
                 <h1 class="text-5xl font-bold text-[#000000]">Login</h1>
             </div>
             <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
@@ -16,7 +19,10 @@
                             type="text" 
                             placeholder="Username"
                             class="input input-bordered" 
-                            required 
+                            required
+                            minlength="3"
+                            maxlength="50"
+                            pattern="[a-zA-Z0-9_-]+"
                         />
                     </div>
                     <div class="form-control">
@@ -54,6 +60,7 @@
                     </div>
                 </form>
             </div>
+            </div>
         </div>
     </div>
 </template>
@@ -62,6 +69,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import HeaderCompo from '@/components/HeaderCompo.vue'; // Importa el componente HeaderCompo
 
 const router = useRouter();
 
@@ -90,3 +98,7 @@ const handleLogin = async () => {
     }
 };
 </script>
+
+<style scoped>
+/* Aquí puedes agregar estilos específicos para este componente si es necesario */
+</style>
