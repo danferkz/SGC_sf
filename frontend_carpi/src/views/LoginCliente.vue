@@ -5,13 +5,13 @@
         <div class="bg-[#FFFBEB] min-h-screen flex items-center justify-center">
             <div class="hero-content flex-col lg:flex-row-reverse">
                 <div class="text-center lg:text-left lg:w-1/2">
-                <h1 class="text-5xl font-bold text-[#000000]">Iniciar Sesión</h1>
+                <h1 class="text-5xl font-bold text-[#000000]">Autenticar</h1>
             </div>
             <div class="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
                 <form @submit.prevent="handleLogin" class="card-body">
                     <div class="form-control">
                         <label for="username" class="label">
-                            <span class="label-text text-[#000000]">Usuario</span>
+                            <span class="label-text text-[#000000]">Username</span>
                         </label>
                         <input 
                             id="username" 
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-control">
                         <label for="password" class="label">
-                            <span class="label-text text-[#000000]">Contraseña</span>
+                            <span class="label-text text-[#000000]">Password</span>
                         </label>
                         <input 
                             id="password" 
@@ -46,7 +46,7 @@
                             type="submit" 
                             class="btn bg-[#D97706] hover:bg-[#B45309] text-white"
                         >
-                            Iniciar sesión
+                            Login
                         </button>
                     </div>
                     <div class="text-center mt-4">

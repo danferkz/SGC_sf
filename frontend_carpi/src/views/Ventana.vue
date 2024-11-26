@@ -205,6 +205,7 @@ export default {
     const validateForm = () => {
       let isValid = true;
       Object.keys(errors).forEach(key => errors[key] = '');
+      
       if (!formData.woodType) {
         errors.woodType = 'El tipo de madera es obligatorio.';
         isValid = false;
@@ -235,7 +236,6 @@ export default {
 
     const handleSubmit = async () => {
       if (validateForm()) {
-
         try {
           // Calcular el precio antes de mostrar la ventana modal
           await handleCalculatePrice();

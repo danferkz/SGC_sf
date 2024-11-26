@@ -101,7 +101,7 @@
                   clip-rule="evenodd" />
               </svg>
             </div>
-            <div class="timeline-end mb-10 md:text-start">
+            <div class="timeline-end mb-10">
               <time class="font-mono italic">2</time>
               <div class="text-lg font-black">Diseño</div>
               Creamos un diseño personalizado según tus necesidades
@@ -133,7 +133,7 @@
                   clip-rule="evenodd" />
               </svg>
             </div>
-            <div class="timeline-end mb-10 md:text-start">
+            <div class="timeline-end mb-10">
               <time class="font-mono italic">4</time>
               <div class="text-lg font-black">Entrega</div>
               Entregamos tu pedido, con opción a domicilio

@@ -11,7 +11,7 @@
         <div class="bg-gray-100 flex justify-center">
           <div class="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-7xl">
             <!-- Filtros y búsqueda -->
-            <div class="p-4 border-b border-gray-40 flex flex-wrap items-center justify-between gap-4">
+            <div class="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
               <!-- Filtro por estado -->
               <div class="flex items-center space-x-2">
                 <label for="estado" class="text-sm font-medium text-gray-600">Estado:</label>
