@@ -14,7 +14,6 @@ DATABASES = {
 }
 
 
-
 '''
 import logging
 
