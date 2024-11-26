@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
-    <!-- Componente Header añadido aquí -->
-    <Header />
+    <!-- Header with margin-bottom for spacing -->
+    <Header class="mb-16" /> <!-- Added mb-16 to create space below the header -->
 
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
-      <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Ventana Personalizada</h2>
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Puerta Personalizada</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Tipo de Madera -->
@@ -96,8 +96,6 @@
             class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
             Validar Datos
           </button>
-          <div class="flex items-center space-x-2">
-          </div>
         </div>
       </form>
 
@@ -124,36 +122,31 @@
           </div>
         </div>
       </div>
+
       <section id="productos" class="py-16 px-6 bg-white">
         <div class="container mx-auto">
-          
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Producto 1: Puertas -->
             <router-link to="/puerta" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
-              
               <h4 class="text-xl font-semibold mb-2">Puertas</h4>
-            
             </router-link>
 
             <!-- Producto 2: Ventanas -->
             <router-link to="/ventana" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
-              
               <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
-              
             </router-link>
 
             <!-- Producto 3: Muebles -->
             <router-link to="/mueble" class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
-              
               <h4 class="text-xl font-semibold mb-2">Muebles</h4>
-              
             </router-link>
           </div>
         </div>
       </section>
     </div>
-    <!-- Footer -->
-    <Footer class="footer" />
+
+    <!-- Footer with margin-top for spacing -->
+    <Footer class="footer mt-28" /> <!-- Added mt-16 to create space above the footer -->
   </div>
 </template>
 
@@ -341,12 +334,3 @@ export default {
   },
 };
 </script>
-
-
-<style scoped>
-.footer {
-  position: relative;
-  width: 100%;
-  margin-top: auto;
-}
-</style>

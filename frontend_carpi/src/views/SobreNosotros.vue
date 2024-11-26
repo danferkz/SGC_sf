@@ -1,17 +1,17 @@
 <template>
-    <div class="sobre-nosotros">
+    <div class="font-sans text-brown-800 bg-orange-50">
         <!-- Header Componente -->
-        <Header />
+        <Header class="mb-6" />
 
-        <main class="content">
-            <section class="info-section">
-                <h2>Sobre Nosotros</h2>
-                <p>
+        <main class="max-w-7xl mx-auto p-16">
+            <section class="bg-yellow-200 p-12 rounded-lg mb-16">
+                <h2 class="text-orange-600 text-4xl mb-6">Sobre Nosotros</h2>
+                <p class="text-lg mb-4 leading-relaxed">
                     En Maderera el bosque, nos apasiona trabajar con la madera y crear piezas únicas que
                     combinen belleza y funcionalidad. Con más de 20 años de experiencia, nos hemos
                     convertido en expertos en el arte de la carpintería.
                 </p>
-                <p>
+                <p class="text-lg leading-relaxed">
                     Nuestro equipo de artesanos altamente calificados se dedica a producir muebles de
                     alta calidad, puertas, ventanas y todo tipo de trabajos en madera, siempre
                     respetando el medio ambiente y utilizando materiales sostenibles.
@@ -19,21 +19,34 @@
             </section>
 
             <!-- Galería de imágenes -->
-            <h2>Galería de Imágenes</h2>
-            <section class="image-gallery">
-
-                <div v-for="(image, index) in images" :key="index" class="image-container">
-                    <img :src="image.src" :alt="image.alt" />
+            <h2 class="text-orange-600 text-4xl mb-8">Galería de Imágenes</h2>
+            <section class="flex flex-wrap justify-between gap-8 mb-12">
+                <div v-for="(image, index) in images" :key="index" class="w-full md:w-[45%] lg:w-[30%]">
+                    <div class="overflow-hidden rounded-lg shadow transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                        <img :src="image.src" :alt="image.alt" class="w-full h-96 object-cover" />
+                    </div>
                 </div>
             </section>
 
-            <section class="services">
-                <h3>Nuestros Servicios</h3>
-                <ul>
-                    <li>Diseño y fabricación de muebles a medida</li>
-                    <li>Restauración de muebles antiguos</li>
-                    <li>Carpintería para interiores y exteriores</li>
-                    <li>Asesoramiento personalizado</li>
+            <section class="bg-orange-200 p-8 rounded-lg">
+                <h3 class="text-orange-600">Nuestros Servicios</h3>
+                <ul class="list-none pl-0">
+                    <li class="mb-2 pl-6 relative">
+                        Diseño y fabricación de muebles a medida
+                        <span class="absolute left-0">🌳</span>
+                    </li>
+                    <li class="mb-2 pl-6 relative">
+                        Restauración de muebles antiguos
+                        <span class="absolute left-0">🌳</span>
+                    </li>
+                    <li class="mb-2 pl-6 relative">
+                        Carpintería para interiores y exteriores
+                        <span class="absolute left-0">🌳</span>
+                    </li>
+                    <li class="mb-2 pl-6 relative">
+                        Asesoramiento personalizado
+                        <span class="absolute left-0">🌳</span>
+                    </li>
                 </ul>
             </section>
         </main>
@@ -59,86 +72,5 @@ const images = ref([
 </script>
 
 <style scoped>
-.sobre-nosotros {
-    font-family: 'Arial', sans-serif;
-    color: #5D4037;
-    background-color: #FFF3E0;
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-h2,
-h3 {
-    color: #E65100;
-}
-
-.info-section {
-    background-color: #FFECB3;
-    padding: 2rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-}
-
-.image-gallery {
-    display: flex;
-    justify-content: space-between;
-    /* flex-wrap: wrap;*/
-    margin-bottom: 2rem;
-}
-
-.image-container {
-    width: 32%;
-    /* Asegura que tres imágenes quepan en una fila */
-    margin: 10px;
-    /* Agrega un margen de 10px entre las imágenes */
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.image-container:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-}
-
-.services {
-    background-color: #FFE0B2;
-    padding: 2rem;
-    border-radius: 8px;
-}
-
-ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-li {
-    margin-bottom: 0.5rem;
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-li::before {
-    content: '🌳';
-    position: absolute;
-    left: 0;
-}
-
-@media (max-width: 768px) {
-    .image-container {
-        width: 100%;
-    }
-}
+/* Puedes eliminar el estilo CSS existente, ya que ahora estamos usando Tailwind CSS */
 </style>

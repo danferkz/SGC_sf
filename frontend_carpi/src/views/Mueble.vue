@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
-    <Header />
+    <Header class="mb-16" />
 
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Diseña tu Mueble Personalizado</h2>
@@ -146,7 +146,7 @@
         </div>
       </section>
     </div>
-    <Footer class="footer" />
+    <Footer class="footer mt-28" /> 
   </div>
 </template>
 <script>
@@ -328,12 +328,3 @@ export default {
   },
 };
 </script>
-
-
-<style scoped>
-.footer {
-  position: relative;
-  width: 100%;
-  margin-top: auto;
-}
-</style>

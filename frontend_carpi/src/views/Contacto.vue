@@ -1,29 +1,31 @@
 <template>
-    <div class="contacto">
-        <Header />
+    <div class="font-sans text-brown-700 bg-orange-50">
+        <!-- Header with margin-bottom for spacing -->
+        <Header class="mb-16" />
 
-        <main class="content">
-            <h2>Contacto</h2>
+        <!-- Main content with increased padding for vertical spacing -->
+        <main class="max-w-7xl mx-auto py-32 px-12">
+            <h2 class="text-orange-800 text-3xl text-center mb-8">Contacto</h2>
 
-            <div class="contacto-container">
-                <section class="formulario-contacto">
-                    <h3>Envíanos un mensaje</h3>
-                    <form @submit.prevent="enviarFormulario">
-                        <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" v-model="formData.nombre" required>
+            <div class="flex flex-wrap gap-8 justify-between">
+                <section class="flex-1 min-w-[300px]">
+                    <h3 class="text-orange-800 text-2xl text-center mb-6">Envíanos un mensaje</h3>
+                    <form @submit.prevent="enviarFormulario" class="space-y-4">
+                        <div>
+                            <label for="nombre" class="block font-bold mb-2">Nombre:</label>
+                            <input type="text" id="nombre" v-model="formData.nombre" required class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" v-model="formData.email" required>
+                        <div>
+                            <label for="email" class="block font-bold mb-2">Email:</label>
+                            <input type="email" id="email" v-model="formData.email" required class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
                         </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono" v-model="formData.telefono">
+                        <div>
+                            <label for="telefono" class="block font-bold mb-2">Teléfono:</label>
+                            <input type="tel" id="telefono" v-model="formData.telefono" class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
                         </div>
-                        <div class="form-group">
-                            <label for="asunto">Asunto:</label>
-                            <select id="asunto" v-model="formData.asunto" required>
+                        <div>
+                            <label for="asunto" class="block font-bold mb-2">Asunto:</label>
+                            <select id="asunto" v-model="formData.asunto" required class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md h-12 p-1.5">
                                 <option value="">Seleccione un asunto</option>
                                 <option value="consulta">Consulta general</option>
                                 <option value="presupuesto">Solicitud de presupuesto</option>
@@ -31,41 +33,44 @@
                                 <option value="otro">Otro</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="mensaje">Mensaje:</label>
-                            <textarea id="mensaje" v-model="formData.mensaje" required></textarea>
+                        <div>
+                            <label for="mensaje" class="block font-bold mb-2">Mensaje:</label>
+                            <textarea id="mensaje" v-model="formData.mensaje" required class="mt-1 block w-full shadow-sm sm:text-sm border border-gray-300 focus:ring-amber-500 focus:border-amber-500 rounded-md resize-none p-1.5"></textarea>
                         </div>
-                        <button type="submit" class="boton-enviar">Enviar mensaje</button>
+                        <button type="submit" class="bg-orange-600 text-orange-50 rounded px-4 py-2 text-lg hover:bg-orange-700 transition duration-300">Enviar mensaje</button>
                     </form>
                 </section>
 
-                <section class="info-contacto">
-                    <h3>Información de contacto</h3>
-                    <div class="info-item">
-                        <strong>Dirección:</strong>
-                        <p>Av. de los Árboles 123, Ciudad Bosque, CP 12345</p>
+                <section class="flex-1 min-w-[300px]">
+                    <h3 class="text-orange-800 text-2xl text-center mb-6">Información de contacto</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <strong>Dirección:</strong>
+                            <p>Av. de los Árboles 123, Ciudad Bosque, CP 12345</p>
+                        </div>
+                        <div>
+                            <strong>Teléfono:</strong>
+                            <p>+1 (234) 567-8900</p>
+                        </div>
+                        <div>
+                            <strong>Email:</strong>
+                            <p>info@madereraelbosque.com</p>
+                        </div>
+                        <div>
+                            <strong>Horario de atención:</strong>
+                            <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                            <p>Sábados: 10:00 AM - 2:00 PM</p>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <strong>Teléfono:</strong>
-                        <p>+1 (234) 567-8900</p>
-                    </div>
-                    <div class="info-item">
-                        <strong>Email:</strong>
-                        <p>info@madereraelbosque.com</p>
-                    </div>
-                    <div class="info-item">
-                        <strong>Horario de atención:</strong>
-                        <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                        <p>Sábados: 10:00 AM - 2:00 PM</p>
-                    </div>
-
                 </section>
             </div>
         </main>
-        <!-- Footer -->
-        <Footer class="footer" />
+
+        <!-- Footer with margin-top for spacing -->
+        <Footer class="mt-28" />
     </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
@@ -96,102 +101,5 @@ const enviarFormulario = () => {
 </script>
 
 <style scoped>
-.contacto {
-    font-family: 'Arial', sans-serif;
-    color: #5D4037;
-    background-color: #FFF3E0;
-}
-
-
-
-h1 {
-    color: #FFF3E0;
-    font-size: 2.5rem;
-    margin: 0;
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-h2,
-h3 {
-    color: #E65100;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.contacto-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: space-between;
-}
-
-.formulario-contacto,
-.info-contacto {
-    flex: 1;
-    min-width: 300px;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #FFE0B2;
-    border-radius: 4px;
-    background-color: #FFF3E0;
-}
-
-textarea {
-    height: 150px;
-}
-
-.boton-enviar {
-    background-color: #FF9800;
-    color: #FFF3E0;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.boton-enviar:hover {
-    background-color: #E65100;
-}
-
-.info-item {
-    margin-bottom: 1rem;
-}
-
-.mapa {
-    margin-top: 2rem;
-}
-
-.mapa-imagen {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-@media (max-width: 768px) {
-    .contacto-container {
-        flex-direction: column;
-    }
-}
+/* No se requieren estilos adicionales ya que Tailwind CSS maneja el diseño */
 </style>

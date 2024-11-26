@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-100 text-gray-800">
-    <!-- Header -->
-    <Header />
+    <!-- Header with margin-bottom for spacing -->
+    <Header class="mb-16" />
 
-    <!-- Productos Section -->
-    <section id="productos" class="py-16 px-6 bg-white">
+    <!-- Productos Section with increased vertical padding -->
+    <section id="productos" class="py-32 px-6 bg-white"> <!-- Changed py-16 to py-32 -->
       <div class="container mx-auto">
         <h3 class="text-3xl font-bold text-center mb-12">Nuestros Productos</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -12,7 +12,6 @@
           <router-link to="/puerta"
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
-              <!-- Imagen de Puertas -->
               <img src="../assets/puerta (1).png" alt="Puertas" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Puertas</h4>
@@ -23,7 +22,6 @@
           <router-link to="/ventana"
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
-              <!-- Imagen de Ventanas -->
               <img src="../assets/ventana (1).png" alt="Ventanas" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Ventanas</h4>
@@ -34,7 +32,6 @@
           <router-link to="/mueble"
             class="bg-amber-50 p-6 rounded-lg shadow-md text-center hover:bg-amber-100 transition">
             <div class="image-container">
-              <!-- Imagen de Muebles -->
               <img src="../assets/muebles (1).png" alt="Muebles" class="product-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">Muebles</h4>
@@ -43,10 +40,12 @@
         </div>
       </div>
     </section>
-    <!-- Footer -->
-    <Footer class="footer" />
+
+    <!-- Footer with margin-top for spacing -->
+    <Footer class="mt-40" /> <!-- Changed mt-80 to mt-40 for balanced spacing -->
   </div>
 </template>
+
 
 <script setup>
 import Header from '@/components/HeaderCompo.vue'
@@ -69,11 +68,5 @@ import Footer from '@/components/FooterCompo.vue'
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
-}
-
-.footer {
-  position: relative;
-  width: 100%;
-  margin-top: auto;
 }
 </style>

@@ -1,54 +1,59 @@
 <template>
     <HeaderCompo />
-    <div class="construccion">
+    <div class="font-sans text-brown-800 bg-orange-50">
         <header class="header">
         </header>
-        <main class="content">
+        <main class="max-w-7xl mx-auto p-12">
             <!-- SERVICIOS DE CONSTRUCCIÓN -->
-            <h2 class="subtitulo">Servicios de Construcción en Madera</h2>
-            <section class="servicios-construccion">
-                <div v-for="servicio in serviciosConstruccion" :key="servicio.id" class="servicio-card">
-                    <img :src="servicio.imagen" :alt="servicio.titulo" class="servicio-imagen">
-                    <div class="servicio-info">
-                        <h3>{{ servicio.titulo }}</h3>
-                        <p>{{ servicio.descripcion }}</p>
+            <h2 class="text-2xl font-bold text-orange-800 text-center mb-6">Servicios de Construcción en Madera</h2>
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div v-for="servicio in serviciosConstruccion" :key="servicio.id" class="bg-yellow-200 rounded-lg overflow-hidden shadow-lg transition-transform transform hover:-translate-y-1">
+                    <img :src="servicio.imagen" :alt="servicio.titulo" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">{{ servicio.titulo }}</h3>
+                        <p class="text-lg">{{ servicio.descripcion }}</p>
                     </div>
                 </div>
             </section>
 
             <!-- PROYECTOS DESTACADOS -->
-            <h2 class="subtitulo">Proyectos Destacados</h2>
-            <section class="proyectos-destacados">
-                <div class="proyectos-grid">
-                    <div v-for="proyecto in proyectosDestacados" :key="proyecto.id" class="proyecto-card">
-                        <img :src="proyecto.imagen" :alt="proyecto.titulo" class="proyecto-imagen">
-                        <div class="proyecto-info">
-                            <h4>{{ proyecto.titulo }}</h4>
-                            <p>{{ proyecto.descripcion }}</p>
-                        </div>
+            <h2 class="text-2xl font-bold text-orange-800 text-center mb-6">Proyectos Destacados</h2>
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div v-for="proyecto in proyectosDestacados" :key="proyecto.id" class="bg-orange-200 rounded-lg overflow-hidden shadow-md">
+                    <img :src="proyecto.imagen" :alt="proyecto.titulo" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold">{{ proyecto.titulo }}</h4>
+                        <p>{{ proyecto.descripcion }}</p>
                     </div>
                 </div>
             </section>
 
             <!-- PROCESO DE CONSTRUCCIÓN -->
-            <section class="proceso-construccion">
-                <h3>Nuestro Proceso de Construcción</h3>
-                <div class="proceso-timeline">
-                    <div v-for="(paso, index) in procesoConstruccion" :key="index" class="paso-construccion">
-                        <div class="paso-numero">{{ index + 1 }}</div>
-                        <div class="paso-contenido">
-                            <h4>{{ paso.titulo }}</h4>
-                            <p>{{ paso.descripcion }}</p>
+            <section class="mb-12">
+                <h3 class="text-xl font-bold mb-4">Nuestro Proceso de Construcción</h3>
+                <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+                    <li v-for="(paso, index) in procesoConstruccion" :key="index">
+                        <hr />
+                        <div class="timeline-middle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                            </svg>
                         </div>
-                    </div>
-                </div>
+                        <div class="timeline-start mb-10 md:text-end">
+                            <time class="font-mono italic">{{ paso.titulo }}</time>
+                            <div class="text-lg font-black">{{ paso.titulo }}</div>
+                            {{ paso.descripcion }}
+                        </div>
+                        <hr />
+                    </li>
+                </ul>
             </section>
 
             <!-- LLAMADO A LA ACCIÓN -->
-            <section class="cta-construccion">
-                <h3>¿Listo para comenzar tu proyecto?</h3>
+            <section class="bg-orange-200 rounded-lg p-8 text-center mt-12">
+                <h3 class="text-xl font-bold">¿Listo para comenzar tu proyecto?</h3>
                 <p>Nuestro equipo de expertos está listo para ayudarte a hacer realidad tu visión en madera.</p>
-                <a href="#" class="boton-cta">Solicitar Presupuesto</a>
+                <a href="#" class="inline-block bg-orange-600 text-white py-2 px-4 rounded mt-4 font-bold transition-colors duration-300 hover:bg-orange-700">Solicitar Presupuesto</ a>
             </section>
         </main>
 
@@ -56,8 +61,6 @@
         <Footer class="footer" />
     </div>
 </template>
-
-
 
 <script setup>
 import { ref } from 'vue';
@@ -69,6 +72,7 @@ import puertasegura from '@/assets/puertasegura.jpeg';
 import puertaconst from '@/assets/PuertasConstr.jpg';
 import catedral from '@/assets/Ventanacatedral.jpeg';
 import ventanaconst from '@/assets/Ventanacostr.jpeg';
+
 const serviciosConstruccion = ref([
     {
         id: 1,
@@ -144,227 +148,5 @@ const procesoConstruccion = ref([
 </script>
 
 <style scoped>
-.construccion {
-    font-family: 'Arial', sans-serif;
-    color: #5D4037;
-    background-color: #FFF3E0;
-}
-
-
-
-h1 {
-    color: #FFF3E0;
-    font-size: 2.5rem;
-    margin: 0;
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-h2,
-h3 {
-    color: #E65100;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.servicios-construccion {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.servicio-card {
-    background-color: #FFECB3;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.servicio-card:hover {
-    transform: translateY(-5px);
-}
-
-.servicio-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.servicio-info {
-    padding: 1rem;
-}
-
-.proyectos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.proyecto-card {
-    background-color: #FFE0B2;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.proyecto-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.proyecto-info {
-    padding: 1rem;
-}
-
-.proceso-construccion {
-    margin-bottom: 3rem;
-}
-
-.proceso-timeline {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 0;
-}
-
-/* TÍTULO PRINCIPAL */
-.header h1 {
-    font-size: 2.5rem;
-    text-align: center;
-    margin: 1rem 0;
-    color: #3c3c3c;
-}
-
-/* SUBTÍTULOS DESTACADOS */
-.subtitulo {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 2rem 0 1rem;
-    color: #2e2e2e;
-}
-
-/* SECCIONES GENERALES */
-.servicios-construccion,
-.proyectos-destacados {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin: 1rem auto;
-    padding: 0 2rem;
-}
-
-.servicio-card,
-.proyecto-card {
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: center;
-}
-
-.servicio-imagen,
-.proyecto-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.servicio-info,
-.proyecto-info {
-    padding: 1rem;
-}
-
-h3,
-h4 {
-    margin: 0.5rem 0;
-    font-weight: bold;
-}
-
-
-.proceso-timeline::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background-color: #FF9800;
-    transform: translateX(-50%);
-}
-
-.paso-construccion {
-    position: relative;
-    margin-bottom: 2rem;
-    padding-left: 3rem;
-}
-
-.paso-numero {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    background-color: #FF9800;
-    color: #FFF3E0;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
-.paso-contenido {
-    background-color: #FFECB3;
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.cta-construccion {
-    background-color: #FFE0B2;
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    margin-top: 3rem;
-}
-
-.boton-cta {
-    display: inline-block;
-    background-color: #FF9800;
-    color: #FFF3E0;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.boton-cta:hover {
-    background-color: #E65100;
-}
-
-
-
-@media (max-width: 768px) {
-    .proceso-timeline::before {
-        left: 20px;
-    }
-
-    .paso-construccion {
-        padding-left: 60px;
-    }
-
-    .paso-numero {
-        left: 0;
-    }
-}
+/* Aquí puedes agregar estilos adicionales si es necesario */
 </style>
