@@ -30,21 +30,20 @@
               </div>
 
               <!-- Búsqueda -->
-              <div class="flex-1 max-w-sm">
-                <label for="busqueda" class="sr-only">Buscar pedidos</label>
-                <div class="relative">
-                  <input
-                    type="text"
-                    id="busqueda"
-                    v-model="busqueda"
-                    placeholder="Buscar pedidos..."
-                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md"
-                  />
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <SearchIcon class="h-5 w-5 text-gray-400" />
+                <div class="flex-1 max-w-xs">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="busqueda"
+                      v-model="busqueda"
+                      placeholder="Buscar pedidos..."
+                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md h-10 p-1.5"
+                    />
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <SearchIcon class="h-5 w-5 text-gray-400" />
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
 
             <!-- Tabla de pedidos -->
@@ -53,11 +52,11 @@
                 <thead class="bg-gray-50">
                   <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Promised Date</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Price</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NOMBRE DE USUARIO</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ESTADO</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FECHA PROMETIDA</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRECIO TOTAL</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACCIONES</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

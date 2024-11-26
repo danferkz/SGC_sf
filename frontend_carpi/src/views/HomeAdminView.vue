@@ -6,12 +6,12 @@
     <!-- Dashboard Section -->
     <section id="dashboard" class="flex-1 py-16 px-6 bg-white">
       <div class="container mx-auto">
-        <h3 class="text-3xl font-bold text-center mb-12">Dashboard</h3>
+        <h3 class="text-3xl font-bold text-center mb-12">PANEL</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Gestión de Clientes -->
           <router-link to="/clientedashboard"
             class="card">
-            <div class="image-container" style="background-color: #FFFBEB;">
+            <div class="image-container" style="background-color: #DBEAFE;">
               <img src="../assets/gestioncliente_icon.png" alt="Clientes" class="dashboard-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">CLIENTES</h4>
@@ -20,7 +20,7 @@
           <!-- Gestión de Pedidos -->
           <router-link to="/gestionpedidos"
             class="card">
-            <div class="image-container" style="background-color: #FFFBEB;">
+            <div class="image-container" style="background-color: #DBEAFE;">
               <img src="../assets/gestionpedidos_icon.png" alt="Pedidos" class="dashboard-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">PEDIDOS</h4>
@@ -29,16 +29,16 @@
           <!-- Gestión de Administradores -->
           <router-link to="/gestionadmin"
             class="card">
-            <div class="image-container" style="background-color: #FFFBEB;">
+            <div class="image-container" style="background-color: #DBEAFE;">
               <img src="../assets/gestionadminstradores_icon.png" alt="Administradores" class="dashboard-image" />
             </div>
-            <h4 class="text-xl font-semibold mb-2">ADMINISTRACION</h4>
+            <h4 class="text-xl font-semibold mb-2">ADMINISTRACIÓN</h4>
             <p>Gestiona los administradores</p>
           </router-link>
           <!-- Gestión de Presupuestos -->
           <router-link to="/gestionpresupuesto"
             class="card">
-            <div class="image-container" style="background-color: #FFFBEB;">
+            <div class="image-container" style="background-color: #DBEAFE;">
               <img src="../assets/gestionpresupuesto_icon.png" alt="Presupuestos" class="dashboard-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">PRESUPUESTOS</h4>
@@ -47,7 +47,7 @@
           <!-- Gestión de Empleados -->
           <router-link to="/gestionempleados"
             class="card">
-            <div class="image-container" style="background-color: #FFFBEB;">
+            <div class="image-container" style="background-color: #DBEAFE;">
               <img src="../assets/gestionempleados_icon.png" alt="Presupuestos" class="dashboard-image" />
             </div>
             <h4 class="text-xl font-semibold mb-2">EMPLEADOS</h4>
@@ -99,14 +99,16 @@ import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
 
 /* Estilos de las tarjetas */
 .card {
-  background-color: #FFFBEB;
+  background-color: #DBEAFE;
   padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: background-color 0.3s;
+  color: #1E40AF; /* Añade esta línea para cambiar el color del texto */
 }
+
 .card:hover {
-  background-color: #FFECB3;
+  background-color: #8fbaf7;
 }
 </style>

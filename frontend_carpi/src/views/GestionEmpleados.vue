@@ -17,7 +17,7 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">nOMBRE DE EMPLEADO</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Contratación</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Especialidad</th>
                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
@@ -73,7 +73,7 @@
         <h2 class="text-lg font-semibold mb-4">Crear Staff</h2>
         <form @submit.prevent="crearStaff">
             <div class="mb-4">
-            <label class="block text-gray-700">Username</label>
+            <label class="block text-gray-700">NOMBRE DE EMPLEADO</label>
             <input 
               v-model="nuevoStaff.username" 
               type="text" 

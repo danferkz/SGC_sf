@@ -169,9 +169,9 @@ const formatearFecha = (fecha) => {
 
 // Formatear precio
 const formatearPrecio = (precio) => {
-    return new Intl.NumberFormat('es-ES', {
+    return new Intl.NumberFormat('es-PE', {
         style: 'currency',
-        currency: 'EUR'
+        currency: 'PEN'
     }).format(precio)
 }
 

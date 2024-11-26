@@ -6,7 +6,6 @@ import AdminView from '../views/LoginAdminView.vue';
 import LoginClient from '../views/LoginCliente.vue';
 import RegistrationView from '../views/RegistrationView.vue';
 import Vista from '../views/VistaView.vue';
-import EmployeeView from '../views/EmployeeView.vue';
 import InternView from '../views/InternView.vue';
 import HomeAdminView from '../views/HomeAdminView.vue';
 import Producto from '../views/Producto.vue';
@@ -51,11 +50,6 @@ const router = createRouter({
       path: '/vista',
       name: 'Vista',
       component: Vista
-    },
-    {
-      path: '/empleado',
-      name: 'Empleado',
-      component: EmployeeView
     },
     {
       path: '/interno',
