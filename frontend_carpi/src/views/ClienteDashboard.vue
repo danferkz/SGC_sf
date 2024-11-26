@@ -45,11 +45,8 @@
                     {{ cliente.address }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      @click="editarCliente(cliente)"
-                      class="text-indigo-600 hover:text-indigo-900 mr-2"
-                    >
-                      <PencilIcon class="h-5 w-5" />
+                    <button @click="verDetallesCliente(cliente)" class="text-indigo-600 hover:text-indigo-900">
+                      <EyeIcon class="h-5 w-5" />
                     </button>
                   </td>
                 </tr>
@@ -84,21 +81,39 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal de detalles del cliente -->
+    <div v-if="mostrarModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
+        <h2 class="text-2xl font-bold mb-4">Detalles del Cliente</h2>
+        <p><strong>Nombre:</strong> {{ clienteSeleccionado.username }}</p>
+        <p><strong>Email:</strong> {{ clienteSeleccionado.email }}</p>
+        <p><strong>Teléfono:</strong> {{ clienteSeleccionado.phone }}</p>
+        <p><strong>Dirección:</strong> {{ clienteSeleccionado.address }}</p>
+        <div class="mt-6 text-right">
+          <button @click="cerrarModal" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import HeaderAdmin from '@/components/NabvarVerticalAdmin.vue'
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { PencilIcon, TrashIcon } from 'lucide-vue-next'
+import { EyeIcon } from 'lucide-vue-next'
 
-// Estado de los clientes y la paginación
+// Estado de los clientes, paginación y modal
 const clientes = ref([])
 const paginaActual = ref(1)
 const totalPaginas = ref(0)
 const nextPage = ref(null)
 const previousPage = ref(null)
+const mostrarModal = ref(false)
+const clienteSeleccionado = ref(null)
 
 // Función para obtener los clientes de la API
 const obtenerClientes = async (pagina = 1) => {
@@ -138,9 +153,15 @@ const paginaSiguiente = () => {
   }
 }
 
-const eliminarCliente = (cliente) => {
-  if (confirm(`¿Estás seguro de que quieres eliminar a ${cliente.username}?`)) {
-    clientes.value = clientes.value.filter(c => c.id !== cliente.id)
-  }
+// Función para mostrar detalles del cliente en el modal
+const verDetallesCliente = (cliente) => {
+  clienteSeleccionado.value = cliente
+  mostrarModal.value = true
+}
+
+// Función para cerrar el modal
+const cerrarModal = () => {
+  mostrarModal.value = false
+  clienteSeleccionado.value = null
 }
 </script>

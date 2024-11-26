@@ -80,9 +80,7 @@
                       <button @click="editarPedido(pedido)" class="text-yellow-600 hover:text-yellow-900">
                         <PencilIcon class="h-5 w-5" />
                       </button>
-                      <button @click="eliminarPedido(pedido)" class="text-red-600 hover:text-red-900">
-                        <TrashIcon class="h-5 w-5" />
-                      </button>
+                      
                     </td>
                   </tr>
                 </tbody>
@@ -347,14 +345,23 @@ const cargarPedidos = async (url = 'http://localhost:8000/api/orders/orders-list
 // Computed para los pedidos filtrados
 const pedidosFiltrados = computed(() => {
   return pedidos.value.filter(pedido => {
-    return (
-      (filtroEstado.value === '' || pedido.status === filtroEstado.value) &&
-      (busqueda.value === '' ||
-        pedido.client_detail?.username.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-        pedido.orders_id.includes(busqueda.value))
-    )
-  })
-})
+    // No mostrar por defecto pedidos entregados o cancelados
+    if (!filtroEstado.value && (pedido.status === 'delivered' || pedido.status === 'cancelled')) {
+      return false;
+    }
+
+    // Aplicar el filtro por estado
+    const cumpleEstado = filtroEstado.value === '' || pedido.status === filtroEstado.value;
+
+    // Aplicar búsqueda por username o ID
+    const cumpleBusqueda =
+      busqueda.value === '' ||
+      pedido.client_detail?.username.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      pedido.orders_id.includes(busqueda.value);
+
+    return cumpleEstado && cumpleBusqueda;
+  });
+});
 
 const estadoClases = {
   pending: 'bg-yellow-100 text-yellow-800',
