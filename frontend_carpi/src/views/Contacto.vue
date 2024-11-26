@@ -1,69 +1,113 @@
 <template>
-    <div class="sobre-nosotros">
-      <!-- Header Componente -->
-      <Header />
-  
+    <div class="contacto">
+        <Header />
+        
       <main class="content">
-        <section class="info-section">
-          <h2>Sobre Nosotros</h2>
-          <p>
-            En Maderera el bosque, nos apasiona trabajar con la madera y crear piezas únicas que
-            combinen belleza y funcionalidad. Con más de 20 años de experiencia, nos hemos
-            convertido en expertos en el arte de la carpintería.
-          </p>
-          <p>
-            Nuestro equipo de artesanos altamente calificados se dedica a producir muebles de
-            alta calidad, puertas, ventanas y todo tipo de trabajos en madera, siempre
-            respetando el medio ambiente y utilizando materiales sostenibles.
-          </p>
-        </section>
-  
-        <!-- Galería de imágenes -->
-        <section class="image-gallery">
-          <h3>Galería de Imágenes</h3>
-          <div v-for="(image, index) in images" :key="index" class="image-container">
-            <img :src="image.src" :alt="image.alt" />
-          </div>
-        </section>
-  
-        <section class="services">
-          <h3>Nuestros Servicios</h3>
-          <ul>
-            <li>Diseño y fabricación de muebles a medida</li>
-            <li>Restauración de muebles antiguos</li>
-            <li>Carpintería para interiores y exteriores</li>
-            <li>Asesoramiento personalizado</li>
-          </ul>
-        </section>
+        <h2>Contacto</h2>
+        
+        <div class="contacto-container">
+          <section class="formulario-contacto">
+            <h3>Envíanos un mensaje</h3>
+            <form @submit.prevent="enviarFormulario">
+              <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" v-model="formData.nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="formData.email" required>
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" v-model="formData.telefono">
+              </div>
+              <div class="form-group">
+                <label for="asunto">Asunto:</label>
+                <select id="asunto" v-model="formData.asunto" required>
+                  <option value="">Seleccione un asunto</option>
+                  <option value="consulta">Consulta general</option>
+                  <option value="presupuesto">Solicitud de presupuesto</option>
+                  <option value="cita">Agendar una cita</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" v-model="formData.mensaje" required></textarea>
+              </div>
+              <button type="submit" class="boton-enviar">Enviar mensaje</button>
+            </form>
+          </section>
+          
+          <section class="info-contacto">
+            <h3>Información de contacto</h3>
+            <div class="info-item">
+              <strong>Dirección:</strong>
+              <p>Av. de los Árboles 123, Ciudad Bosque, CP 12345</p>
+            </div>
+            <div class="info-item">
+              <strong>Teléfono:</strong>
+              <p>+1 (234) 567-8900</p>
+            </div>
+            <div class="info-item">
+              <strong>Email:</strong>
+              <p>info@madereraelbosque.com</p>
+            </div>
+            <div class="info-item">
+              <strong>Horario de atención:</strong>
+              <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+              <p>Sábados: 10:00 AM - 2:00 PM</p>
+            </div>
+            
+          </section>
+        </div>
       </main>
-  
-      <!-- Footer Componente -->
-      <Footer />
+      <!-- Footer -->
+    <Footer class="footer" />
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
-  // Importamos los componentes Header y Footer
-  import Header from "@/components/HeaderCompo.vue";
-  import Footer from "@/components/FooterCompo.vue";
-  // Importamos las imágenes de assets
-  import tallerImage from '@/assets/taller.jpg';
-  import artesanoImage from '@/assets/artesano.jpg';
-  import mueblesImage from '@/assets/muebles_2.jpeg';
+import Header from "@/components/HeaderCompo.vue";
+import Footer from "@/components/FooterCompo.vue";
   
-  const images = ref([
-    { src: tallerImage, alt: 'Taller de carpintería' },
-    { src: artesanoImage, alt: 'Artesano trabajando' },
-    { src: mueblesImage, alt: 'Muebles terminados' },
-  ]);
+  const formData = ref({
+    nombre: '',
+    email: '',
+    telefono: '',
+    asunto: '',
+    mensaje: ''
+  });
+  
+  const enviarFormulario = () => {
+    // Aquí iría la lógica para enviar el formulario
+    console.log('Formulario enviado:', formData.value);
+    // Reiniciar el formulario después del envío
+    formData.value = {
+      nombre: '',
+      email: '',
+      telefono: '',
+      asunto: '',
+      mensaje: ''
+    };
+    alert('Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.');
+  };
   </script>
   
   <style scoped>
-  .sobre-nosotros {
+  .contacto {
     font-family: 'Arial', sans-serif;
     color: #5D4037;
     background-color: #FFF3E0;
+  }
+  
+ 
+  
+  h1 {
+    color: #FFF3E0;
+    font-size: 2.5rem;
+    margin: 0;
   }
   
   .content {
@@ -74,63 +118,78 @@
   
   h2, h3 {
     color: #E65100;
-  }
-  
-  .info-section {
-    background-color: #FFECB3;
-    padding: 2rem;
-    border-radius: 8px;
+    text-align: center;
     margin-bottom: 2rem;
   }
   
-  .image-gallery {
+  .contacto-container {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
+    gap: 2rem;
+    justify-content: space-between;
   }
   
-  .image-container {
-    width: calc(33.33% - 1rem);
+  .formulario-contacto, .info-contacto {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .form-group {
     margin-bottom: 1rem;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .image-container img {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #FFE0B2;
+    border-radius: 4px;
+    background-color: #FFF3E0;
+  }
+  
+  textarea {
+    height: 150px;
+  }
+  
+  .boton-enviar {
+    background-color: #FF9800;
+    color: #FFF3E0;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-enviar:hover {
+    background-color: #E65100;
+  }
+  
+  .info-item {
+    margin-bottom: 1rem;
+  }
+  
+  .mapa {
+    margin-top: 2rem;
+  }
+  
+  .mapa-imagen {
     width: 100%;
     height: auto;
-    object-fit: cover;
-  }
-  
-  .services {
-    background-color: #FFE0B2;
-    padding: 2rem;
     border-radius: 8px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  li {
-    margin-bottom: 0.5rem;
-    padding-left: 1.5rem;
-    position: relative;
-  }
-  
-  li::before {
-    content: '🌳';
-    position: absolute;
-    left: 0;
   }
   
   @media (max-width: 768px) {
-    .image-container {
-      width: 100%;
+    .contacto-container {
+      flex-direction: column;
     }
   }
   </style>
+  
   
