@@ -42,10 +42,7 @@
   </template>
   
   <script setup>
-  import Construccion from '@/views/Construccion.vue';
-  import SobreNosotros from '@/views/SobreNosotros.vue';
-  import Contacto from '@/views/Contacto.vue';
-  import Trabajos from '@/views/Trabajos.vue';
+
   </script>
   
   <style lang="scss" scoped>
