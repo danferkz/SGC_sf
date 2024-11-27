@@ -11,13 +11,13 @@
                 <form @submit.prevent="handleLogin" class="card-body">
                     <div class="form-control">
                         <label for="username" class="label">
-                            <span class="label-text text-[#000000]">Username</span>
+                            <span class="label-text text-[#000000]">Usuario</span>
                         </label>
                         <input 
                             id="username" 
                             v-model="username" 
                             type="text" 
-                            placeholder="Username"
+                            placeholder="Usuario"
                             class="input input-bordered" 
                             required
                             minlength="3"
@@ -27,13 +27,13 @@
                     </div>
                     <div class="form-control">
                         <label for="password" class="label">
-                            <span class="label-text text-[#000000]">Password</span>
+                            <span class="label-text text-[#000000]">Contraseña</span>
                         </label>
                         <input 
                             id="password" 
                             v-model="password" 
                             type="password" 
-                            placeholder="Password"
+                            placeholder="Contraseña"
                             class="input input-bordered" 
                             required 
                         />
