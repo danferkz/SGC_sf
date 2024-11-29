@@ -17,7 +17,7 @@
                             id="username" 
                             v-model="username" 
                             type="text" 
-                            placeholder="Username"
+                            placeholder="Usuario"
                             class="input input-bordered" 
                             required
                             minlength="3"
@@ -33,7 +33,7 @@
                             id="password" 
                             v-model="password" 
                             type="password" 
-                            placeholder="Password"
+                            placeholder="Contraseña"
                             class="input input-bordered" 
                             required 
                         />

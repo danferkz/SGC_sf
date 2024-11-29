@@ -53,7 +53,12 @@
             <section class="bg-orange-200 rounded-lg p-8 text-center mt-12">
                 <h3 class="text-xl font-bold">¿Listo para comenzar tu proyecto?</h3>
                 <p>Nuestro equipo de expertos está listo para ayudarte a hacer realidad tu visión en madera.</p>
-                <a href="#" class="inline-block bg-orange-600 text-white py-2 px-4 rounded mt-4 font-bold transition-colors duration-300 hover:bg-orange-700">Solicitar Presupuesto</ a>
+                <button 
+                    @click="solicitarPresupuesto" 
+                    class="inline-block bg-orange-600 text-white py-2 px-4 rounded mt-4 font-bold transition-colors duration-300 hover:bg-orange-700"
+                >
+                    Solicitar Presupuesto
+                </button>
             </section>
         </main>
 
@@ -64,6 +69,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import HeaderCompo from '@/components/HeaderCompo.vue';
 import Footer from "@/components/FooterCompo.vue";
 import iglesia from '@/assets/Muebledeinglesia.jpg';
@@ -72,6 +78,12 @@ import puertasegura from '@/assets/puertasegura.jpeg';
 import puertaconst from '@/assets/PuertasConstr.jpg';
 import catedral from '@/assets/Ventanacatedral.jpeg';
 import ventanaconst from '@/assets/Ventanacostr.jpeg';
+
+const router = useRouter();
+
+const solicitarPresupuesto = () => {
+    router.push('/client'); // Redirige a la vista ClientView
+};
 
 const serviciosConstruccion = ref([
     {

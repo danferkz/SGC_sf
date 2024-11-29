@@ -7,7 +7,7 @@
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-3xl font-bold text-gray-900">Empleados</h1>
           <button @click="abrirModal('crearStaff')" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Crear Staff
+            Crear Empleado
           </button>
         </div>
 
@@ -70,7 +70,7 @@
     <!-- Modal Crear Staff -->
     <div v-if="modalActivo === 'crearStaff'" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-lg font-semibold mb-4">Crear Staff</h2>
+        <h2 class="text-lg font-semibold mb-4">Crear Empleado</h2>
         <form @submit.prevent="crearStaff">
             <div class="mb-4">
             <label class="block text-gray-700">NOMBRE DE EMPLEADO</label>

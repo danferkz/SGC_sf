@@ -4,7 +4,7 @@
             :class="['bg-gray-800 text-white h-screen transition-all duration-300', isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed']">
             <div class="p-4 flex items-center justify-between">
                 <h1 class="text-xl font-bold truncate transition-opacity duration-300" v-if="isExpanded">
-                    Admin Panel
+                    Panel del Admin
                 </h1>
                 <button @click="toggleNav" class="focus:outline-none">
                     <svg v-if="!isExpanded" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
