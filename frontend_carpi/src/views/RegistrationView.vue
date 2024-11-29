@@ -45,7 +45,7 @@
                         <div class="form-control">
                             <label class="cursor-pointer flex items-center space-x-2">
                                 <input type="checkbox" v-model="termsAccepted" class="checkbox checkbox-bordered" required />
-                                <span class="label-text text-[#000000]">Acepto los <RouterLink to="/terms" class="text-[#D97706]">Términos y Condiciones</RouterLink></span>
+                                <span class="label-text text-[#000000]">Acepto los Términos y Condiciones</span>
                             </label>
                         </div>
                         <div class="form-control mt-6">

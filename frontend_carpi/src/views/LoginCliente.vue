@@ -46,11 +46,11 @@
                             type="submit" 
                             class="btn bg-[#D97706] hover:bg-[#B45309] text-white"
                         >
-                            Login
+                            Iniciar sesión
                         </button>
                     </div>
                     <div class="text-center mt-4">
-                        <span class="text-[#000000]">¿NO tienes una cuenta?</span>
+                        <span class="text-[#000000]">¿No tienes una cuenta?</span>
                         <router-link 
                             to="/registro" 
                             class="font-medium text-[#D97706] hover:text-[#B45309] ml-1"
